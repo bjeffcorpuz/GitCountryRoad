@@ -1,0 +1,29 @@
+<!-- Spend and save-->
+ <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#395564">
+ 
+  <tr>
+     <td align="center" style="font-size: 0px; line-height: 0px;" valign="middle">
+        <!--[if !mso 9]><!--> 
+        <div class="mobile-show" style="display:none; width:0px; overflow: hidden; max-height: 0px; mso-hide: all; line-height:0;">
+           <img alt="Spend &amp; Save is on now*" border="0" src="https://image.e.countryroad.com.au/lib/fe9312727260027f74/m/54/August-Exclusive-Release-EDM_03_mobile.png" style="mso-hide:all;max-width: 600px;" width="100%">
+        </div>
+        <!--<![endif]--> <img alt="Spend &amp; Save ends Sunday*" border="0" class="mobile-hide" height="50" src="https://image.e.countryroad.com.au/lib/fe9312727260027f74/m/54/August-WW-Modern-Essentials-EDM-01_02.jpg" style="display:block;" width="600"> 
+     </td>
+  </tr>
+  %%[IF Tier != "" AND @TotalRewards > 8 THEN]%%
+  <tr>
+     <td style="font-size: 18px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center;  line-height: 17px; color: #ffffff; display:block; font-weight:400; margin:0 auto; padding: 0 0 0 0px;" valign="top" align="center" class="copy-pad body-copy-14"><a href="%%=RedirectTo(Concat(@baseURL,'?utm_campaign=',@campaigntag,'&utm_source=brand&utm_medium=email',@promotype))=%%" target="_blank" style="text-decoration: none; color: #ffffff; display:block;" conversion="false" alias="">You have $%%=v(@TotalRewards)=%% in&nbsp;rewards<sup>^</sup></a></td>
+  </tr>
+    <tr>
+     <td class="" height="5" style="font-size:1px; line-height:1px;">
+        &nbsp;
+     </td>
+  </tr>
+  %%[ELSE NULL ENDIF]%%
+  <tr>
+     <td class="mobheight" height="18" style="font-size:1px; line-height:1px;">
+        &nbsp;
+     </td>
+  </tr>
+ </table>
+ <!-- end Spend and save-->
