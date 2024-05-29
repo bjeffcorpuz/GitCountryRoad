@@ -996,7 +996,8 @@
          <!--%%[
       
          IF @Country == "Australia" THEN    
-      
+            
+            SET @Link1 = "https://app.witchery.com.au/BXdC/0mkrf9ux"
             SET @Link2 = "https://app.witchery.com.au/BXdC/0mkrf9ux"
             SET @Link3 = "https://app.witchery.com.au/BXdC/0mkrf9ux"
             SET @Link4 = "https://app.witchery.com.au/BXdC/2v382kan"
@@ -1013,6 +1014,7 @@
          ELSE
       
             /* Set other countries links */
+            SET @Link1 = Concat(@www_witchery_com,'sale/?',@wyutm)
             SET @Link2 = Concat(@www_witchery_com,'sale/?',@wyutm)
             SET @Link3 = Concat(@www_witchery_com,'sale/?',@wyutm)
             SET @Link4 = Concat(@www_witchery_com,'wool-blend-double-breasted-blazer-coat-60295091-1?',@wyutm)
@@ -1029,7 +1031,6 @@
          ENDIF
       
             /* No Deep Links */
-            SET @Link1 = Concat(@www_witchery_com,'sale/?',@wyutm)
             SET @Link13 = Concat(@www_witchery_com,'sale/?src=i&aspectGroup=Size^AU+4&',@wyutm)
             SET @Link14 = Concat(@www_witchery_com,'sale/?src=i&aspectGroup=Size^AU+6&',@wyutm)
             SET @Link15 = Concat(@www_witchery_com,'sale/?src=i&aspectGroup=Size^AU+8&',@wyutm)
