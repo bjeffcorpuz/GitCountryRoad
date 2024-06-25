@@ -1,0 +1,3548 @@
+<!DOCTYPE html>
+
+<script runat="server" language="ampscript">
+	/* IMPORTANT:
+	Do not place any code, AMPscript or otherwise, above the doctype tag
+	as it causes rendering issues in certain email clients */
+</script>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+	xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+	<!-- Content Builder\Templates\Main\v1.0\Main_Email_Template_v1 -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<title>Sam's Club - Email Template</title>
+
+	<style>
+		@import url("https://use.typekit.net/myx3sdo.css");
+		@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap");
+
+		.body {
+			margin: 0 auto !important;
+			min-width: 100% !important;
+			padding: 0 !important;
+			width: 100% !important;
+		}
+
+		* {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+		}
+
+		img {
+			border: 0;
+			height: auto;
+			line-height: 100%;
+		}
+
+		sup {
+			font-size: 60%;
+			line-height: 0;
+		}
+
+		span.outlook-overflow-scaling {
+			width: 100% !important;
+			max-width: 100%;
+			padding: 0 !important;
+		}
+
+		a,
+		a:link {
+			color: blue;
+			text-decoration: none;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: canada-type-gibson, Roboto, Arial, sans-serif !important;
+			margin: 0 0 0px;
+		}
+
+		p {
+			margin: 0 0 0px;
+		}
+
+		table,
+		td {
+			font-family: canada-type-gibson, Roboto, Arial, sans-serif;
+		}
+
+		#backgroundWrapper,
+		.body {
+			background-color: #ffffff;
+		}
+
+		.desktop-content {
+			display: block !important;
+			height: inherit !important;
+		}
+
+		.mobile-content {
+			display: none;
+		}
+
+		.stack-wrapper {
+			font-size: 0;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		.stack-wrapper .column,
+		.stack-wrapper .column1,
+		.stack-wrapper .column2,
+		.stack-wrapper .column3 {
+			display: inline-block;
+			vertical-align: top;
+			white-space: normal;
+			width: 100%;
+		}
+
+		.Four_Column_ItemAssortment .column {
+			width: 50%;
+		}
+
+		.dashBoard .column1,
+		.dashBoard .column2 {
+			width: unset;
+		}
+
+		.dashBoard .dashBoardCol1 td {
+			padding: 0 !important;
+		}
+
+		.dashBoard .dashBoardCol2 td {
+			padding-right: 0px !important;
+		}
+
+		.twoColumn .column {
+			margin: 0 10px;
+			max-width: 300px;
+		}
+
+		.twoColumnFull .column {
+			margin: 0;
+			max-width: 320px;
+		}
+
+		.threeColumn .column {
+			margin: 0 5px;
+			max-width: 200px;
+		}
+
+		.dshow {
+			display: block !important;
+		}
+
+		.mshow {
+			display: none !important;
+		}
+
+		.twofooter .column {
+			max-width: 200px;
+		}
+
+		.column1Style {
+			padding-right: 40px !important;
+		}
+
+		@media only screen and (max-width: 639px) {
+			u~.body #backgroundWrapper {
+				width: 100vw !important;
+			}
+
+			.desktop-content {
+				display: none !important;
+				height: 0 !important;
+			}
+
+			.mobile-content {
+				display: block;
+			}
+
+			.stack-wrapper {
+				white-space: normal !important;
+			}
+
+			.twoColumnFull .column,
+			.twoColumn .column,
+			.threeColumn .column {
+				margin: 0;
+				max-width: 100% !important;
+			}
+
+			.Four_Column_ItemAssortment .column {
+				display: block;
+				width: 100%;
+			}
+
+			.dshow {
+				display: none !important;
+			}
+
+			.mshow {
+				display: block !important;
+			}
+
+			.column1Style {
+				padding-right: 10px !important;
+			}
+
+			.dashBoard .dashBoardCol2,
+			.dashBoard .dashBoardCol1 {
+				width: 100%;
+			}
+
+			.dashBoard .dashBoardCol1 td {
+				padding: 0 50px !important;
+			}
+
+			.dashBoard .dashBoardCol2 td {
+				padding-right: 20px !important;
+			}
+		}
+	</style>
+
+	<!--[if false]><!-->
+	<style>
+		a[x-apple-data-detectors],
+		#MessageViewBody .samsungfix a {
+			color: inherit !important;
+			font-family: inherit !important;
+			font-size: inherit !important;
+			font-weight: inherit !important;
+			line-height: inherit !important;
+			text-decoration: none !important;
+		}
+
+		#MessageViewBody,
+		#MessageWebViewDiv {
+			margin: 0 !important;
+			min-width: 100vw;
+			padding: 0 !important;
+			zoom: 1 !important;
+		}
+
+		#MessageViewBody #backgroundWrapper {
+			min-width: 100vw;
+		}
+
+		@media yahoo {
+			#backgroundWrapper {
+				table-layout: fixed;
+			}
+		}
+	</style>
+	<!--<![endif]-->
+
+	<!--[if true]>
+			<style>
+				      table { border-collapse: collapse; }
+
+				table, td { mso-line-height-rule: exactly; mso-margin-bottom-alt: 0; mso-margin-top-alt: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+
+				li { /*  Uncomment the mso-special-format property below if your bullets are not showing up. This may cause inconsistent bullet spacing though.
+				*/ text-indent: -1em; margin: 0px 0px 6px; }
+
+				table, td, h1, h2, h3, h4, h5, h6 { font-family: Arial, sans-serif !important; }
+
+				sup { font-size: 110%; mso-text-raise: 12%; }
+
+				.column, .column1, .column2, .column3 { margin: 0 !important; }
+
+				.desktop-content { display: block !important; }
+			</style>
+		<![endif]-->
+
+	<style>
+		@media only screen and (max-width: 599px) {
+			.container {
+				width: 100% !important;
+			}
+
+			.drop {
+				clear: both;
+				display: block !important;
+				float: left;
+				width: 100% !important;
+			}
+
+			.fluid,
+			.fluid-centered {
+				height: auto !important;
+				margin-left: auto !important;
+				margin-right: auto !important;
+				max-width: 100% !important;
+				width: 100% !important;
+			}
+
+			.fluid-centered {
+				margin-left: auto !important;
+				margin-right: auto !important;
+			}
+
+			.logo {
+				display: block !important;
+				padding: 0 !important;
+			}
+
+			.mobile-hidden {
+				display: none !important;
+			}
+
+			.photo img {
+				height: auto !important;
+				max-width: 100% !important;
+				width: 100% !important;
+			}
+
+			.responsive-td {
+				display: block !important;
+				padding: 0 !important;
+				width: 100% !important;
+			}
+
+			.tableBlock {
+				width: 100% !important;
+			}
+		}
+	</style>
+
+	<!--[if gte mso 9]>
+			<xml>
+				<o:OfficeDocumentSettings>
+					<o:AllowPNG />
+					<o:PixelsPerInch>96</o:PixelsPerInch>
+				</o:OfficeDocumentSettings>
+			</xml>
+		<![endif]-->
+</head>
+
+<body class="body" style="font-family: Roboto, Arial, sans-serif; margin: 0; padding: 0;">
+	<table id="backgroundWrapper" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+		<tr>
+			<td align="center">
+				<div style="display: none; line-height: 0; max-height: 0px; overflow: hidden;">
+					&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+				</div>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+					<tr>
+						<td align="center" style="padding: 26px 0;">
+							<a href="%%=redirectto(concat('https://www.samsclub.com/sams/homepage.jsp?',@params1))=%%"
+								alias="SamsClub-logo" target="_blank">
+								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/2/PromoEmail_Logo.png"
+									alt="Sam's Club" width="212"
+									style="display: block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; font-size: 24px; color: #1e6cbb;" />
+							</a>
+						</td>
+					</tr>
+				</table>
+				<table border="0" cellpadding="0" cellspacing="0" role="presentation">
+					<tr>
+						<td class="main" align="center" style="background-color: #ffffff; width: 640px;">
+							<div class="dshow" style="display: none;">
+								<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td style="padding: 0 0 18px; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/grocery/1444?',@params1))=%%"
+												alias="Grocery-nav" target="_blank"
+												style="padding: 0 12px; color: #686868; text-decoration: none;">
+												Grocery
+											</a>
+											&nbsp;&zwnj;
+											<!--[if true]> &nbsp;&zwnj; &nbsp;&zwnj; <![endif]-->
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/electronics/1086?',@params1))=%%"
+												alias="Electronics-nav" target="_blank"
+												style="padding: 0 12px; color: #686868; text-decoration: none;">
+												Electronics
+											</a>
+											&nbsp;&zwnj;
+											<!--[if true]> &nbsp;&zwnj; &nbsp;&zwnj; <![endif]-->
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/furniture/1286?',@params1))=%%"
+												alias="Furniture-nav" target="_blank"
+												style="padding: 0 12px; color: #686868; text-decoration: none;">
+												Furniture
+											</a>
+											&nbsp;&zwnj;
+											<!--[if true]> &nbsp;&zwnj; &nbsp;&zwnj; <![endif]-->
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/outdoor-living/1852?',@params1))=%%"
+												alias="Outdoor-Patio-nav" target="_blank"
+												style="padding: 0 12px; color: #686868; text-decoration: none;">
+												Outdoor &amp; Patio
+											</a>
+											&nbsp;&zwnj;
+											<!--[if true]> &nbsp;&zwnj; &nbsp;&zwnj; <![endif]-->
+											<a href="%%=redirectto(concat('https://www.samsclub.com/b/clearance/1150109?',@params1))=%%"
+												alias="Clearance-nav" target="_blank"
+												style="padding: 0 12px; color: #686868; text-decoration: none;">
+												Clearance
+											</a>
+											&nbsp;&zwnj;
+										</td>
+									</tr>
+								</table>
+							</div>
+							<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<td style="font-family: Arial, sans-serif; font-size: 0; line-height: 0; margin: 0; border-bottom: 1px solid #cccccc; padding: 0;"
+										align="center">
+										&nbsp;&zwnj;
+									</td>
+								</tr>
+								<tr>
+									<td style="font-family: sans-serif; font-size: 20px; line-height: 1; margin: 0; border: 0; padding: 0;"
+										align="center">
+										&nbsp;&zwnj;
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding:  0 0 30px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%" style="padding:0">
+															<tr>
+																<td align="center" style="padding: 0 0 0px;">
+																	<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_03-06.jpg"
+																		alt="Image Alt" width="320"
+																		style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%" style="padding:0">
+															<tr>
+																<td align="center" style="padding: 0 0 0px;">
+																	<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_03.jpg"
+																		alt="Image Alt" width="320"
+																		style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%" style="padding:0">
+											<tr>
+												<td align="center" style="padding: 0 0 0px;">
+													<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_09.jpg"
+														alt="Image Alt" width="640"
+														style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%" style="padding:0">
+											<tr>
+												<td align="center" style="padding: 0 0 0px;">
+													<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_09.jpg"
+														alt="Image Alt" width="640"
+														style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+												</td>
+											</tr>
+
+											<tr>
+												<td align="center" style="padding: 30px 35px 35px 35px;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation">
+														<tr>
+															<td align="center"
+																style="font-weight: 500; color: #424242; font-size: 15px; line-height: 1.2;  width: 100%;">
+																<p style="margin: 0px 0px 15px;">
+																	Pre-header text Gibson SB 15pt
+																</p>
+															</td>
+														</tr>
+
+														<tr>
+															<td align="center" style=" width: 100%;">
+																<h2 class="heading"
+																	style="color: #424242; font-family: sans-serif; font-size: 32px; line-height: 34px; font-weight: 600; margin: 0 0 20px;">
+																	Headline Gibson SemiBold aprox 32pt
+																</h2>
+															</td>
+														</tr>
+
+														<tr>
+															<td align="center"
+																style="font-weight: normal; color: #424242; font-size: 20px; line-height: 1.2;  width: 100%;">
+																<p style="margin: 0px 0px 20px;">
+																	Sub-header Gibson Regular 20pt lorem ipsum.
+																</p>
+															</td>
+														</tr>
+
+														<tr>
+															<td align="center"
+																style="font-weight: normal; color: #424242; font-size: 15px; line-height: 1.2; font-style: italic;  width: 100%;">
+																<p style="margin: 0px 0px 20px;">
+																	End date copy GIbson Italic 15pt
+																</p>
+															</td>
+														</tr>
+
+														<tr>
+															<td align="center" style="padding: 0 0 0px; width: 100%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation">
+																	<tr>
+																		<td align="center"
+																			style="background-color: #11224b; border-radius: 25px; ">
+																			<a class="cta-btn" href="#tbd"
+																				alias="CTA_Btn" target="_blank"
+																				style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 25px; color: #ffffff; display: inline-block; font-size: 18px; padding: 15px 30px; text-decoration: none; font-weight: 600;">
+																				Medium CTA Text
+																			</a>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%" style="padding:0">
+											<tr>
+												<td align="center" style="padding: 30px 0;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation">
+														<tr>
+															<td align="center" style="padding: 0 0 0px; width: 100%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation">
+																	<tr>
+																		<td align="center"
+																			style="background-color: #11224b; border-radius: 25px; ">
+																			<a class="cta-btn" href="#tbd"
+																				alias="CTA_Btn" target="_blank"
+																				style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 25px; color: #ffffff; display: inline-block; font-size: 18px; padding: 15px 30px; text-decoration: none; font-weight: 600;">
+																				Medium CTA Text
+																			</a>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%" style="padding:0">
+															<tr>
+																<td align="center" style="padding: 0 0 30px;">
+																	<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/13/20220815-FY23-Q3-em-templates_FINAL_03.jpg"
+																		alt="Image Alt" width="320"
+																		style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+																</td>
+															</tr>
+
+															<tr>
+																<td align="center" style="padding: 0 0 30px;">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation">
+																		<tr>
+																			<td align="center"
+																				style="background-color: #11224b; border-radius: 25px; ">
+																				<a class="cta-btn" href="#tbd"
+																					alias="CTA_Btn" target="_blank"
+																					style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 25px; color: #ffffff; display: inline-block; font-size: 18px; padding: 15px 30px; text-decoration: none; font-weight: 600;">
+																					Medium CTA Text
+																				</a>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%" style="padding:0">
+															<tr>
+																<td align="center" style="padding: 0 0 30px;">
+																	<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/13/20220815-FY23-Q3-em-templates_FINAL_03.jpg"
+																		alt="Image Alt" width="320"
+																		style="border: 0; display: block; height: auto; margin: 0px; max-width: 100%; width: 100%;" />
+																</td>
+															</tr>
+
+															<tr>
+																<td align="center" style="padding: 0 0 30px;">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation">
+																		<tr>
+																			<td align="center"
+																				style="background-color: #11224b; border-radius: 25px; ">
+																				<a class="cta-btn" href="#tbd"
+																					alias="CTA_Btn" target="_blank"
+																					style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 25px; color: #ffffff; display: inline-block; font-size: 18px; padding: 15px 30px; text-decoration: none; font-weight: 600;">
+																					Medium CTA Text
+																				</a>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%" style="padding:0">
+											<tr>
+												<td align="center" style="padding: 60px;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation">
+														<tr>
+															<td align="center" style=" width: 100%;">
+																<h2 class="heading"
+																	style="color: #424242; font-family: sans-serif; font-size: 28px; line-height: 1.2; font-weight: 600; margin: 0;">
+																	Headline text Gibson SB 28pt or less
+																</h2>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td align="center" style="padding: 30px 0;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="middle"
+																style="padding: 0 10px 0 30px" class="column1Style">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 15px; line-height: 1.2; ">
+																			<p style="margin: 0px 0px 0px;">
+																				Live text lorem ipsum dolor sit amet,
+																				consectetur adipiscing elit, sed do
+																				eiusmod tempor.
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="middle"
+																style="padding: 0; width:150px">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="right"
+																			style="padding: 0 20px 0px 0px;">
+																			<table border="0" cellpadding="0"
+																				cellspacing="0" role="presentation">
+																				<tr>
+																					<td align="center"
+																						style="background-color: #11224b; border-radius: 18px; ">
+																						<a class="cta-btn" href="#tbd"
+																							alias="CTA_Btn"
+																							target="_blank"
+																							style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 18px; color: #ffffff; display: inline-block; font-size: 15px; padding: 10px 20px; text-decoration: none; font-weight: 500;">
+																							Learn More
+																						</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%" style="padding:0;">
+											<tr>
+												<td align="center" style="padding: 0 0px;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation">
+														<tr>
+															<td align="center"
+																style="font-weight: 400; color: #424242; font-size: 18px; line-height: 1.2; padding: 30px 0; width: 440px;">
+																<p style="margin: 0px 38px;">
+																	18pt Live text only. Lorem ipsum dolor sit amet,
+																	consec tetur adipiscing elit, sed do.
+																</p>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td align="center" style="padding: 40px 0;">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="middle"
+																style="padding: 0 10px 0 30px" class="column1Style">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="left" style="">
+																			<h2 class="heading"
+																				style="color: #424242; font-family: sans-serif; font-size: 24px; line-height: 1.2; font-weight: 600; margin: 0;">
+																				Headline text Gibson SB 24pt
+																			</h2>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-family: Arial,sans-serif; font-weight: 400; color: #424242; font-size: 18px; line-height: 1.2; ">
+																			<p style="margin: 0px 0px 0px;">
+																				Sub-header Lorem ipsum
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="middle"
+																style="padding: 0; width:150px">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="right"
+																			style="padding: 0 20px 0px 0px;">
+																			<table border="0" cellpadding="0"
+																				cellspacing="0" role="presentation">
+																				<tr>
+																					<td align="center"
+																						style="background-color: #11224b; border-radius: 18px; ">
+																						<a class="cta-btn" href="#tbd"
+																							alias="CTA_Btn"
+																							target="_blank"
+																							style="background-color: #11224b; line-height: 1; border: 1px solid #11224b; border-radius: 18px; color: #ffffff; display: inline-block; font-size: 15px; padding: 10px 20px; text-decoration: none; font-weight: 500;">
+																							Shop Now
+																						</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											align="center">
+											<tr>
+												<td align="center"
+													background="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg"
+													height="auto" valign="top"
+													style="background: url('https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg') top left / cover no-repeat; background-size: cover; height: inherit; width: 100%;">
+													<!--[if gte mso 9]>
+      <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block; width: 640px; height: 320px;" src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg" />
+      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block;position: absolute; width: 640px; height: 320px;">
+      <v:fill  opacity="0%" color="#ffffff"  />
+      <v:textbox inset="0,0,0,0">
+      <![endif]-->
+													<div>
+														<table class="twoColumnFull" border="0" cellpadding="0"
+															cellspacing="0" role="presentation" width="100%">
+															<tr>
+																<td class="stack-wrapper" align="center"
+																	style="padding: 0;">
+																	<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 0; max-width: 320px; width: 100%;">
+																					<table border="0" cellpadding="0"
+																						cellspacing="0"
+																						role="presentation">
+																						<tr>
+																							<td align="center"
+																								style="padding: 0 0 0px; width: 100%;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates-Recovered-Recovered_03.jpg"
+																									alt="Alt Image"
+																									width="320"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 320px; width: 100%;" />
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 0; max-width: 320px; width: 100%;">
+																					<table border="0" cellpadding="0"
+																						cellspacing="0"
+																						role="presentation">
+																						<tr>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 10px 5px 5px 10px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates-Recovered-Recovered_04_03.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 10px 10px 5px 5px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_032.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																						</tr>
+
+																						<tr>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 5px 5px 10px 10px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_07-08.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 5px 10px 10px 5px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_092.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if gte mso 9]> 
+        </v:textbox>
+        </v:fill>
+        </v:rect>
+        </v:image>
+      <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											align="center">
+											<tr>
+												<td align="center"
+													background="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg"
+													height="auto" valign="top"
+													style="background: url('https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg') top left / cover no-repeat; background-size: cover; height: inherit; width: 100%;">
+													<!--[if gte mso 9]>
+      <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block; width: 640px; height: 320px;" src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg" />
+      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block;position: absolute; width: 640px; height: 320px;">
+      <v:fill  opacity="0%" color="#ffffff"  />
+      <v:textbox inset="0,0,0,0">
+      <![endif]-->
+													<div>
+														<table class="twoColumnFull" border="0" cellpadding="0"
+															cellspacing="0" role="presentation" width="100%">
+															<tr>
+																<td class="stack-wrapper" align="center"
+																	style="padding: 0;">
+																	<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 0; max-width: 320px; width: 100%;">
+																					<table border="0" cellpadding="0"
+																						cellspacing="0"
+																						role="presentation">
+																						<tr>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 10px 5px 5px 10px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates-Recovered-Recovered_04_03.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 10px 10px 5px 5px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_17.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																						</tr>
+
+																						<tr>
+																							<td colspan="2"
+																								align="center"
+																								style="padding: 5px 10px 10px 10px; width: 100%;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_17-20.jpg"
+																									alt="Image Alt"
+																									width="300"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:10px 0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 0; max-width: 320px; width: 100%;">
+																					<table border="0" cellpadding="0"
+																						cellspacing="0"
+																						role="presentation">
+																						<tr>
+																							<td width="50%"
+																								align="center"
+																								valign="middle"
+																								style="padding: 0px 5px 0px 10px;">
+																								<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_15.jpg"
+																									alt="Image Alt"
+																									width="145"
+																									style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																							</td>
+																							<td width="50%"
+																								align="center"
+																								valign="middle">
+																								<table border="0"
+																									cellpadding="0"
+																									cellspacing="0"
+																									role="presentation"
+																									align="center">
+																									<tr>
+																										<td align="center"
+																											valign="middle"
+																											style="padding: 0px 10px 5px 5px">
+																											<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_17.jpg"
+																												alt="Image Alt"
+																												width="145"
+																												style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																										</td>
+																									</tr>
+																									<tr>
+																										<td align="center"
+																											valign="middle"
+																											style="padding: 5px 10px 0px 5px">
+																											<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_21.jpg"
+																												alt="Image Alt"
+																												width="145"
+																												style="border: 0; display: block; height: auto; margin: 0px; max-width: 145px; width: 100%;" />
+																										</td>
+																									</tr>
+																								</table>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if gte mso 9]> 
+        </v:textbox>
+        </v:fill>
+        </v:rect>
+        </v:image>
+      <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 20px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											align="center">
+											<tr>
+												<td align="center"
+													background="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg"
+													height="auto" valign="top"
+													style="background: url('https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg') top left / cover no-repeat; background-size: cover; height: inherit; width: 100%;">
+													<!--[if gte mso 9]>
+      <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block; width: 640px; height: 320px;" src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/samsBGWhite.jpg" />
+      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style=" border: 0;display: inline-block;position: absolute; width: 640px; height: 320px;">
+      <v:fill  opacity="0%" color="#ffffff"  />
+      <v:textbox inset="0,0,0,0">
+      <![endif]-->
+													<div>
+														<table class="twoColumnFull" border="0" cellpadding="0"
+															cellspacing="0" role="presentation" width="100%">
+															<tr>
+																<td class="stack-wrapper" align="center">
+																	<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 10px;">
+																					<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_25.jpg"
+																						alt="Image Alt" width="300"
+																						style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+																	<div class="column">
+																		<table border="0" cellpadding="0"
+																			cellspacing="0" role="presentation"
+																			width="100%" style="padding:0">
+																			<tr>
+																				<td align="center"
+																					style="padding: 10px;">
+																					<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_26.jpg"
+																						alt="Image Alt" width="300"
+																						style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if gte mso 9]> 
+        </v:textbox>
+        </v:fill>
+        </v:rect>
+        </v:image>
+      <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table class="" border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%">
+											<tr>
+												<td align="center" style="padding: 0px">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="top"
+																style="padding: 0px;  width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242 Lorem ipsum
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Was $00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">Free
+																				shipping for <em>Plus</em></p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="top"
+																style="padding: 0px; width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242 Lorem ipsum
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Was $00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">Free
+																				shipping for <em>Plus</em></p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table class="" border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%">
+											<tr>
+												<td align="center" style="padding: 0px">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="top"
+																style="padding: 0px;  width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Expires MM/DD/YY
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="top"
+																style="padding: 0px; width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="right"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Expires MM/DD/YY
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table class="" border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%">
+											<tr>
+												<td align="center" style="padding: 0px">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="top"
+																style="padding: 0px;  width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242 Lorem ipsum
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="top"
+																style="padding: 0px; width: 50%;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="center"
+																			style="padding: 0px 10px 10px;">
+																			<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_31.jpg"
+																				alt="Image Alt" width="300"
+																				style="border: 0; display: block; height: auto; margin: 0px; max-width: 300px; width: 100%;" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 20px;">
+																				Product name live text Gibson Regular
+																				14pt #424242 Lorem ipsum
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all;">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				$00.00
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																			<p style="margin: 0px 10px 0px 10px;">
+																				Limit #
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="Four_Column_ItemAssortment" border="0" cellpadding="0"
+											cellspacing="0" role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0; max-width: 160px; width: 100%;">
+																							<table border="0"
+																								cellpadding="0"
+																								cellspacing="0"
+																								role="presentation">
+																								<tr>
+																									<td align="center"
+																										style="padding: 0px 10px 10px; width: 100%;">
+																										<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																											alt="Image Alt"
+																											width="140"
+																											style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																									</td>
+																								</tr>
+
+																								<tr>
+																									<td align="left"
+																										style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2;  width: 100%;">
+																										<p
+																											style="margin: 0px 10px 17px;">
+																											Product name
+																											live text
+																											Gibson
+																											Regular 14pt
+																											#424242
+																										</p>
+																									</td>
+																								</tr>
+
+																								<tr>
+																									<td align="left"
+																										style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all width: 100%;">
+																										<p
+																											style="margin: 0px 10px 0px 10px;">
+																											$00.00
+																										</p>
+																									</td>
+																								</tr>
+
+																								<tr>
+																									<td align="left"
+																										style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2;  width: 100%;">
+																										<p
+																											style="margin: 0px 10px 0px 10px;">
+																											Free
+																											shipping for
+																											<em>Plus</em>
+																										</p>
+																									</td>
+																								</tr>
+
+																								<tr>
+																									<td align="left"
+																										style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2;  width: 100%;">
+																										<p
+																											style="margin: 0px 10px 0px 10px;">
+																											Limit #
+																										</p>
+																									</td>
+																								</tr>
+																							</table>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="Four_Column_ItemAssortment" border="0" cellpadding="0"
+											cellspacing="0" role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Was $00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Was $00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Was $00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 16px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Was $00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1.2; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Free shipping for
+																								<em>Plus</em></p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="Four_Column_ItemAssortment" border="0" cellpadding="0"
+											cellspacing="0" role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Expires MM/DD/YY
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Expires MM/DD/YY
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Expires MM/DD/YY
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px 0 30px 0; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="left"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 17px;">
+																								Product name live text
+																								Gibson Regular 14pt
+																								#424242
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; word-break: break-all">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								$00.00
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Limit #
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="right"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px 10px;">
+																								Expires MM/DD/YY
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 10px 0;">
+										<table class="Four_Column_ItemAssortment" border="0" cellpadding="0"
+											cellspacing="0" role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="middle"
+																				style="padding: 0px;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 20px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="middle"
+																				style="padding: 0px; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 20px 10px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="middle"
+																				style="padding: 0px;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 20px">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="middle"
+																				style="padding: 0px; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 20px">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 0px 0;">
+										<table class="Four_Column_ItemAssortment" border="0" cellpadding="0"
+											cellspacing="0" role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center" style="padding: 0;">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 15px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 600; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px;">
+																								Live Text Gibson
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1; ">
+																							<p
+																								style="margin: 0px 10px 30px;">
+																								Regular 14pt #424242
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 15px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 600; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px;">
+																								Live Text Gibson
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1; ">
+																							<p
+																								style="margin: 0px 10px 30px;">
+																								Regular 14pt #424242
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="top" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table class="" border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center"
+																	style="padding: 0px; max-width:320px; width:100%">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center" width="320">
+																		<tr>
+																			<td align="left" valign="top"
+																				style="padding: 0px;  width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 15px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 600; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px;">
+																								Live Text Gibson
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1; ">
+																							<p
+																								style="margin: 0px 10px 30px;">
+																								Regular 14pt #424242
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																			<td align="left" valign="top"
+																				style="padding: 0px; width: 160px;">
+																				<table border="0" cellpadding="0"
+																					cellspacing="0" role="presentation"
+																					width="100%" style="padding:0">
+																					<tr>
+																						<td align="center"
+																							style="padding: 0px 10px 15px;">
+																							<img src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/20220815-FY23-Q3-em-templates_0322.jpg"
+																								alt="Image Alt"
+																								width="140"
+																								style="border: 0; display: block; height: auto; margin: 0px; max-width: 140px; width: 100%;" />
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 600; color: #424242; font-size: 14px; line-height: 1.2; ">
+																							<p
+																								style="margin: 0px 10px 0px;">
+																								Live Text Gibson
+																							</p>
+																						</td>
+																					</tr>
+
+																					<tr>
+																						<td align="center"
+																							style="font-weight: 400; color: #424242; font-size: 14px; line-height: 1; ">
+																							<p
+																								style="margin: 0px 10px 30px;">
+																								Regular 14pt #424242
+																							</p>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+											width="100%">
+											<tr>
+												<td align="center" style="background-color: #20388a; ">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" width="100%" style="padding:0;">
+														<tr>
+															<td align="center" style="padding: 0 0px;">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation">
+																	<tr>
+																		<td align="center"
+																			style="font-weight: 400; color: #ffffff; font-size: 18px; line-height: 1.2; padding: 30px 0; width: 440px;">
+																			<p style="margin: 0px 30px;">
+																				Hey [FirstName],
+																			</p>
+																			<p style="margin: 0px 30px;">
+																				18pt Live text only lorem ipsum sit col
+																				goes there.
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td align="center" style="padding: 20px 0; background: #20388a">
+													<table border="0" cellpadding="0" cellspacing="0"
+														role="presentation" align="center" width="100%">
+														<tr>
+															<td align="left" valign="middle"
+																style="padding: 0 10px 0 30px" class="column1Style">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="left"
+																			style="font-weight: 600; color: #ffffff; font-size: 18px; line-height: 1.2; ">
+																			<p style="margin: 0px 0px 0px;">A quick look
+																				at your savings & earnings.<sup>1</sup>
+																			</p>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td align="right" valign="middle"
+																style="padding: 0; width:150px">
+																<table border="0" cellpadding="0" cellspacing="0"
+																	role="presentation" width="100%" style="padding:0">
+																	<tr>
+																		<td align="right"
+																			style="padding: 0 20px 0px 0px;">
+																			<table border="0" cellpadding="0"
+																				cellspacing="0" role="presentation">
+																				<tr>
+																					<td align="center"
+																						style="background-color: #ffffff; border-radius: 18px; ">
+																						<a class="cta-btn-white"
+																							href="#tbd" alias="CTA_Btn"
+																							target="_blank"
+																							style="background-color: #ffffff; line-height: 1; border: 1px solid #ffffff; border-radius: 18px; color: #424242; display: inline-block; font-size: 15px; padding: 10px 20px; text-decoration: none; font-weight: 500;">
+																							See Details
+																						</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table class="dashBoard" border="0" cellpadding="0" cellspacing="0" role="presentation"
+								width="100%">
+								<tr>
+									<td class="stack-wrapper" align="center"
+										style="padding: 20px 0px 10px 0px; background-color: #eeeeee">
+										<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="middle" style="width: unset;">
+            <![endif]-->
+										<div class="column1">
+											<table class="dashBoardCol1" border="0" cellpadding="0" cellspacing="0"
+												role="presentation" style="padding:0">
+												<tr>
+													<td align="center"
+														style="font-weight: 600; color: #424242; font-size: 22px; line-height: 1; padding: 0 50px; mso-padding-alt:0">
+														<p style="margin: 0px 0px 5px;">A quick look at your savings &
+															earnings.<sup>1</sup></p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="middle" style="width: unset;padding:0 0 0 20px;">
+            <![endif]-->
+										<div class="column2">
+											<table class="dashBoardCol2" border="0" cellpadding="0" cellspacing="0"
+												role="presentation" style="padding:0">
+												<tr>
+													<td align="center"
+														style="padding: 0 20px 5px 20px; mso-padding-alt:0; line-height: 1">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation">
+															<tr>
+																<td align="center">
+																	<a class="cta-btn2" href="#tbd" alias="CTA_Btn"
+																		target="_blank"
+																		style="color: #0649ab; display: inline-block; font-size: 20px; text-decoration:underline; font-weight: 500;">
+																		See Details
+																	</a>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+									</td>
+								</tr>
+							</table>
+
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+								<tr>
+									<td align="center" style="padding: 0 0 30px 0;">
+										<table class="twoColumnFull" border="0" cellpadding="0" cellspacing="0"
+											role="presentation" width="100%">
+											<tr>
+												<td class="stack-wrapper" align="center"
+													style="padding: 0; background-color: #eeeeee">
+													<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center" style="padding:0 15px 15px 15px;">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center">
+																		<tr>
+																			<td align="center"
+																				background="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/blueCard22.jpg"
+																				height="90" valign="top"
+																				style="background: url('https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/blueCard22.jpg') top left / cover no-repeat; background-size: cover; height: inherit; width: 290px; border-radius: 5px">
+																				<!--[if true]>         
+            <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 90px; width: 290px;" src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/blueCard22.jpg" />
+            <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 90px; position: absolute; width: 290px;">
+              <v:fill opacity="0%" color="#eeeeee" />
+              <v:textbox inset="0,0,0,0">
+                  <![endif]-->
+																				<div>
+																					<table border="0" cellspacing="0"
+																						cellpadding="0" align="center"
+																						width="100%">
+																						<tr>
+																							<td height="90" width="86"
+																								style="width:86px; height:90px"
+																								valign="middle"></td>
+																							<td height="90"
+																								style="height:90px; padding: 0 5px 0 0; text-align: left; font-family: 'canada-type-gibson', Helvetica, Arial, sans-serif; font-weight: normal; color: #424242; line-height: 1.4"
+																								valign="middle">
+																								<p
+																									style="font-size: 18px; margin: 0">
+																									Sam’s
+																									Cash<sup>™§</sup>
+																									earned:</p>
+																								<p
+																									style="font-size: 22px; margin: 0">
+																									$XXX.XX<sup>‡:</sup>
+																								</p>
+																							</td>
+																						</tr>
+																					</table>
+																				</div>
+																				<!--[if true]>               
+              </v:textbox>
+              </v:fill>           
+            </v:rect>
+            </v:image>       <![endif]-->
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+
+
+                <td align="center" valign="middle" style="width: 320;">
+            <![endif]-->
+													<div class="column">
+														<table border="0" cellpadding="0" cellspacing="0"
+															role="presentation" width="100%">
+															<tr>
+																<td align="center" style="padding:0 15px 15px 15px;">
+																	<table border="0" cellpadding="0" cellspacing="0"
+																		role="presentation" align="center">
+																		<tr>
+																			<td align="center"
+																				background="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/redCard22.jpg"
+																				height="90" valign="top"
+																				style="background: url('https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/redCard22.jpg') top left / cover no-repeat; background-size: cover; height: inherit; width: 290px; border-radius: 5px">
+																				<!--[if true]>         
+            <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 90px; width: 290px;" src="https://image.em.samsclub.com/lib/fe3015707564067a711d78/m/12/redCard22.jpg" />
+            <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 90px; position: absolute; width: 290px;">
+              <v:fill opacity="0%" color="#eeeeee" />
+              <v:textbox inset="0,0,0,0">
+                  <![endif]-->
+																				<div>
+																					<table border="0" cellspacing="0"
+																						cellpadding="0" align="center"
+																						width="100%">
+																						<tr>
+																							<td height="90" width="86"
+																								style="width:86px; height:90px"
+																								valign="middle"></td>
+																							<td height="90"
+																								style="height:90px; padding: 0 5px 0 0; text-align: left; font-family: 'canada-type-gibson', Helvetica, Arial, sans-serif; font-weight: normal; color: #424242; line-height: 1.4"
+																								valign="middle">
+																								<p
+																									style="font-size: 18px; margin: 0">
+																									Total savings:</p>
+																								<p
+																									style="font-size: 22px; margin: 0">
+																									$XXX.XX<sup>±:</sup>
+																								</p>
+																							</td>
+																						</tr>
+																					</table>
+																				</div>
+																				<!--[if true]>               
+              </v:textbox>
+              </v:fill>           
+            </v:rect>
+            </v:image>       <![endif]-->
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<!--[if true]>
+                </td>
+              </tr>
+            </table>
+            <![endif]-->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+							<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<td
+										style="font-family: sans-serif; font-size: 20px; line-height: 1; margin: 0; border: 0; padding: 0;">
+										&nbsp;&zwnj;
+									</td>
+								</tr>
+							</table>
+							<!--[if false]><!-->
+							<div class="mshow" style="display: block;">
+								<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td style="padding: 14px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/grocery/1444?',@params1))=%%"
+												alias="Grocery-mobile" target="_blank"
+												style="padding: 2px; color: #686868; text-decoration: none;">
+												Grocery
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-family: sans-serif; font-size: 0; line-height: 0; margin: 0; border-bottom: 1px solid #cccccc; padding: 0;"
+											align="center">
+											&nbsp;‌
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 14px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/electronics/1086?',@params1))=%%"
+												alias="Electronics-mobile" target="_blank"
+												style="padding: 2px; color: #686868; text-decoration: none;">
+												Electronics
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-family: sans-serif; font-size: 0; line-height: 0; margin: 0; border-bottom: 1px solid #cccccc; padding: 0;"
+											align="center">
+											&nbsp;‌
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 14px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/furniture/1286?',@params1))=%%"
+												alias="Furniture-mobile" target="_blank"
+												style="padding: 2px; color: #686868; text-decoration: none;">
+												Furniture
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-family: sans-serif; font-size: 0; line-height: 0; margin: 0; border-bottom: 1px solid #cccccc; padding: 0;"
+											align="center">
+											&nbsp;‌
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 14px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/c/outdoor-living/1852?',@params1))=%%"
+												alias="Outdoor-Patio-mobile" target="_blank"
+												style="padding: 2px; color: #686868; text-decoration: none;">
+												Outdoor &amp; Patio
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-family: sans-serif; font-size: 0; line-height: 0; margin: 0; border-bottom: 1px solid #cccccc; padding: 0;"
+											align="center">
+											&nbsp;‌
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 14px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1;"
+											align="center">
+											<a href="%%=redirectto(concat('https://www.samsclub.com/b/clearance/1150109?',@params1))=%%"
+												alias="Clearance-mobile" target="_blank"
+												style="padding: 2px; color: #686868; text-decoration: none;">
+												Clearance
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-family: sans-serif; font-size: 18px; line-height: 1; margin: 0; border: 0; padding: 0;"
+											align="center">
+											&nbsp;‌
+										</td>
+									</tr>
+								</table>
+							</div>
+							<!--<![endif]-->
+
+							<!-- MonitorCampaignID: %%=v(@pid_parent)=%% -->
+							<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+								bgcolor="#f2f1ef">
+								<tr>
+									<td>
+										<table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+											border="0">
+											<tr>
+												<td style="padding: 10px 20px;">
+													<table role="presentation" width="100%" cellspacing="0"
+														cellpadding="0" border="0">
+														<tr>
+															<td align="center">
+																<table class="twofooter" role="presentation"
+																	width="100%" cellspacing="0" cellpadding="0"
+																	border="0">
+																	<tr>
+																		<td class="stack-wrapper" align="center">
+																			<!--[if true]>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+             <tr>
+              <td align="center" valign="top" style="width: 200px;">
+               <![endif]-->
+																			<div class="column">
+																				<table role="presentation" width="100%"
+																					cellspacing="0" cellpadding="0"
+																					border="0">
+																					<tr>
+																						<td class="mht"
+																							style="font-family: Arial, sans-serif; font-size: 12px; line-height: 20px; font-weight: bold; padding: 10px;"
+																							align="center">
+																							<a href="https://www.samsclub.com/content/scan-and-go?%%=v(@params1)=%%"
+																								alias="get-app"
+																								target="_blank"
+																								style="color: #666666; text-decoration: none; padding: 0 4px;">
+																								Get the App
+																							</a>
+																							&nbsp;&zwnj;
+																							<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																							<a href="https://apps.apple.com/us/app/sams-club/id382497397?%%=v(@params1)=%%"
+																								alias="Apple-app"
+																								target="_blank"
+																								style="padding: 0 4px;">
+																								<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/26f16d52-f93a-48f9-97a7-f3a99530ed25.png"
+																									alt="Apple"
+																									style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; color: #666666; vertical-align: middle;"
+																									width="17" />
+																							</a>
+																							&nbsp;&zwnj;
+																							<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																							<a href="https://play.google.com/store/apps/details?id=com.rfi.sams.android&hl=en_US&%%=v(@params1)=%%"
+																								alias="Android-app"
+																								target="_blank"
+																								style="padding: 0 4px;">
+																								<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/a5413923-5017-42cb-a6b8-ccd110177fcf.png"
+																									alt="Android"
+																									style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; color: #666666; vertical-align: middle;"
+																									width="18" />
+																							</a>
+																						</td>
+																					</tr>
+																				</table>
+																			</div>
+																			<!--[if true]>
+              </td>
+              <td align="center" valign="top" style="width: 200px;">
+               <![endif]-->
+																			<div class="column">
+																				<table role="presentation" width="100%"
+																					cellspacing="0" cellpadding="0"
+																					border="0">
+																					<tr>
+																						<td class="mht"
+																							style="font-family: Arial, sans-serif; font-size: 12px; line-height: 20px; font-weight: bold; padding: 10px 23px 10px 10px;"
+																							align="center">
+																							<a href="https://www.samsclub.com/account/summary?%%=v(@params1)=%%"
+																								alias="YourAccount"
+																								target="_blank"
+																								style="padding: 6px 6px 0 0; color: #666666; text-decoration: none;">
+																								Your Account
+																							</a>
+																							&nbsp;&zwnj;
+																							<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																							<a href="https://www.samsclub.com/locator?%%=v(@params1)=%%"
+																								alias="YourClub"
+																								target="_blank"
+																								style="padding: 6px 0 0 0; color: #666666; text-decoration: none;">
+																								Your Club
+																							</a>
+																						</td>
+																					</tr>
+																				</table>
+																			</div>
+																			<!--[if true]>
+              </td>
+             </tr>
+            </table>
+            <![endif]-->
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td style="padding: 10px 0; color: #686868; font-family: Arial, sans-serif; font-size: 12px; line-height: 20px;"
+																align="center">
+																<a href="https://www.samsclub.com/content/pickup?%%=v(@params1)=%%"
+																	alias="Pickup-footer" target="_blank"
+																	style="color: #686868; text-decoration: none;">Pickup</a>
+																&nbsp;&zwnj;|&zwnj;&nbsp;
+																<a href="https://www.samsclub.com/b/instant-savings-book/6930116?%%=v(@params1)=%%"
+																	alias="Savings-footer" target="_blank"
+																	style="color: #686868; text-decoration: none;">
+																	Instant&nbsp;Savings
+																</a>
+																&nbsp;&zwnj;|&zwnj;&nbsp;
+																<a href="https://www.samsclub.com/content/membership-services?%%=v(@params1)=%%"
+																	alias="All-Services-footer" target="_blank"
+																	style="color: #686868; text-decoration: none;">
+																	All&nbsp;Services
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td style="padding: 10px 0; font-family: Arial, sans-serif; font-size: 20px; line-height: 1;"
+																align="center">
+																<a href="https://www.facebook.com/samsclub?%%=v(@params1)=%%"
+																	alias="facebook-social" target="_blank"
+																	style="padding: 0 4px;">
+																	<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/7c0803bf-017d-4491-b94b-def9a8aae79f.png"
+																		alt="facebook"
+																		style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; font-size: 12px; color: #666666;"
+																		width="32" />
+																</a>
+																&nbsp;&zwnj;
+																<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																<a href="https://twitter.com/samsclub?%%=v(@params1)=%%"
+																	alias="twitter-social" target="_blank"
+																	style="padding: 0 4px;">
+																	<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/93770664-101a-4d2f-a5f0-0747553e2d0d.png"
+																		alt="twitter"
+																		style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; font-size: 12px; color: #666666;"
+																		width="32" />
+																</a>
+																&nbsp;&zwnj;
+																<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																<a href="https://www.instagram.com/samsclub?%%=v(@params1)=%%"
+																	alias="instagram-social" target="_blank"
+																	style="padding: 0 4px;">
+																	<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/74b53670-dd25-4ee0-8c97-e8b1a9a5145a.png"
+																		alt="instagram"
+																		style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; font-size: 12px; color: #666666;"
+																		width="32" />
+																</a>
+																&nbsp;&zwnj;
+																<!--[if true]> &nbsp;&zwnj; <![endif]-->
+																<a href="https://www.pinterest.com/samsclub?%%=v(@params1)=%%"
+																	alias="pinterest-social" target="_blank"
+																	style="padding: 0 4px;">
+																	<img src="http://image.em.samsclub.com/lib/fe3015707564067a711d78/m/1/6ff26031-9b45-410f-8697-96d01a91c314.png"
+																		alt="pinterest"
+																		style="display: inline-block; margin: 0; border: 0; padding: 0; font-family: Arial, sans-serif; font-size: 12px; color: #666666;"
+																		width="32" />
+																</a>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<td
+										style="font-family: sans-serif; font-size: 30px; line-height: 1; margin: 0; border: 0; padding: 0;">
+										&nbsp;&zwnj;
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+					<tr>
+						<td align="center" style="padding: 0 30px;">
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation">
+								<tr>
+									<td align="left"
+										style="color: #686868; font-family: Arial, sans-serif; font-size: 11px; line-height: 16px; width: 580px; max-width: 100%; padding: 0 0 30px;">
+										<p style="margin: 0 0 16px; font-style: italic;">
+											Sam's Club Member Services %%Member_Addr%%, %%Member_City%%,
+											%%Member_State%% %%Member_PostalCode%% &copy;2000&ndash;%%xtyear%%,
+											%%Member_Busname%%. All rights reserved.
+										</p>
+										<div data-type="slot" data-key="policyandunsub"
+											data-label="Policy and Unsubscribe">
+											<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+												align="center">
+												<tr>
+													<td width="580" align="left"
+														style="color: #686868; font-family: Arial, sans-serif; font-size: 11px; line-height: 16px; width: 580px;">
+														<p style="margin: 0 0 16px;">
+															<strong>ADVERTISING - PRODUCTS AND PRICING</strong>
+															<br />
+															Sam&#8217;s Club
+															<sup style="font-size:9px;">&reg;</sup> Advertised
+															Merchandise Policy &ndash; It is our firm intention to have
+															every advertised item in stock, occasionally, items may not
+															be
+															available. We reserve the right to limit quantities and
+															exclude resellers. We try to ensure that all information is
+															accurate, but errors and omissions occur and are subject to
+															correction. Pricing and item availability may vary by
+															location, in Alaska, Hawaii, Oklahoma, Puerto Rico and
+															Wisconsin, and on
+															<a href="%%=redirectto(concat('https://help.samsclub.com/app/answers/detail/a_id/188','?',@params1))=%%"
+																alias="Samsclub Merch Policy 2020" target="_blank"
+																style="color: #1e6cbb; text-decoration: none; font-weight: normal;">
+																SamsClub.com
+															</a>
+															. "Up&nbsp;to" savings range from zero to the maximized
+															advertised amount. No rain checks. See our
+															<a href="%%=redirectto(concat('https://help.samsclub.com/app/answers/detail/a_id/188?', @params1))=%%"
+																alias="Legal Policy" target="_blank"
+																style="color: #1e6cbb; text-decoration: none;">
+																Advertising and Pricing&nbsp;Policy
+															</a>
+															.
+														</p>
+														<p style="margin: 0 0 16px;">
+															Privacy Policy and Terms &amp; Conditions
+															<br />
+															Sam&#8217;s Club wants to protect your security and privacy.
+															Be assured that we will never ask for personal information
+															(such as passwords or credit card numbers) in an email
+															newsletter. If you receive such a request, please do not
+															respond to that email. See our
+															<a href="%%=redirectto(concat('https://corporate.samsclub.com/privacy-policy?', @params1))=%%"
+																alias="privacy-policy" target="_blank"
+																style="color: #1e6cbb; text-decoration: none;">
+																Privacy Policy
+															</a>
+															and
+															<a href="%%=redirectto(concat('https://www.samsclub.com/content/terms-and-conditions?', @params1))=%%"
+																alias="terms-conditions" target="_blank"
+																style="color: #1e6cbb; text-decoration: none;">
+																Terms and Conditions
+															</a>
+															to learn more.
+														</p>
+														<p style="margin: 0 0 16px;">
+															For questions about returns and refunds, see our
+															<a href="%%=redirectto(concat('https://www.samsclub.com/content/returns?', @params1))=%%"
+																alias="return-refund" target="_blank"
+																style="color: #1e6cbb; text-decoration: none;">
+																Return / Refund Policy
+															</a>
+															.
+														</p>
+														<p style="margin: 0 0 16px;">
+															Having trouble viewing images?
+															<a href="%%view_email_url%%" alias="view-web"
+																target="_blank"
+																style="color: #1e6cbb; text-decoration: underline;">View
+																this email on the web</a>.
+														</p>
+														<p style="margin: 0 0 16px;">
+															This email is a Sam&#8217;s Club advertisement. You have
+															received this email as a Sam&#8217;s Club member or
+															subscriber. If you do not want to receive these email
+															updates,
+															<a href="%%=redirectto(@unsubURL)=%%" alias="unsub"
+																target="_blank"
+																style="color: #1e6cbb; text-decoration: underline;">click
+																here to unsubscribe</a>.
+														</p>
+														<p style="margin: 0 0 16px;">
+															Please understand that you may still receive emails from
+															<a href="%%=redirectto(concat('https://www.samsclub.com?', @params1))=%%"
+																alias="website_footer" target="_blank"
+																style="color: #686868; text-decoration: none; font-weight: bold; pointer-events: none; cursor: default;">
+																SamsClub.com
+															</a>
+															regarding order confirmations from our Website or for
+															membership renewal information.
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation">
+								<tr>
+									<td class="main" align="center" style="width: 580px;">
+										<div data-type="slot" data-key="additionaldisclaimer"
+											data-label="Additional Disclaimer Area"></div>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
