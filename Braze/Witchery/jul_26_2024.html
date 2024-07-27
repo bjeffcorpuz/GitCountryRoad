@@ -649,9 +649,6 @@
                     <td class="pad">
                       <div style="font-family:Arial,Sans-serif;text-align:center" align="center">
                         <style type="text/css">
-                          .font14{
-                              font-size: 18px !important;
-                            }
                           @media only screen and (max-width: 620px) {
 
                             .full-width {
@@ -669,11 +666,6 @@
 
                             .pad-right-20 {
                               padding-right: 20px !important;
-                            }
-
-
-                            .font14{
-                              font-size: 14px !important;
                             }
 
                           }
@@ -712,38 +704,51 @@
 
 {% comment %} Deep link code {% endcomment %}
 	<!--
-		{% assign Link3 = BaseURL | append: '/new-in/' %}
-		{% assign Link4 = BaseURL | append: '/stores/' %}
-	-->
+	{% assign clicktracking = 'clicktracking=off ' %}
 
+	{% if ${country} == 'AU' %}  
+
+		{% assign Link1 = 'https://app.witchery.com.au/BXdC/283zgv5f' %}
+		{% assign Link2 = 'https://app.witchery.com.au/BXdC/w3z6okew' %}
+		{% assign Link3 = 'https://app.witchery.com.au/BXdC/0xkcnplv' %}
+		{% assign Link4 = 'https://app.witchery.com.au/BXdC/w3z6okew' %}
+		{% assign Link5 = 'https://app.witchery.com.au/BXdC/px356g1v' %}
+		{% assign Link6 = 'https://app.witchery.com.au/BXdC/9t3nq4p5' %}
+		{% assign Link7 = 'https://app.witchery.com.au/BXdC/7wnu7pon' %}
+		{% assign Link8 = 'https://app.witchery.com.au/BXdC/0xkcnplv'  %}
+		{% assign Link9 = 'https://app.witchery.com.au/BXdC/rzzzhf2n'  %}
+
+	{% else %}
+
+		{% comment %} Set other countries links {% endcomment %}
+		{% assign Link1 = BaseURL | append: '/denim-crop-shacket-60297532-180' %}
+		{% assign Link2 = BaseURL | append: '/clothing-denim/' %}
+		{% assign Link3 = BaseURL | append: '/new-in/' %}
+		{% assign Link4 = BaseURL | append: '/clothing-denim/' %}
+		{% assign Link5 = BaseURL | append: '/adriana-heel-60297964-118' %}
+		{% assign Link6 = BaseURL | append: '/cleo-stud-60297950-901' %}
+		{% assign Link7 = BaseURL | append: '/romy-hobo-bag-60298032-129' %}
+		{% assign Link8 = BaseURL | append: '/new-in/' %}
+		{% assign Link9 = BaseURL | append: '/new-in-accessories/' %}
+
+	{% endif %}
+
+		{% comment %} No Deep Links {% endcomment %}
+
+
+	-->
 
 <!-- Slice 1 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
       <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07006c60b704/original.jpg?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Witchery Store Closure | We’re getting a makeover">
+        <a href="{{ Link1 }}?lid=2n87f7rhqc4u" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e387478d005e423ff8/original.jpg?1721873891" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+        </a>
       </td>
     </tr>
   </tbody>
-</table>
-
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#f7f8f3">
-  <!--[if false]-->
-  <tr>
-    <td align="center" style="font-size: 0;">
-      <!-- fix for gmail not aligning middle -->
-      <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/668baac76d050d0065855a74/original.png?1720429255" alt="" style="width: 100%; max-width: 600px; border: 0; height: auto" width="600" height="auto" border="0">
-    </td>
-  </tr>
-  <!--[endif]-->
-  <tr>
-
-    <td align="center" class="padCustom" style=" font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding : 0 25px">
-      Dear {{ ${first_name} | capitalize }},
-
-    </td>
-  </tr>
 </table>
 
 <!-- Slice 2 -->
@@ -751,33 +756,78 @@
   <tbody>
     <tr>
       <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0a45f42005e918744/original.png?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We wanted to let you know, Witchery Chadstone has temporarily closed for refurbishment, ahead of a brand new store, coming soon. Don’t worry, you can still shop Witchery’s latest collections nearby at Witchery David Jones or Myer, or visit us online.">
+        <a href="{{ Link2 }}?lid=qup9t3c8jwah" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e3a36d82005e28d799/original.png?1721873890" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="MOST WANTED DENIM – July 24. Designed to double-up, but just as versatile when worn separately. From high rise jeans to a cropped shacket – discover these fresh styles in robust 100% cotton denim and arriving in three refined washes.">
+        </a>
       </td>
     </tr>
   </tbody>
 </table>
 
-<!-- Slice 3 4 -->
-<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td valign="top" align="center" width="39.16%"><a href="{{ Link3 }}?lid=30mrpd0v78rc" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0e364b1005d40cfcb/original.png?1721953775" alt="Shop Online" width="235" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-      <td valign="top" align="center" width="60.84%"><a href="{{ Link4 }}?lid=hadsiei30y7a" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf072c078005d884c56/original.png?1721953776" alt="Find Your Nearest Store" width="365" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Slice 5 -->
+<!-- Slice 3 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
       <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07005d610e5b/original.png?1721953775" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We’ll let you know once we’ve reopened. Warm Regards, The Team at Witchery Chadstone">
+        <a href="{{ Link3 }}?lid=otyi3wycytrx" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e31617e0005ea31c42/original.png?1721873891" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Shop New In">
+        </a>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Slice 4 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center">
+        <a href="{{ Link4 }}?lid=ht81fb4z5hj8" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e487478d005e423ff9/original.gif?1721873892" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- spacer -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center">
+        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e3d00d08005ec36035/original.png?1721873891" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="spacer">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Slice 5 6 7 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link5 }}?lid=wwccj2vqwu1b" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e2d00d08006dc30722/original.jpg?1721873890" alt="Adriana Heel A$229.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link6 }}?lid=a98i59gesecs" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e387478d006d41efc9/original.jpg?1721873891" alt="Cleo Stud A$59.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link7 }}?lid=7hxrnchr6luy" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e2488bd3005f67ae01/original.jpg?1721873890" alt="Romy Hobo Bag A$129.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Slice 8 9 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center" width="50%"><a href="{{ Link8 }}?lid=dma6p7f41i4c" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e34141d9005ec76146/original.jpg?1721873891" alt="Shop New Arrivals" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="50%"><a href="{{ Link9 }}?lid=0ahidbf8x5ix" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a1b5e4d00d08005ec36036/original.jpg?1721873891" alt="Shop New Accessories" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 
 
 <!--

@@ -649,9 +649,6 @@
                     <td class="pad">
                       <div style="font-family:Arial,Sans-serif;text-align:center" align="center">
                         <style type="text/css">
-                          .font14{
-                              font-size: 18px !important;
-                            }
                           @media only screen and (max-width: 620px) {
 
                             .full-width {
@@ -669,11 +666,6 @@
 
                             .pad-right-20 {
                               padding-right: 20px !important;
-                            }
-
-
-                            .font14{
-                              font-size: 14px !important;
                             }
 
                           }
@@ -712,79 +704,113 @@
 
 {% comment %} Deep link code {% endcomment %}
 	<!--
-		{% assign Link3 = BaseURL | append: '/new-in/' %}
-		{% assign Link4 = BaseURL | append: '/stores/' %}
+	{% assign clicktracking = 'clicktracking=off ' %}
+
+	{% if ${country} == 'AU' %}  
+
+		{% assign Link1 = 'https://app.witchery.com.au/BXdC/qiyv0hxx' %}
+		{% assign Link1a = 'https://app.witchery.com.au/BXdC/qiyv0hxx' %}
+		{% assign Link2 = 'https://app.witchery.com.au/BXdC/6ni6q1f5' %}
+		{% assign Link3 = 'https://app.witchery.com.au/BXdC/qiyv0hxx'  %}
+		{% assign Link4 = 'https://app.witchery.com.au/BXdC/zg48b6q2'  %}
+		{% assign Link5 = 'https://app.witchery.com.au/BXdC/zg48b6q2'  %}
+		{% assign Link6 = 'https://app.witchery.com.au/BXdC/n4m0sv11'  %}
+		{% assign Link7 = 'https://app.witchery.com.au/BXdC/kuikav5d'  %}
+		{% assign Link8 = 'https://app.witchery.com.au/BXdC/d0vlj28e'  %}
+
+	{% else %}
+
+		{% comment %} Set other countries links {% endcomment %}
+		{% assign Link1 = BaseURL | append: '/waist-detail-pant-60296761-1' %}
+		{% assign Link1a = BaseURL | append: '/waist-detail-pant-60296761-1' %}
+		{% assign Link2 = BaseURL | append: '/clothing-pants/' %}
+		{% assign Link3 = BaseURL | append: '/waist-detail-pant-60296761-1' %}
+		{% assign Link4 = BaseURL | append: '/waist-detail-pant-60300802-9901' %}
+		{% assign Link5 = BaseURL | append: '/waist-detail-pant-60300802-9901' %}
+		{% assign Link6 = BaseURL | append: '/waist-detail-pant-60296761-118' %}
+		{% assign Link7 = BaseURL | append: '/new-in/' %}
+		{% assign Link8 = BaseURL | append: '/accessories/' %}
+
+	{% endif %}
 	-->
 
 
 <!-- Slice 1 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07006c60b704/original.jpg?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Witchery Store Closure | We’re getting a makeover">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link1 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6697086af3f1d0005a15e252/original.gif?1721174122" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Gif Image">
+          </a></td>
+      </tr>
   </tbody>
-</table>
-
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#f7f8f3">
-  <!--[if false]-->
-  <tr>
-    <td align="center" style="font-size: 0;">
-      <!-- fix for gmail not aligning middle -->
-      <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/668baac76d050d0065855a74/original.png?1720429255" alt="" style="width: 100%; max-width: 600px; border: 0; height: auto" width="600" height="auto" border="0">
-    </td>
-  </tr>
-  <!--[endif]-->
-  <tr>
-
-    <td align="center" class="padCustom" style=" font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding : 0 25px">
-      Dear {{ ${first_name} | capitalize }},
-
-    </td>
-  </tr>
-</table>
-
+</table>           
+      
+<!-- Slice 1a -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link1a }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e005af820f3/original.png?1721174120" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="THE WAIST DETAIL PANT – July 24. It’s the unexpected details that stand out. Adding a modern twist to tailoring, this season’s brand-new style is crafted from 100% wool and defined by its exposed waistband and sleek full-length profile.">
+          </a></td>
+      </tr>
+  </tbody>
+</table>           
+      
 <!-- Slice 2 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0a45f42005e918744/original.png?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We wanted to let you know, Witchery Chadstone has temporarily closed for refurbishment, ahead of a brand new store, coming soon. Don’t worry, you can still shop Witchery’s latest collections nearby at Witchery David Jones or Myer, or visit us online.">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6697086803b4c1005ac93ed5/original.png?1721174120" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Shop Pants">
+          </a></td>
+      </tr>
   </tbody>
-</table>
-
-<!-- Slice 3 4 -->
+</table>           
+      
+<!-- Slice 3 4 -->      
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center" width="39.16%"><a href="{{ Link3 }}?lid=30mrpd0v78rc" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0e364b1005d40cfcb/original.png?1721953775" alt="Shop Online" width="235" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      <tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a40059b2c7ad/original.jpg?1721174120" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
 
-      <td valign="top" align="center" width="60.84%"><a href="{{ Link4 }}?lid=hadsiei30y7a" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf072c078005d884c56/original.png?1721953776" alt="Find Your Nearest Store" width="365" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-    </tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link4 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6697086903b4c1005ac93ed6/original.jpg?1721174121" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
   </tbody>
-</table>
-
-<!-- Slice 5 -->
+</table>         
+      
+<!-- Slice 5 6 -->      
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07005d610e5b/original.png?1721953775" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We’ll let you know once we’ve reopened. Warm Regards, The Team at Witchery Chadstone">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link5 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a40064b24422/original.jpg?1721174121" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+          <td valign="top" align="center" width="50%"><a href="{{ Link6 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e0070f77a9f/original.jpg?1721174121" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
+  </tbody>
+</table>         
+      
+<!-- Slice 7 8 -->      
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link7 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e0065f79701/original.jpg?1721174120" alt="Shop New Arrivals" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+          <td valign="top" align="center" width="50%"><a href="{{ Link8 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a4006fb2265d/original.jpg?1721174121" alt="Shop New Accessories" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
   </tbody>
 </table>
 
 
-<!--
-********************************************************************************************************* 
-*********************************************** END HTML *********************************************** 
-*********************************************************************************************************
--->
+
+
+
+
+
+        <!-- END OF HTML -->
       </div>
     </td>
   </tr>
@@ -804,3 +830,12 @@
 		<!-- End -->
 	</body>
 </html>
+
+
+
+<div style="display: none;">
+
+[{"column":"1","sliceID":"1","alias":"1","coreLink":"/waist-detail-pant-60296761-1","imgSrc":"https://braze-images.com/appboy/communication/assets/image_assets/images/6697086af3f1d0005a15e252/original.gif?1721174122","imgAlt":"Gif Image","goldTier":"https://app.witchery.com.au/BXdC/qiyv0hxx","silverTier":"","bronzeTier":"","memberTier":"","noDeepLinks":"false","extraColumn":"","showStatus":"false"},{"column":"1","sliceID":"1a","alias":"1a","coreLink":"/waist-detail-pant-60296761-1","imgSrc":"https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e005af820f3/original.png?1721174120","imgAlt":"THE WAIST DETAIL PANT – July 24. It’s the unexpected details that stand out. Adding a modern twist to tailoring, this season’s brand-new style is crafted from 100% wool and defined by its exposed waistband and sleek full-length profile.","goldTier":"https://app.witchery.com.au/BXdC/qiyv0hxx","silverTier":"","bronzeTier":"","memberTier":"","noDeepLinks":"false","extraColumn":"","showStatus":"false"},{"column":"1","sliceID":"2","alias":"2","coreLink":"/clothing-pants/","imgSrc":"https://braze-images.com/appboy/communication/assets/image_assets/images/6697086803b4c1005ac93ed5/original.png?1721174120","imgAlt":"Shop Pants","goldTier":"https://app.witchery.com.au/BXdC/6ni6q1f5","silverTier":"","bronzeTier":"","memberTier":"","noDeepLinks":"false","extraColumn":"","showStatus":"false"},{"column":"2","sliceID":["3","4"],"alias":["3","4"],"coreLink":["/waist-detail-pant-60296761-1","/waist-detail-pant-60300802-9901"],"imgSrc":["https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a40059b2c7ad/original.jpg?1721174120","https://braze-images.com/appboy/communication/assets/image_assets/images/6697086903b4c1005ac93ed6/original.jpg?1721174121"],"imgAlt":["",""],"goldTier":["https://app.witchery.com.au/BXdC/qiyv0hxx","https://app.witchery.com.au/BXdC/zg48b6q2"],"silverTier":["",""],"bronzeTier":["",""],"memberTier":["",""],"noDeepLinks":["false","false"],"extraColumn":"","showStatus":"false","widths":["50","50"]},{"column":"2","sliceID":["5","6"],"alias":["5","6"],"coreLink":["/waist-detail-pant-60300802-9901","/waist-detail-pant-60296761-118"],"imgSrc":["https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a40064b24422/original.jpg?1721174121","https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e0070f77a9f/original.jpg?1721174121"],"imgAlt":["",""],"goldTier":["https://app.witchery.com.au/BXdC/zg48b6q2","https://app.witchery.com.au/BXdC/n4m0sv11"],"silverTier":["",""],"bronzeTier":["",""],"memberTier":["",""],"noDeepLinks":["false","false"],"extraColumn":"","showStatus":"false","widths":["50","50"]},{"column":"2","sliceID":["7","8"],"alias":["7","8"],"coreLink":["/new-in/","/accessories/"],"imgSrc":["https://braze-images.com/appboy/communication/assets/image_assets/images/669708690c743e0065f79701/original.jpg?1721174120","https://braze-images.com/appboy/communication/assets/image_assets/images/669708693e90a4006fb2265d/original.jpg?1721174121"],"imgAlt":["Shop New Arrivals","Shop New Accessories"],"goldTier":["https://app.witchery.com.au/BXdC/kuikav5d","https://app.witchery.com.au/BXdC/d0vlj28e"],"silverTier":["",""],"bronzeTier":["",""],"memberTier":["",""],"noDeepLinks":["false","false"],"extraColumn":"","showStatus":"false","widths":["50","50"]}]
+
+
+</div>
