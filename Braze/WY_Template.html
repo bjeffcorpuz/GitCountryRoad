@@ -712,70 +712,155 @@
 
 {% comment %} Deep link code {% endcomment %}
 	<!--
-		{% assign Link3 = BaseURL | append: '/new-in/' %}
-		{% assign Link4 = BaseURL | append: '/stores/' %}
+	{% assign clicktracking = 'clicktracking=off ' %}
+
+	{% if ${country} == 'AU' %}  
+
+		{% assign Link1 = 'https://app.witchery.com.au/BXdC/nfeuquq8' %}
+		{% assign Link2 = 'https://app.witchery.com.au/BXdC/azt8g01b' %}
+		{% assign Link3 = 'https://app.witchery.com.au/BXdC/dd2mg0wn' %}
+		{% assign Link4 = 'https://app.witchery.com.au/BXdC/rimvf8pi'  %}
+		{% assign Link6 = 'https://app.witchery.com.au/BXdC/rimvf8pi'  %}
+		{% assign Link5 = 'https://app.witchery.com.au/BXdC/uib3559f' %}
+		{% assign Link7 = 'https://app.witchery.com.au/BXdC/rimvf8pi' %}
+		{% assign Link8 = 'https://app.witchery.com.au/BXdC/5rlpbia8' %}
+		{% assign Link9 = 'https://app.witchery.com.au/BXdC/azt8g01b' %}
+		{% assign Link10 = 'https://app.witchery.com.au/BXdC/tta533qz' %}
+		{% assign Link11 = 'https://app.witchery.com.au/BXdC/hyk5yvt3' %}
+		{% assign Link12 = 'https://app.witchery.com.au/BXdC/mqrx54eu' %}
+		{% assign Link13 = 'https://app.witchery.com.au/BXdC/nfeuquq8'  %}
+		{% assign Link14 = 'https://app.witchery.com.au/BXdC/f1sg0gvq'  %}
+
+	{% else %}
+
+		{% comment %} Set other countries links {% endcomment %}
+		{% assign Link1 = BaseURL | append: '/new-in/' %}
+		{% assign Link2 = BaseURL | append: '/denim-longline-dress-60297410-605' %}
+		{% assign Link3 = BaseURL | append: '/clothing-denim-and-jeans/' %}
+		{% assign Link4 = BaseURL | append: '/denim-blazer-60297412-605' %}
+		{% assign Link6 = BaseURL | append: '/denim-blazer-60297412-605' %}
+		{% assign Link5 = BaseURL | append: '/high-rise-wide-leg-jean-60297399-605' %}
+		{% assign Link7 = BaseURL | append: '/denim-blazer-60297412-605' %}
+		{% assign Link8 = BaseURL | append: '/denim-split-front-skirt-60297403-605' %}
+		{% assign Link9 = BaseURL | append: '/denim-longline-dress-60297410-605' %}
+		{% assign Link10 = BaseURL | append: '/elliot-necklace-60297970-908' %}
+		{% assign Link11 = BaseURL | append: '/ines-pillow-clutch-60298036-129' %}
+		{% assign Link12 = BaseURL | append: '/ava-block-mule-60300221-4349' %}
+		{% assign Link13 = BaseURL | append: '/new-in/' %}
+		{% assign Link14 = BaseURL | append: '/new-in-accessories/' %}
+
+	{% endif %}
+
+		{% comment %} No Deep Links {% endcomment %}
+
+
 	-->
 
 
 <!-- Slice 1 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07006c60b704/original.jpg?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Witchery Store Closure | We’re getting a makeover">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link1 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec03bd405d005fb4efb5/original.png?1722477571" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+          </a></td>
+      </tr>
   </tbody>
-</table>
-
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#f7f8f3">
-  <!--[if false]-->
-  <tr>
-    <td align="center" style="font-size: 0;">
-      <!-- fix for gmail not aligning middle -->
-      <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/668baac76d050d0065855a74/original.png?1720429255" alt="" style="width: 100%; max-width: 600px; border: 0; height: auto" width="600" height="auto" border="0">
-    </td>
-  </tr>
-  <!--[endif]-->
-  <tr>
-
-    <td align="center" class="padCustom" style=" font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding : 0 25px">
-      Dear {{ ${first_name} | capitalize }},
-
-    </td>
-  </tr>
-</table>
-
+</table>           
+      
 <!-- Slice 2 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0a45f42005e918744/original.png?1721953776" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We wanted to let you know, Witchery Chadstone has temporarily closed for refurbishment, ahead of a brand new store, coming soon. Don’t worry, you can still shop Witchery’s latest collections nearby at Witchery David Jones or Myer, or visit us online.">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec03bd405d007db4b216/original.jpg?1722477571" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="DENIM, REDEFINED – August 24. Clean, cool and crisp – the latest denim drop is here. New silhouettes have been crafted in indigo Italian denim and are available in very limited quantities. Double down in a matching blazer and jeans combination – or inject newness into your rotation with the bodysuit or longline dress. Shop Now.">
+          </a></td>
+      </tr>
   </tbody>
-</table>
+</table>           
+      
+<!-- Slice 3 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec02dc01f6005c6693ac/original.png?1722477570" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+          </a></td>
+      </tr>
+  </tbody>
+</table>           
+      
+<!-- Slice 4 5 6 -->      
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link4 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec022b2be0005c130d3b/original.jpg?1722477570" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a><a href="{{ Link5 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec020bcc5e005dc3c335/original.jpg?1722477570" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
 
-<!-- Slice 3 4 -->
+          <td valign="top" align="center" width="50%"><a href="{{ Link6 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec039d435d006ed61c04/original.jpg?1722477570" alt="" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
+  </tbody>
+</table>         
+      
+<!-- Slice 7 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link7 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec039d435d005fd669ad/original.jpg?1722477570" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+          </a></td>
+      </tr>
+  </tbody>
+</table>           
+      
+<!-- Slice 8 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link8 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec03bd405d006eb4b9d4/original.jpg?1722477571" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+          </a></td>
+      </tr>
+  </tbody>
+</table>           
+      
+<!-- Slice 9 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center">
+          <a href="{{ Link9 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec030bcc5e005dc3c336/original.jpg?1722477571" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
+          </a></td>
+      </tr>
+  </tbody>
+</table>       
+
+<!-- Slice 10 11 12 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td valign="top" align="center" width="39.16%"><a href="{{ Link3 }}?lid=30mrpd0v78rc" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0e364b1005d40cfcb/original.png?1721953775" alt="Shop Online" width="235" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link10 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec02bd405d005fb4efb4/original.jpg?1722477570" alt="Wear with the Elliot Necklace A$79.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
 
-      <td valign="top" align="center" width="60.84%"><a href="{{ Link4 }}?lid=hadsiei30y7a" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf072c078005d884c56/original.png?1721953776" alt="Find Your Nearest Store" width="365" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link11 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec022b2be0006a1238fe/original.jpg?1722477570" alt="Wear with the Ines Pillow Clutch A$129.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link12 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec032b2be0005c130d3c/original.jpg?1722477570" alt="Wear with the Ava Block Mule A$199.00" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
     </tr>
   </tbody>
 </table>
-
-<!-- Slice 5 -->
+      
+<!-- Slice 13 14 -->      
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
-    <tr>
-      <td valign="top" align="center">
-        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66a2edf0c4ca07005d610e5b/original.png?1721953775" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="We’ll let you know once we’ve reopened. Warm Regards, The Team at Witchery Chadstone">
-      </td>
-    </tr>
+      <tr>
+          <td valign="top" align="center" width="50%"><a href="{{ Link13 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec039d435d006ed61c05/original.jpg?1722477571" alt="Shop New Arrivals" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+          <td valign="top" align="center" width="50%"><a href="{{ Link14 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66aaec039d435d007cd60bfe/original.jpg?1722477571" alt="Shop New Accessories" width="300" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
   </tbody>
 </table>
 
@@ -804,3 +889,38 @@
 		<!-- End -->
 	</body>
 </html>
+
+
+<div style="display: none;">
+  <!-- T&C -->
+<table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
+  <tr>
+    <td class="left-copy-pad-8perc right-copy-pad-8perc" align="left" valign="top" style="padding: 25px 40px 25px 40px; font-size: 11px; line-height: 18px; letter-spacing: 0.0em; font-family: Helvetica, Arial,  sans-serif;  color:#000000; text-align: left;font-weight: 300;">
+      <!--<span>
+        <strong>*Terms & Conditions — tbc</strong>
+      </span><br>
+      tbc<br>
+      <br>-->
+
+      <a alias="tc 1" href="https://www.witchery.com.au?lid=t3kmc6habim1" target="_blank" style="color:#000000; text-decoration:underline;">
+        <span style="color:#000000;">www.witchery.com.au</span></a>,
+
+      <a alias="tc 2" href="https://www.witchery.com?lid=dwqpvr1pzzhq" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.com</span></a> and
+
+      <a alias="tc 3" href="https://www.witchery.co.nz?lid=j1ste7qws79z" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>, on full price Witchery items at
+      Witchery outlet stores, on
+
+      <a alias="tc 4" href="https://www.davidjones.com.au?lid=jr5xivm2p41a" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.davidjones.com.au</span></a> and
+
+      <a alias="tc 5" href="https://www.myer.com.au?lid=qno3od8pinq4" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.myer.com.au</span></a> and David Jones & Myer stores stocking
+      Witchery on Wednesday 07.02.2024 for David Jones rewards members, Witchery rewards members and Myer One members only. Spend $150, Save 20% will be available on
+
+      <a alias="tc 6" href="https://www.iconic.com.au?lid=5i36exnfa47f" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.iconic.com.au</span></a> on 08.02.2024 for Iconic
+      customers.
+
+      <a alias="tc 7" href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}" target="_blank" style="color:#000000; text-decoration:underline;">
+        <span style="color:#000000;">For full terms and conditions click here.</span></a>
+    </td>
+  </tr>
+</table>
+</div>
