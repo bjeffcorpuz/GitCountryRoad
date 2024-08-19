@@ -703,7 +703,7 @@
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
 
-  {% if ${gender} == 'Male' %}  
+  {% if ${gender} == 'male' %}  
     {% assign Link1 = 'https://countryroad.onelink.me/8pfy/77oqejzv' %}
     {% assign Link2 = 'https://countryroad.onelink.me/8pfy/twt3gxmx' %}
   {% else %}
@@ -716,7 +716,7 @@
 {% comment %} Set other countries links {% endcomment %}
   {% assign Link1 = BaseURL %}
 
-  {% if ${gender} == 'Male' %}  
+  {% if ${gender} == 'male' %}  
     {% assign Link2 = BaseURL | append: '/man-new-in/' %}
   {% else %}
     {% assign Link2 = BaseURL | append: '/woman-new-in/' %}
@@ -734,166 +734,147 @@
 *********************************************************************************************************
 -->
 
-
 <!-- Block 1 -->
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
-    <tr>
+    <tbody>
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="mso-hide:all;" alt="Country Road Logo" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="display:block; max-width: 600px; width:100%;" alt="Country Road Logo" border="0">
-            </a>
+          <a href="{{ Link1 }}?lid=ff8dvsx6amnu" {{clicktracking}}style="text-decoration: none;" target="_blank">
+            <!--[if !mso 9]><!-->
+            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+              <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="mso-hide:all;" alt="Country Road Logo" border="0">
+            </div>
+            <!--<![endif]-->
+            <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="display:block; max-width: 600px; width:100%;" alt="Country Road Logo" border="0">
+          </a>
         </td>
-    </tr>
-	</tbody>
-</table>{% if {{custom_attribute.${total_reward_balance}}} &gt; 8 %}
-<table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#fcfabc">
-  <tbody>
-    <tr>
-      <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">
-        &nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td class="body_copy_20 copy-pad" style="font-size: 24px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; line-height: 33px; color: #000000; display:block; font-weight:400; margin:0 auto; padding: 0 0 5px 0px;" valign="top" align="center">
-        <a alias="TotalReward banner" href="{{ BaseURL }}?lid=zi6r107b75fn" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
-          Spend &amp; Save ends today<sup style="font-size: 10pt;">*</sup>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="cta-link copy-pad" style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; color: #000000; line-height:28px; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
-        <a alias="TotalReward banner" href="{{ BaseURL }}?lid=t0549lrq1xfd" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
-          You have&nbsp;${{custom_attribute.${total_reward_balance}}}&nbsp;in rewards^
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">
-        &nbsp;
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-{% else %}
-<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#fcfabc">
-  <tbody>
-    <tr>
-      <td height="15" class="" style="font-size:1px; line-height:1px; height: 15px">
-        &nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td class="body_copy_20 copy-pad" style="font-size: 24px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; line-height: 33px; color: #000000; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
-        <a alias="TotalReward banner" href="{{ BaseURL }}?lid=0sapobxtvzns" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
-          Spend &amp; Save ends today<sup style="font-size: 10pt;">*</sup>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td height="15" class="" style="font-size:1px; line-height:1px; height: 15px">
-        &nbsp;
-      </td>
-    </tr>
-  </tbody>
-</table>
-{% endif %}
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
-    {% if ${gender} == 'Male' %}  
-    <tr>
+      </tr>
+    </tbody>
+  </table>{% if {{custom_attribute.${total_reward_balance}}} &gt; 8 %}
+  <table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#fcfabc">
+    <tbody>
+      <tr>
+        <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td class="body_copy_20 copy-pad" style="font-size: 24px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; line-height: 33px; color: #000000; display:block; font-weight:400; margin:0 auto; padding: 0 0 5px 0px;" valign="top" align="center">
+          <a alias="TotalReward banner" href="{{ BaseURL }}?lid=ous1pyjyugek" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
+            Spend &amp; Save ends today<sup style="font-size: 10pt;">*</sup>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td class="cta-link copy-pad" style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; color: #000000; line-height:28px; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
+          <a alias="TotalReward banner" href="{{ BaseURL }}?lid=wi17qwkj18wj" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
+            You have&nbsp;${{custom_attribute.${total_reward_balance}}}&nbsp;in rewards^
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">
+          &nbsp;
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  {% else %}
+  <table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#fcfabc">
+    <tbody>
+      <tr>
+        <td height="15" class="" style="font-size:1px; line-height:1px; height: 15px">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td class="body_copy_20 copy-pad" style="font-size: 24px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; line-height: 33px; color: #000000; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
+          <a alias="TotalReward banner" href="{{ BaseURL }}?lid=my6rlzwgojcj" target="_blank" style="text-decoration: none; color: #000000; display:block;" conversion="false">
+            Spend &amp; Save ends today<sup style="font-size: 10pt;">*</sup>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td height="15" class="" style="font-size:1px; line-height:1px; height: 15px">
+          &nbsp;
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+  <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+    <tbody>
+      {% if ${gender} == 'male' %}
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015" style="mso-hide:all;" alt="Curated for You" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015" style="display:block; max-width: 600px; width:100%;" alt="Curated for You" border="0">
-            </a>
+          <a href="{{ Link2 }}?lid=wnhr9qnsl27n" {{clicktracking}}style="text-decoration: none;" target="_blank">
+            <!--[if !mso 9]><!-->
+            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+              <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015" style="mso-hide:all;" alt="Curated for You" border="0">
+            </div>
+            <!--<![endif]-->
+            <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf6e44370064e616ff/original.jpg?1723694015" style="display:block; max-width: 600px; width:100%;" alt="Curated for You" border="0">
+          </a>
         </td>
-    </tr>
-    {% else %}
-    <tr>
+      </tr>
+      {% else %}
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016" style="mso-hide:all;" alt="Curated for You" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016" style="display:block; max-width: 600px; width:100%;" alt="Curated for You" border="0">
-            </a>
+          <a href="{{ Link2 }}?lid=v6ks1iy0axdj" {{clicktracking}}style="text-decoration: none;" target="_blank">
+            <!--[if !mso 9]><!-->
+            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+              <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016" style="mso-hide:all;" alt="Curated for You" border="0">
+            </div>
+            <!--<![endif]-->
+            <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bc172b2b70065e88705/original.png?1723694016" style="display:block; max-width: 600px; width:100%;" alt="Curated for You" border="0">
+          </a>
         </td>
-    </tr>    
-    {% endif %}
-    {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-    <tr>
+      </tr>
+      {% endif %}
+      {% if ${country} == 'Australia' or ${country} == 'AU' %}
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014" style="mso-hide:all;" alt="Explore your personalised edit and shop the offer in store, online and via the app." border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Explore your personalised edit and shop the offer in store, online and via the app." border="0">
-            
+  
+          <!--[if !mso 9]><!-->
+          <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014" style="mso-hide:all;" alt="Explore your personalised edit and shop the offer in store, online and via the app." border="0">
+          </div>
+          <!--<![endif]-->
+          <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb006c300741edbcb/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Explore your personalised edit and shop the offer in store, online and via the app." border="0">
+  
         </td>
-    </tr>
-    {% else %}
-    <tr>
+      </tr>
+      {% else %}
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014" style="mso-hide:all;" alt="Explore your personalised edit and shop the offer in store and online." border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Explore your personalised edit and shop the offer in store and online." border="0">
-            
+  
+          <!--[if !mso 9]><!-->
+          <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014" style="mso-hide:all;" alt="Explore your personalised edit and shop the offer in store and online." border="0">
+          </div>
+          <!--<![endif]-->
+          <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbee4dec40064664c4f/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Explore your personalised edit and shop the offer in store and online." border="0">
+  
         </td>
-    </tr>
-    {% endif %}
-    <tr>
+      </tr>
+      {% endif %}
+      <tr>
         <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014" style="mso-hide:all;" alt="Shop new in" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Shop new in" border="0">
-            </a>
+          <a href="{{ Link2 }}?lid=d4rgsj5m75lz" {{clicktracking}}style="text-decoration: none;" target="_blank">
+            <!--[if !mso 9]><!-->
+            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+              <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014" style="mso-hide:all;" alt="Shop new in" border="0">
+            </div>
+            <!--<![endif]-->
+            <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbeb49eb7007492d7ed/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Shop new in" border="0">
+          </a>
         </td>
-    </tr>
-	</tbody>
-</table>
-<!-- end of Block 1 -->        
-        
-<!-- Block 2 -->
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
-    <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf17efaf0064004dda/original.png?1723694014" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf17efaf0064004dda/original.png?1723694014') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf17efaf0064004dda/original.png?1723694014" style="mso-hide:all;" alt="Spend &amp; Save" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66bd7bbf17efaf0064004dda/original.png?1723694014" style="display:block; max-width: 600px; width:100%;" alt="Spend &amp; Save" border="0">
-            
-        </td>
-    </tr>
-	</tbody>
-</table>
-<!-- end of Block 2 -->
+      </tr>
+    </tbody>
+  </table>
+  <!-- end of Block 1 -->
+
 
 <!--
 ********************************************************************************************************* 
@@ -923,17 +904,11 @@ $(document).ready(function(){
 //MW NZ with Balance
 // a1l900000071fmyeaa
 
-//male au rewards
-// richee_xiong@yahoo.com.au
-
-//male NZ no rewards
-// aimeanderson@hotmail.com
+//male AU no rewards
+// jackk.m@hotmail.com
 
 // WW AU with rewards
 // hyoleeamy@naver.com
-
-// ww nz no rewards
-// albeka@gmail.com
 
 //#54555c
 // NSW WW
