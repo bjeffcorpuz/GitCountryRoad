@@ -1,0 +1,105 @@
+<!-- {% assign dressipi_send_id = 'now' | date: "%d%m%Y" %}
+   {% assign dressipi_theme_id = "138" %}
+   
+   
+   {% assign dressipi_baseurl = "https://au.dressipi-emails.com/themed/" %}
+   
+   {% assign dressipi_namespace_id = "1f018f59-4996-47a5-a258-3c2f71dadfa0" %}
+   -->
+   {% comment %}
+   WY Dressipi BAU Recommendations - 2x3 grid
+   {% endcomment %}
+   <style type="text/css">
+     @media only screen and (max-width:640px) {
+       .height-auto-mobile {
+         height: auto !important;
+       }
+     }
+   </style>
+   <table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+     <tr>
+       <td background="https://braze-images.com/appboy/communication/assets/image_assets/images/65f273c1af2f390058bbeade/original.png?1710388161" bgcolor="#ffffff" class="full-width" valign="top" width="600">
+         <!--[if gte mso 9]>
+               <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;">
+                  <v:fill type="tile" src="https://braze-images.com/appboy/communication/assets/image_assets/images/65f273c1af2f390058bbeade/original.png?1710388161" color="#ffffff" />
+                  <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+                     <![endif]-->
+         <div>
+           <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+             <tr>
+               <td align="center">
+                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width">
+                   <tr>
+                     <td valign="top">
+                       <a alias="%%=Concat('Dressipi_1_',@Rec1Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/1{{url_params_enc}}?" target="_blank">
+                         <img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/1" style="width: 100%;height:535px;" width="295"> </a>
+                     </td>
+                     <td class="w-5" style="width: 10px; font-size: 1px; line-height: 1px;" width="10">
+                       &nbsp;
+                     </td>
+                     <td valign="top">
+                       <a alias="%%=Concat('Dressipi_2_',@Rec2Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/2{{url_params_enc}}?" target="_blank"><img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/2" style="width: 100%;height:535px;" width="295"> </a>
+                     </td>
+                   </tr>
+                 </table>
+                 <!--Spacer-->
+                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+                   <tr>
+                     <td height="20" style="line-height: 10px; font-size: 10px; height: 20px;">
+                       &nbsp;
+                     </td>
+                   </tr>
+                 </table>
+                 <!--//Spacer--><!-- //Static Image -->
+                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width">
+                   <tr>
+                     <td valign="top">
+                       <a alias="%%=Concat('Dressipi_3_',@Rec3Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/3{{url_params_enc}}?" target="_blank"><img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/3" style="width: 100%;height:535px;" width="295"> </a>
+                     </td>
+                     <td class="w-5" style="width: 10px; font-size: 1px; line-height: 1px;" width="10">
+                       &nbsp;
+                     </td>
+                     <td valign="top">
+                       <a alias="%%=Concat('Dressipi_4_',@Rec4Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/4{{url_params_enc}}?" target="_blank"><img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/4" style="width: 100%;height:535px;" width="295"> </a>
+                     </td>
+                   </tr>
+                 </table>
+                 <!--Spacer-->
+                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+                   <tr>
+                     <td height="20" style="line-height: 10px; font-size: 10px; height: 20px;">
+                       &nbsp;
+                     </td>
+                   </tr>
+                 </table>
+                 <!--//Spacer-->
+                 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+                   <tr>
+                     <td align="center">
+                       <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width">
+                         <tr>
+                           <td valign="top">
+                             <a alias="%%=Concat('Dressipi_5_',@Rec5Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/5{{url_params_enc}}?" target="_blank"><img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/5" style="width: 100%;height:535px;" width="295"> </a>
+                           </td>
+                           <td class="w-5" style="width: 10px; font-size: 1px; line-height: 1px;" width="10">
+                             &nbsp;
+                           </td>
+                           <td valign="top">
+                             <a alias="%%=Concat('Dressipi_6_',@Rec6Title)=%%" href="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/link/slot/6{{url_params_enc}}?" target="_blank"><img class="full-width height-auto-mobile" height="535" src="{{dressipi_baseurl}}{{dressipi_namespace_id}}/{{dressipi_theme_id}}/{{dressipi_send_id}}/{{custom_attribute.${card_number}}}/image/slot/6" style="width: 100%;height:535px;" width="295"> </a>
+                           </td>
+                         </tr>
+                       </table>
+                     </td>
+                   </tr>
+                 </table>
+               </td>
+             </tr>
+           </table>
+         </div>
+         <!--[if gte mso 9]>
+                  </v:textbox>
+               </v:rect>
+               <![endif]-->
+       </td>
+     </tr>
+   </table>

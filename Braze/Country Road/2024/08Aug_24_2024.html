@@ -701,9 +701,19 @@
 <!--
 {% assign clicktracking = 'clicktracking=off ' %}
 
+{% if ${country} == 'Australia' or ${country} == 'AU' %}  
+
+    {% assign Link1 = 'https://countryroad.onelink.me/8pfy/g5yrwu8t' %}
+
+{% else %}
+
+{% comment %} Set other countries links {% endcomment %}
+    {% assign Link1 = BaseURL %}
+
+{% endif %}
+
 {% comment %} No Deep Links {% endcomment %}
-    {% assign Link1 = BaseURL | append: '/our-impact-partnerships-oritain/' %}
-    {% assign Link2 = BaseURL | append: '/search?q=verified' %}
+    {% assign Link2 = BaseURL | append: '/our-impact-partnerships-red-cross/' %}
 
 -->
 
@@ -717,105 +727,292 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
 	<tbody>
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67007533f596/original.jpg?1724894492" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67007533f596/original.jpg?1724894492') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
             <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67007533f596/original.jpg?1724894492" style="mso-hide:all;" alt="Country Road x Oritain" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="mso-hide:all;" alt="Country Road Logo" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67007533f596/original.jpg?1724894492" style="display:block; max-width: 600px; width:100%;" alt="Country Road x Oritain" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6684c77149c170005aacc9f9/original.jpg?1719977841" style="display:block; max-width: 600px; width:100%;" alt="Country Road Logo" border="0">
             </a>
         </td>
     </tr>
-
+    {% if ${country} == 'Australia' or ${country} == 'AU' %}  
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e9/original.gif?1724894494" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e9/original.gif?1724894494') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e9/original.gif?1724894494" style="mso-hide:all;" alt="Hero GIF" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="800" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e9/original.gif?1724894494" style="display:block; max-width: 600px; width:100%; height: auto" alt="Hero GIF" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500745427a2/original.png?1724894492" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500745427a2/original.png?1724894492') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b7978f3c0065ac32e8/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b7978f3c0065ac32e8/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
             
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500745427a2/original.png?1724894492" style="mso-hide:all;" alt="Verified Australian Fibres" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b7978f3c0065ac32e8/original.png?1724241079" style="mso-hide:all;" alt="A new life for your pre-loved wardrobe" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500745427a2/original.png?1724894492" style="display:block; max-width: 600px; width:100%;" alt="Verified Australian Fibres" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b7978f3c0065ac32e8/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="A new life for your pre-loved wardrobe" border="0">
             
         </td>
     </tr>
-
+    {% else %}
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67006633f6ee/original.png?1724894493" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67006633f6ee/original.png?1724894493') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d84dfdcc1f0064c0ca92/original.png?1724241997" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d84dfdcc1f0064c0ca92/original.png?1724241997') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67006633f6ee/original.png?1724894493" style="mso-hide:all;" alt="Discover our partnership" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d84dfdcc1f0064c0ca92/original.png?1724241997" style="mso-hide:all;" alt="A new life for your pre-loved wardrobe" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67006633f6ee/original.png?1724894493" style="display:block; max-width: 600px; width:100%;" alt="Discover our partnership" border="0">
-            </a>
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d84dfdcc1f0064c0ca92/original.png?1724241997" style="display:block; max-width: 600px; width:100%;" alt="A new life for your pre-loved wardrobe" border="0">
+            
         </td>
-    </tr>
-
+    </tr>    
+    {% endif %}
+    {% if ${country} == 'Australia' or ${country} == 'AU' %}  
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e8/original.gif?1724894494" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e8/original.gif?1724894494') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b3/original.gif?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b3/original.gif?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
             <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e8/original.gif?1724894494" style="mso-hide:all;" alt="From spring 24, we are expanding our verified australian fibre range to include key designs across woman, man, child and home" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b3/original.gif?1724241080" style="mso-hide:all;" alt="Gif1" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="785" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ed4b53b0065d079e8/original.gif?1724894494" style="display:block; max-width: 600px; width:100%; height: auto" alt="From spring 24, we are expanding our verified australian fibre range to include key designs across woman, man, child and home" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b3/original.gif?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Gif1" border="0">
             </a>
         </td>
     </tr>
-
+    {% else %}
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67008433f5c6/original.png?1724894493" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67008433f5c6/original.png?1724894493') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b92a404500630439b4/original.gif?1724241081" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b92a404500630439b4/original.gif?1724241081') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
             <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67008433f5c6/original.png?1724894493" style="mso-hide:all;" alt="Shop the range" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b92a404500630439b4/original.gif?1724241081" style="mso-hide:all;" alt="Gif1" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1da19e67008433f5c6/original.png?1724894493" style="display:block; max-width: 600px; width:100%;" alt="Shop the range" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b92a404500630439b4/original.gif?1724241081" style="display:block; max-width: 600px; width:100%;" alt="Gif1" border="0">
             </a>
         </td>
     </tr>
-
+    {% endif %}
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
     <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ea19e67006633f6ef/original.gif?1724894494" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ea19e67006633f6ef/original.gif?1724894494') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
-            <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ea19e67006633f6ef/original.gif?1724894494" style="mso-hide:all;" alt="Oritain global testing centre" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="800" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1ea19e67006633f6ef/original.gif?1724894494" style="display:block; max-width: 600px; width:100%;height: auto" alt="Oritain global testing centre" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500665445bc/original.png?1724894492" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500665445bc/original.png?1724894492') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b72a404500630439b1/original.jpg?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b72a404500630439b1/original.jpg?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
             
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500665445bc/original.png?1724894492" style="mso-hide:all;" alt="spacer" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b72a404500630439b1/original.jpg?1724241079" style="mso-hide:all;" alt="Fashion Trade" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cfcd1d2e515500665445bc/original.png?1724894492" style="display:block; max-width: 600px; width:100%;" alt="spacer" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b72a404500630439b1/original.jpg?1724241079" style="display:block; max-width: 600px; width:100%;" alt="Fashion Trade" border="0">
+            
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00065f49a6c/original.jpg?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00065f49a6c/original.jpg?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00065f49a6c/original.jpg?1724241080" style="mso-hide:all;" alt="Fashion Trade" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00065f49a6c/original.jpg?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Fashion Trade" border="0">
+            
+        </td>
+    </tr>    
+    {% endif %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b785a1b3006579885b/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b785a1b3006579885b/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b785a1b3006579885b/original.png?1724241079" style="mso-hide:all;" alt="Learn more" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b785a1b3006579885b/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="Learn more" border="0">
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a6008f003a13/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a6008f003a13/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a6008f003a13/original.png?1724241079" style="mso-hide:all;" alt="How to Donate 1" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a6008f003a13/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="How to Donate 1" border="0">
+            
+        </td>
+    </tr>
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b300737981b5/original.gif?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b300737981b5/original.gif?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b300737981b5/original.gif?1724241080" style="mso-hide:all;" alt="Gif2" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b300737981b5/original.gif?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Gif2" border="0">
+            </a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b30082798036/original.gif?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b30082798036/original.gif?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b30082798036/original.gif?1724241080" style="mso-hide:all;" alt="Gif2" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b885a1b30082798036/original.gif?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Gif2" border="0">
+            </a>
+        </td>
+    </tr>    
+    {% endif %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60064005917/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60064005917/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60064005917/original.png?1724241079" style="mso-hide:all;" alt="How to Donate 2-3" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60064005917/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="How to Donate 2-3" border="0">
+            
+        </td>
+    </tr>
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b83b27a60064005918/original.gif?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b83b27a60064005918/original.gif?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b83b27a60064005918/original.gif?1724241080" style="mso-hide:all;" alt="Gif3" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b83b27a60064005918/original.gif?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Gif3" border="0">
+            </a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b985a1b30090797ff3/original.gif?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b985a1b30090797ff3/original.gif?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b985a1b30090797ff3/original.gif?1724241080" style="mso-hide:all;" alt="Gif3" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b985a1b30090797ff3/original.gif?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Gif3" border="0">
+            </a>
+        </td>
+    </tr>    
+    {% endif %}
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60072003f8d/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60072003f8d/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60072003f8d/original.png?1724241079" style="mso-hide:all;" alt="The Impact" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b73b27a60072003f8d/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="The Impact" border="0">
+            
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="mso-hide:all;" alt="Your donations will be distributed to Red Cross Shops" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Your donations will be distributed to Red Cross Shops" border="0">
+            
+        </td>
+    </tr>    
+    {% endif %}
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00073f4745d/original.gif?1724241081" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00073f4745d/original.gif?1724241081') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00073f4745d/original.gif?1724241081" style="mso-hide:all;" alt="Gif4" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00073f4745d/original.gif?1724241081" style="display:block; max-width: 600px; width:100%;" alt="Gif4" border="0">
+            </a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00065f49a6d/original.gif?1724241081" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00065f49a6d/original.gif?1724241081') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00065f49a6d/original.gif?1724241081" style="mso-hide:all;" alt="Gif4" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b9be02a00065f49a6d/original.gif?1724241081" style="display:block; max-width: 600px; width:100%;" alt="Gif4" border="0">
+            </a>
+        </td>
+    </tr>
+    {% endif %}
+    {% if ${country} == 'Australia' or ${country} == 'AU' %} 
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="mso-hide:all;" alt="Your donations will be distributed to Red Cross Shops" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b82a404500630439b2/original.png?1724241080" style="display:block; max-width: 600px; width:100%;" alt="Your donations will be distributed to Red Cross Shops" border="0">
+            
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00073f4745c/original.png?1724241079" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00073f4745c/original.png?1724241079') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00073f4745c/original.png?1724241079" style="mso-hide:all;" alt="spacer" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5d4b8be02a00073f4745c/original.png?1724241079" style="display:block; max-width: 600px; width:100%;" alt="spacer" border="0">
+            
+        </td>
+    </tr>    
+    {% endif %}
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f85a1b30065798feb/original.png?1724242783" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f85a1b30065798feb/original.png?1724242783') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration: none;" target="_blank">
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f85a1b30065798feb/original.png?1724242783" style="mso-hide:all;" alt="Learn More" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f85a1b30065798feb/original.png?1724242783" style="display:block; max-width: 600px; width:100%;" alt="Learn More" border="0">
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" valign="top" background="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f3b27a60064005fe8/original.png?1724242783" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f3b27a60064005fe8/original.png?1724242783') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px;">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f3b27a60064005fe8/original.png?1724242783" style="mso-hide:all;" alt="spacer" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66c5db5f3b27a60064005fe8/original.png?1724242783" style="display:block; max-width: 600px; width:100%;" alt="spacer" border="0">
             
         </td>
     </tr>
@@ -920,22 +1117,6 @@ $(document).ready(function(){
     </tr>
    
 </table>
-
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#edeef0" style="display: none;">
-  
-    <tr>
-       <td align="center" style="font-size: 0px; line-height: 0px;" valign="middle">
-         <a clicktracking=off href="{{ Link01 }}?" style="text-decoration: none; color: #000000;" target="_blank">
-             <!--[if !mso 9]><!--> 
-             <div class="mobile-show" style="display:none; width:0px; overflow: hidden; max-height: 0px; mso-hide: all; line-height:0;">
-                <img alt="Countryroad" border="0" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cd9d7017160c00743cb8f6/original.jpg?1724751216" style="mso-hide:all;" width="100%">
-             </div>
-             <!--<![endif]--> <img alt="Countryroad" border="0" class="mobile-hide" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66cd9d7017160c00743cb8f6/original.jpg?1724751216" style="display:block;" width="600"> 
-          </a>
-       </td>
-    </tr>
-   
-   </table>
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#f9f9f9" style="display: none;">
   
