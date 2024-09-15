@@ -715,24 +715,24 @@
 	<!--
 	{% assign clicktracking = 'clicktracking=off ' %}
 
-	{% if ${country} == 'Australia' or ${country} == 'AU' %}
+	{% if ${country} == 'AU' %}  
 
-		{% assign Link1 = 'https://app.witchery.com.au/BXdC/oyifwttc' %}
-		{% assign Link2 = 'https://app.witchery.com.au/BXdC/oyifwttc'  %}
-		{% assign Link3 = 'https://app.witchery.com.au/BXdC/g6pvqti1'  %}
+		{% assign Link1 = 'https://app.witchery.com.au/BXdC/hcvfwota' %}
+		{% assign Link2 = 'https://app.witchery.com.au/BXdC/h4bzkpmx' %}
+		{% assign Link3 = 'https://app.witchery.com.au/BXdC/eidg6pc2' %}
+		{% assign Link4 = 'https://app.witchery.com.au/BXdC/3c4ulwhg' %}
+		{% assign Link5 = 'https://app.witchery.com.au/BXdC/hcvfwota' %}
 
 	{% else %}
 
 		{% comment %} Set other countries links {% endcomment %}
 		{% assign Link1 = BaseURL | append: '/new-in/' %}
-		{% assign Link2 = BaseURL | append: '/new-in/' %}
-		{% assign Link3 = BaseURL | append: '/sale/' %}
+		{% assign Link2 = BaseURL | append: '/clothing-dresses/' %}
+		{% assign Link3 = BaseURL | append: '/clothing-shirts/' %}
+		{% assign Link4 = BaseURL | append: '/clothing-pants/' %}
+		{% assign Link5 = BaseURL | append: '/new-in/' %}
 
 	{% endif %}
-
-		{% comment %} No Deep Links {% endcomment %}
-
-
 	-->
 
 <!-- Slice 1 -->
@@ -741,22 +741,44 @@
       <tr>
           <td valign="top" align="center">
           <a href="{{ Link1 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
-          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66e3b32a85dd33007419bf1b/original.jpg?1726198570" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Member Online Preview:  30% Off Everything  Online Now &amp; In-Store Tomorrow, 17.09.24. T&amp;Cs Apply.">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdda8f8c70066171ff0/original.jpg?1725840349" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Starts Now: 30% Off Dresses, Shirts &amp; Pants* Full Price only. Excludes OCRF White Shirts. Online now and In-Store tomorrow, 10.09.24. T&amp;Cs Apply.">
           </a></td>
       </tr>
   </tbody>
 </table>           
+
+<!-- Slice 2 3 4 -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdd99195a00642beb91/original.jpg?1725840348" alt="Shop Dresses" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdddba277006602b060/original.jpg?1725840348" alt="Shop Shirts" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ Link4 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdd79f7d00075f1fb39/original.jpg?1725840348" alt="Shop Pants" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+    </tr>
+  </tbody>
+</table>
       
-<!-- Slice 2 3 -->      
+<!-- Slice 5 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
       <tr>
-          <td valign="top" align="center" width="37.5%"><a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66e3b32a94a2b80064a2aae1/original.jpg?1726198570" alt="Shop New" width="225" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-          <td valign="top" align="center" width="62.5%"><a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66e3b32a85dd33006519c410/original.jpg?1726198570" alt="Shop Sale" width="375" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+          <td valign="top" align="center">
+          <a href="{{ Link5 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdedba277006602b061/original.gif?1725840350" width="600" height="855" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important; height:auto" border="0" alt="GIF Image">
+          </a></td>
       </tr>
+      <tr>
+        <td valign="top" align="center">
+        <a href="{{ Link5 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
+        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bddd159e40064277d20/original.png?1725840349" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="FIRST LIGHT – Drop 2. Introducing Drop 2 of our latest collection, First Light. Discover our newest arrivals cut from tactile fabrications: faux leather, silk organza, Turkish crepe and elevated lace. Fresh, sorbet hues fall away into a palette of shadows - perfect for after-dark dressing. These elevated styles are slated to become new favourites. Shop Now">
+        </a></td>
+    </tr>
   </tbody>
-</table>
+</table>           
+
+      
 
 
 <!-- T&C -->
@@ -764,13 +786,19 @@
   <tr>
     <td class="left-copy-pad-8perc right-copy-pad-8perc" align="left" valign="top" style="padding: 25px 40px 25px 40px; font-size: 11px; line-height: 18px; letter-spacing: 0.0em; font-family: Helvetica, Arial,  sans-serif;  color:#000000; text-align: left;font-weight: 300;">
       <span>
-         <strong>*Terms & Conditions — 30% Off Everything</strong>
+         <strong>*Terms &amp; Conditions — 30% Off Dresses, Shirts and Pants</strong>
        </span><br>
-       30% Off Everything is available for preview to Witchery Rewards Members on all Witchery merchandise, excluding Limited Edition on the Witchery app and online at <a clicktracking=off href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>, <a clicktracking=off href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a> and <a clicktracking=off href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a> from 6pm (AEST) Monday 16.09.24. 30% Off Everything is available on all Witchery merchandise, excluding Limited Edition on the Witchery app, online at <a clicktracking=off href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>, <a clicktracking=off href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a>, <a clicktracking=off href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>, in-stores, at Witchery outlet stores, David Jones & Myer stores stocking Witchery, <a clicktracking=off href="https://www.iconic.com.au/?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.iconic.com.au</span></a>, <a clicktracking=off href="https://www.davidjones.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.davidjones.com.au</span></a> and <a clicktracking=off href="https://www.myer.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.myer.com.au</span></a> from 17.09.2024. This offer will end in all channels at 11:59pm (AEST) on Sunday 22.09.2024. <a clicktracking=off href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?lid=ezli02il6mo8" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">For full terms and conditions click here.</span></a>
+       This offer is available for a limited time only on full price dresses, shirts and pants, excluding OCRF White Shirts and Limited Edition, online and on the Witchery App from 6:00pm (AEST) Monday, 9th September 2024. This offer is available on full price dresses, shirts and pants, excluding OCRF White Shirts, online, on the Witchery App, in Witchery stores, at
+      <a href="https://www.witchery.com.au?lid=8w7nnf4p4kdn" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>,
+
+      <a href="https://www.witchery.com?lid=eytbptj2i61z" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a>,
+
+      <a href="https://www.witchery.co.nz?lid=o9wbr270r3pu" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>, <a href="https://www.theiconic.com.au?lid=xzl27e2mp2vq" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.theiconic.com.au</span></a>, <a href="https://www.davidjones.com.au?lid=ici5g19z5ynm" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.davidjones.com.au</span></a>, <a href="https://www.myer.com.au?lid=wvjqn5n880li" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.myer.com.au</span></a>, marketplace.qantas.com/au and Myer & David Jones stores stocking Witchery from Tuesday, 10th September 2024. Discount will be applied automatically to the ticketed price at checkout in store and online.
+      <a href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?lid=ezli02il6mo8" target="_blank" style="color:#000000; text-decoration:underline;">
+        <span style="color:#000000;">For full terms and conditions click here.</span></a>
     </td>
   </tr>
 </table>
-
       
 <!--
 ********************************************************************************************************* 
@@ -799,32 +827,6 @@
 
 
 <div style="display: none;">
-
-  <a clicktracking=off href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>
-  <a clicktracking=off href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a>
-  <a clicktracking=off href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>
-  <a clicktracking=off href="https://www.theiconic.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.theiconic.com.au</span></a>
-  <a clicktracking=off href="https://www.davidjones.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.davidjones.com.au</span></a>
-  <a clicktracking=off href="https://www.myer.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.myer.com.au</span></a>
-  <a clicktracking=off href="https://marketplace.qantas.com/au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">marketplace.qantas.com/au</span></a>
-  <a clicktracking=off href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">For full terms and conditions click here.</span></a>
-
-  <a clicktracking=off href="https://www.iconic.com.au/?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.iconic.com.au</span></a>
-
-<!-- 3 column -->
-<!-- Slice 2 3 4 -->
-<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdd99195a00642beb91/original.jpg?1725840348" alt="Shop Dresses" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdddba277006602b060/original.jpg?1725840348" alt="Shop Shirts" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link4 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/66de3bdd79f7d00075f1fb39/original.jpg?1725840348" alt="Shop Pants" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-    </tr>
-  </tbody>
-</table>
-
   <!-- T&C -->
 <table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
   <tr>
