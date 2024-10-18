@@ -716,22 +716,30 @@
 {% if ${country} == 'Australia' or ${country} == 'AU' %}
 *********************************************************************************************************
 -->
+
 {% comment %} Deep link code {% endcomment %}
-<!--
-{% assign clicktracking = 'clicktracking=off ' %}
+	<!--
+	{% assign clicktracking = 'clicktracking=off ' %}
 
-{% if ${country} == 'Australia' or ${country} == 'AU' %}
+	{% if ${country} == 'Australia' or ${country} == 'AU' %}
 
-  {% assign Link1 = 'https://app.witchery.com.au/BXdC/990xds7n' %}
+		{% assign Link1 = 'https://app.witchery.com.au/BXdC/zf2gxmh4' %}
+		{% assign Link2 = 'https://app.witchery.com.au/BXdC/zf2gxmh4'  %}
+		{% assign Link3 = 'https://app.witchery.com.au/BXdC/9xvhcehk'  %}
 
-{% else %}
+	{% else %}
 
-  {% comment %} Set other countries links {% endcomment %}
-  {% assign Link1 = BaseURL | append: '/new-in/' %}
+		{% comment %} Set other countries links {% endcomment %}
+		{% assign Link1 = BaseURL | append: '/new-in/' %}
+		{% assign Link2 = BaseURL | append: '/new-in/' %}
+		{% assign Link3 = BaseURL | append: '/sale/' %}
 
-{% endif %}
+	{% endif %}
 
--->
+		{% comment %} No Deep Links {% endcomment %}
+
+
+	-->
     
 <!-- Slice 1 -->
 <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -739,11 +747,40 @@
       <tr>
           <td valign="top" align="center">
           <a href="{{ Link1 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;">
-          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6711d62639e4c90075795aa3/original.jpg?1729222182" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="HIGH CONTRAST – November Drop 1 2024. Introducing High Contrast: a vibrant celebration of summer’s energy with a bold colour palette. Discover a collection featuring powerful tangerine red juxtaposed against fresh white and grounding neutrals. The interplay of high contrast colours brings a bold dynamism for the holiday season ahead. Dive into the heatwave with pieces that exude high energy and effortless style. Shop New">
+          <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/670c9333fbe1dc0072b6b1a8/original.jpg?1728877363" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="Member Online Preview | 20% Off Everything. In-Store tomorrow, 15.10.24. Ends 20.10.24. T&amp;Cs Apply.">
           </a></td>
       </tr>
   </tbody>
+</table>           
+      
+<!-- Slice 2 3 -->      
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+          <td valign="top" align="center" width="33.33%"><a href="{{ Link2 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/670c9333a6f68d00658ac763/original.jpg?1728877363" alt="Shop New" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+          <td valign="top" align="center" width="66.67%"><a href="{{ Link3 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/670c9333fbe1dc0064b6f3b2/original.jpg?1728877363" alt="Shop Sale" width="400" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+      </tr>
+  </tbody>
 </table>
+
+
+  <!-- T&C -->
+  <table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
+    <tr>
+      <td class="left-copy-pad-8perc right-copy-pad-8perc" align="left" valign="top" style="padding: 25px 40px 25px 40px; font-size: 11px; line-height: 18px; letter-spacing: 0.0em; font-family: Helvetica, Arial,  sans-serif;  color:#000000; text-align: left;font-weight: 300;">
+        <span>
+          <strong>*Terms & Conditions — 20% Off Everything</strong>
+        </span><br><br>
+
+        20% Off Everything is available for preview to Witchery Rewards Members on all Witchery full price and clearance merchandise on the Witchery App and online at <a clicktracking=off href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>, <a clicktracking=off href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a> and <a clicktracking=off href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>, from 6:00pm (AEST) Monday 14.10.24. 20% Off Everything is available on all full price and clearance Witchery merchandise from Tuesday 15.10.24 in-store, on the Witchery App and online at <a clicktracking=off href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>, <a clicktracking=off href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a>, <a clicktracking=off href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a> and on full price and clearance Witchery items at Witchery outlet stores. This offer will be live from Wednesday 16.10.2 at David Jones & Myer stores, <a clicktracking=off href="https://www.iconic.com.au/?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.iconic.com.au</span></a>, <a clicktracking=off href="https://www.davidjones.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.davidjones.com.au</span></a> and <a clicktracking=off href="https://www.myer.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.myer.com.au</span></a>. Offer ends at 11:59pm (AEST) Sunday 20.10.24.
+  
+        <a href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}" target="_blank" style="color:#000000; text-decoration:underline;">
+          <span style="color:#000000;">For full terms and conditions click here.</span></a>
+      </td>
+    </tr>
+  </table>
+
       
 <!--
 ********************************************************************************************************* 
@@ -783,7 +820,6 @@
   <a clicktracking=off href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">For full terms and conditions click here.</span></a>
 
   <a clicktracking=off href="https://www.iconic.com.au/?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.iconic.com.au</span></a>
-  <span style="text-decoration: none; color:#000000">ww&zwnj;w.my&zwnj;e&zwnj;r.&zwnj;co&zwnj;m.a&zwnj;u</span>
 
 <!-- 3 column -->
 <!-- Slice 2 3 4 -->
