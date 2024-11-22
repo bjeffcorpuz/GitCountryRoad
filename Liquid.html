@@ -1,0 +1,125 @@
+Liquid
+always enclose by {{}} for field and {% %} for coding
+
+check this link 
+
+https://shopify.github.io/liquid/basics/introduction/
+
+https://shopify.dev/docs/api/liquid/filters/sum (better)
+
+BRAZE LIQUID DOCUMENTATION
+https://www.braze.com/docs/user_guide/personalization_and_dynamic_content/liquid/using_liquid
+
+=========================================================================
+
+Output fieldname
+
+{{${First_Name}}}
+
+=========================================================================
+
+Capitalize First letter
+
+{{${First_Name} | capitalize}}
+
+=========================================================================
+
+If fieldname value is empty, return default value
+
+{{${First_Name} | capitalize | default: 'Customer' }}
+
+=========================================================================
+
+Standard IF ELSE with fieldnames
+
+{% if {{${First_Name}}} %}
+//True
+{% else %}
+//default
+{% endif %}
+
+=========================================================================
+
+ANOTHER SAMPLE with "==" and ELSEIF
+
+{% if {{${First_Name}}} == "Jeff" %}
+//Condition 1
+{% elseif {{${First_Name}}} == "Brandon"  %}
+//Condition 2
+{% else %}
+//default
+{% endif %}
+
+=========================================================================
+
+Assigning variable
+
+{% assign variable1 = "Hello Word"}
+
+=========================================================================
+
+Arrays in Liquid
+
+<!-- if site.users = "Tobi", "Laura", "Tetsuro", "Adam" -->
+{% for user in site.users %}
+  {{ user }}
+{% endfor %}
+
+=========================================================================
+
+Specific Item in Arrays
+
+<!-- if site.users = "Tobi", "Laura", "Tetsuro", "Adam" -->
+{{ site.users[0] }} // output Tobi
+{{ site.users[1] }} // output Laura
+{{ site.users[-1] }} // Adam
+
+
+"0 \#F7FAFD 4 100000 lumm=5000 lumo=95000\,100000 \#FFFFFF 0 100000\,100000 \#B5D2EC 4 100000 lumm=45000 lumo=55000\,100000 \#CEE1F2 4 100000 lumm=30000 lumo=70000"
+
+
+
+email Templates
+https://reallygoodemails.com/emails/craft-is-better-than-ever
+
+
+https://www.figma.com/design/bBI1CH6lIzoZV8JDcH3NW2/%F0%9F%92%8C-Marka-Email-Generator-[playground]-(Community)?node-id=439-2372&t=XRsuyqW9NJw38cB5-0
+
+
+<!--[if false]-->
+<tr>
+  <td align="center" style="font-size: 0;">
+    <!-- fix for gmail not aligning middle -->
+   <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/668baac76d050d0065855a74/original.png?1720429255" alt="" style="width: 100%; max-width: 600px; border: 0; height: auto" width="600" height="auto" border="0">
+  </td>
+</tr>
+<!--[endif]-->
+
+//to do
+
+
+brandon@ignitedigital.com.au
+KellyS@witchery.com.au
+annie.consiglio@witchery.com.au
+
+Lisa.Tran@witchery.com.au
+annie.consiglio@witchery.com.au
+brandon@ignitedigital.com.au
+
+ONLY AU CR if same with nz
+brandon@ignitedigital.com.au
+hayden.baidawi@countryroad.com.au
+
+brandon@ignitedigital.com.au
+Simon.Westwood@countryroadgroup.com.au
+
+brandon@ignitedigital.com.au
+jessicam@mimco.com.au
+haley.battersby@mimco.com.au
+
+
+RE: CR 30.10.24 BRIEF// WW: Stylebook Launch eDM
+
+
+s224wk12C
+WK12FY25TAF30CONTINUES
