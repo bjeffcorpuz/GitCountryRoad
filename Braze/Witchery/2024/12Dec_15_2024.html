@@ -691,47 +691,6 @@
                         </style>
 
                         <!-- your custom CSS here -->
-                        {{ head }}
-                        <!-- Video css -->
-                        <style type="text/css">
-                          .video-wrapper {display:none !important;}
-                          @media (-webkit-min-device-pixel-ratio: 0) 
-                          {	
-                          .video-wrapper { display:block!important; }
-                          .video-fallback { display:none!important; }
-                          }
-                          @supports (-webkit-overflow-scrolling:touch) and (color:#ffffffff) {
-                          div[class^=video-wrapper] { display:block!important; }
-                          div[class^=video-fallback] { display:none!important; }
-                          }
-                          #MessageViewBody .video-wrapper { display:block!important; }
-                          #MessageViewBody .video-fallback { display:none!important; }
-                          @media only screen and (max-width:640px)
-                          {
-                          .video-wrapper{
-                          width: 100% !important;
-                          height: auto !important;
-                          }
-                          .video-wrapper video{
-                          width: 100% !important;		
-                          height: auto !important;
-                          /*          height:calc(100vw * (16/9)) !important; */
-                          }	
-                          }
-                          @media only screen and (max-width:640px), (min-device-width: 320px) and (max-device-width: 1112px) and (-webkit-min-device-pixel-ratio: 0)
-                          {
-                          .video-wrapper video{
-                          background:url('https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f82e81b7b0065ea9045/original.jpg?1733963649') !important;
-                          background-repeat: no-repeat !important;
-                          background-size: 100%!important;
-                          object-fit: cover;
-                          }
-                          }
-                          @media yahoo {
-                          .video-fallback { display:block !important; }
-                          }
-                       </style>
-                       {{ close }}
                       </div>
                     </td>
                   </tr>
@@ -763,110 +722,156 @@
 *********************************************************************************************************
 -->
 
+
 {% comment %} Deep link code {% endcomment %}
 <!--
 {% assign clicktracking = 'clicktracking=off ' %}
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
 
+	{% assign Link1 = 'https://app.witchery.com.au/BXdC/t7cxeug4' %}
+	{% assign Link2 = 'https://app.witchery.com.au/BXdC/t7cxeug4' %}
+	{% assign LinkReward = 'https://app.witchery.com.au/BXdC/t7cxeug4' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
+	{% assign Link1 = BaseURL | append: '/new-in/' %}
+	{% assign Link2 = BaseURL | append: '/new-in/' %}
+	{% assign LinkReward = BaseURL | append: '/new-in/' %}
 
 {% endif %}
 
 {% comment %} No Deep Links {% endcomment %}
-	{% assign Link1 = BaseURL | append: '/white-shirt-campaign/' %}
-	{% assign Link3 = BaseURL | append: '/white-shirt-campaign/' %}
-	{% assign Link4 = BaseURL | append: '/white-shirt-campaign/' %}
+	{% assign LinkA = BaseURL | append: '/gifts-for-her/' %}
+	{% assign LinkB = BaseURL | append: '/help/returns-and-exchanges/' %}
+	{% assign LinkC = BaseURL | append: '/help/returns-and-exchanges/' %}
+	{% assign LinkD = BaseURL | append: '/gifts-for-her/' %}
+	{% assign LinkE = BaseURL | append: '/help/returns-and-exchanges/' %}
+	{% assign LinkF = BaseURL | append: '/stores/' %}
+	{% assign LinkG = BaseURL | append: '/gifts-for-her/' %}
 
 -->
     
-<!-- Block 1 -->
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+
+<!-- Timer -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td align="center" valign="top">
-        <a href="{{ Link1 }}?lid=d3ynpcqum49s" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-          <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f85cd2410006638f718/original.jpg?1733963653" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="This year we raised over $792,936 Thank you for being a part of the 2024 White Shirt Campaign." border="0">
-        </a>
+      <td valign="top" align="center">
+        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b6fe29ec00633b93df/original.jpg?1733402806" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
       </td>
     </tr>
-
     <tr>
-      <td align="center" valign="top">
+      <td align="center" background="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b7d1881b0065022495/original.png?1733402806" height="auto" valign="top" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b7d1881b0065022495/original.png?1733402806') top left / cover no-repeat; background-size: cover; height: inherit; width: 600px; height: auto; padding: 0 3.75%">
 
-        <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f85d78a5a0064d88e2f/original.png?1733963653" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="TO OUR VALUED MEMBERS We would like to personally thank you for your ongoing support of the Witchery White Shirt Campaign in partnership with the Ovarian Cancer Research Foundation (OCRF). Over the past 16 years, Witchery has raised over $17 million through the sale of white shirts to advance ovarian cancer research. These funds have supported projects focused on early detection, treatment, recurrence and prevention. Witchery, through the OCRF, stands as the largest corporate donor to ovarian cancer research in Australia. Ongoing research remains critical. Our hope is that women, everywhere can live free from the threat of ovarian cancer. We look forward to seeing you in 2025 and wish you a very Happy New Year. Love, Witchery" border="0">
+        <!--[if true]>
+            <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 30px; width: 600px;" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b7d1881b0065022495/original.png?1733402806" />
+            <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; height: 30px; position: absolute; width: 600px;">
+            <v:fill opacity="0%" color="#000000" />
+            <v:textbox inset="0,0,0,0">
+          <![endif]-->
 
+        <div>
+          <!--[if true]>
+          <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="600">
+            <tr><td align="center" valign="top" style="width: 600px; ">
+          <![endif]-->
+
+          <table border="1" cellpadding="0" cellspacing="0" role="presentation" width="555" class="full-width" align="center">
+            <tr>
+              <td align="left" style="padding-top: 1px; color: #ffffff; font-size: 0px; font-weight: bold; width:25%" width="139" valign="top">
+                <a href="{{ Link1 }}?lid=xu51m63xfvrb" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b6ab3f8b006557b366/original.png?1733402806" width="139" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 139px; margin: 0 !important;" border="0" alt="FINAL HOURS">
+                </a>
+              </td>
+              <td style="font-size:1px;width: 55%" width="291">&nbsp;</td>
+              <td align="right" style="padding: 0; color: #ffffff; font-size: 0px; font-weight: bold; width:20%" width="110" valign="top">
+                <a href="{{ Link1 }}?lid=wvq4uegavpn9" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img src="https://i.countdownmail.com/3tg7hx.gif" class="full-width" width="110" style="width:100%!important;max-width:110px!important;height:auto" border="0" alt="countdownmail.com" /></a>
+              </td>
+            </tr>
+          </table>
+          <!--[if true]>
+            </td></tr>
+          </table>
+          <![endif]-->
+        </div>
+
+        <!--[if true]>
+            </v:textbox>
+            </v:fill>
+            </v:rect>
+            </v:image>
+          <![endif]-->
       </td>
     </tr>
-
     <tr>
-      <td align="center" valign="top">
-
-        <!-- Video section -->
-        <style>
-          @media only screen and (max-width: 620px) {
-            .olm-fragment-custom .video-wrapper {
-              display: none !important;
-            }
-
-            .olm-fragment-custom .video-fallback {
-              display: block !important;
-            }
-          }
-        </style>
-        <table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
-          <tr>
-            <td valign="top" align="center" style="background: transparent no-repeat url('https://braze-images.com/appboy/communication/assets/image_assets/images/66907c7c74b798005ad7b192/original.jpg?1720745084') center center; background-size: 100%;overflow: hidden;height: inherit;width: inherit;display: block;" class="">
-              <table border="0" align="center" class="full-width" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td align="center" class="full-width" width="600">
-
-                    <!-- video section -->
-                    <div class="video-wrapper" style="display:none;text-align: center;width: 600px;height: auto;overflow: hidden;">
-
-                      <video controls="controls" poster="data:image/gif,AAAA" style="background: transparent no-repeat url('https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f82e81b7b0065ea9045/original.jpg?1733963649') center center; background-size: 100%;overflow: hidden;height: inherit;width: inherit;display: block;" autoplay="" loop="" controlslist="nodownload" muted="">
-
-                        <source src="https://player.vimeo.com/progressive_redirect/download/1038071029/rendition/720p/witchery_ws24_1920x1080_60_nologo_%281%29%20%28720p%29.mp4?loc=external&signature=957a7682f943327a8b10af709560580c1e0290ff01cd4e7ee450351132808e68" type="video/mp4">
-
-                        <!-- <source src="" type="video/mp4"> -->
-
-                        <!-- fallback for Apple Mail/Outlook Mac OS -->
-                        <a href="{{ Link3 }}?lid=5pzuqquxwx2b" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                          <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f82e81b7b0065ea9045/original.jpg?1733963649" border="0" width="600" class="full-width" alt="">
-                        </a>
-                      </video>
-                    </div>
-
-                    <!-- fallback section  -->
-                    <div class="video-fallback">
-                      <a href="{{ Link3 }}?lid=svjaj9st55vg" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                        <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f82e81b7b0065ea9045/original.jpg?1733963649" width="600" border="0" class="full-width" alt="Watch Oct Film">
-                        </a>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-
-      </td>
-    </tr>
-
-    <tr>
-      <td align="center" valign="top">
-        <a href="{{ Link4 }}?lid=nnhqoadxmukx" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-          <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/675a2f860e7e410065e7ca78/original.jpg?1733963654" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="This White Shirt Can End Ovarian Cancer" border="0">
-        </a>
+      <td valign="top" align="center">
+        <img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b63bcb1d00634c8f36/original.jpg?1733402806" width="600" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0" alt="">
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Block 1 -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+	<tbody>
+    <tr>
+        <td align="center" valign="top">
+            <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6751a0b8c16ca800645837e3/original.jpg?1733402807" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="20% OFF FULL PRICE Shop Now. Ends Today, 15.12.24. T&amp;Cs Apply." border="0">
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" valign="top">
+            <a href="{{ LinkReward }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/674d20db26307e0074e685a3/original.jpg?1733107931" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="YOUR GIFT EXPIRES TODAY: $50 REWARD It’s the season of giving. Treat yourself to something special before it expires. Expires Today 15.12.24. T&amp;Cs Apply." border="0">
+            </a>
+        </td>
+    </tr>
+	</tbody>
+</table>
 <!-- end of Block 1 -->
 
+<!-- Block 2 -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+	<tbody>
+    <tr>
+        <td align="center" valign="top">
+            <a href="{{ LinkA }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e5525994f800667f2da8/original.png?1732371793" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="CHRISTMAS CONCIERGE" border="0">
+            </a>
+        </td>
+    </tr>
+	</tbody>
+</table><!-- Slice B C D -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkB }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e551d495c60065183a6b/original.png?1732371793" alt="Free Online Returns" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkC }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e551d495c60083181323/original.png?1732371793" alt="Instant Refunds with Refundid" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkD }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e551ba13a30082fc6e4d/original.png?1732371793" alt="Flexible Payment Options with Afterpay &amp; Klarna" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+    </tr>
+  </tbody>
+</table>
+<!-- Slice E F G -->
+<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkE }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e551339e2400630f5c5f/original.png?1732371793" alt="45 Day Returns &amp; Exchanges for orders places Nov 18th – Dec 30th" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkF }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e552d495c60065183a6c/original.png?1732371794" alt="Extended Trading Hours in selected stores" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+
+      <td valign="top" align="center" width="33.33%"><a href="{{ LinkG }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6741e5525994f800667f2da9/original.png?1732371794" alt="Gifting Hub &amp; eGift Cards for last minute gifting" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- end of Block 2 -->
+      
 <!--
 ********************************************************************************************************* 
 *********************************************** END HTML *********************************************** 
