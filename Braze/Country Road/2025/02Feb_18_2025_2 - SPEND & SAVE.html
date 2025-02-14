@@ -701,30 +701,31 @@
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-  {% assign clicktracking = 'clicktracking=off ' %}
-  {% assign Link1 = 'https://app.countryroad.com.au/8pfy/kelavf0i' %}
-  {% assign Link2 = 'https://app.countryroad.com.au/8pfy/f4q6n2la' %}
-  {% assign Link3 = 'https://app.countryroad.com.au/8pfy/79weqjfc' %}
-  {% assign Link4 = 'https://app.countryroad.com.au/8pfy/46pw2qfi' %}
-  {% assign Link5 = 'https://app.countryroad.com.au/8pfy/g0y05e8k' %}
-  {% assign Link6 = 'https://app.countryroad.com.au/8pfy/umnxx3n3' %}
-  {% assign Link7 = 'https://app.countryroad.com.au/8pfy/onz2vzca' %}
-  {% assign Link8 = 'https://app.countryroad.com.au/8pfy/8jb7ureo' %}
-  {% assign Link9 = 'https://app.countryroad.com.au/8pfy/7pqlug0m' %}
+    {% assign clicktracking = 'clicktracking=off ' %}
+    {% assign Link1 = 'https://countryroad.onelink.me/8pfy/l51uor3v' %}
+    {% assign Link2 = 'https://countryroad.onelink.me/8pfy/kxqkeg6l' %}
+    {% assign Link3 = 'https://countryroad.onelink.me/8pfy/7t6nz9oh' %}
+    {% assign Link4 = 'https://countryroad.onelink.me/8pfy/5yrb3pt2' %}
+    {% assign Link5 = 'https://countryroad.onelink.me/8pfy/sc54tebv' %}
+    {% assign Link6 = 'https://countryroad.onelink.me/8pfy/a7hx4iey' %}
+    {% assign Link7 = 'https://countryroad.onelink.me/8pfy/0p1d1j0i' %}
+    {% assign Link8 = 'https://countryroad.onelink.me/8pfy/0ssjed8u' %}
+    {% assign Link9 = 'https://countryroad.onelink.me/8pfy/feuds40x' %}
+    {% assign Link10 = 'https://countryroad.onelink.me/8pfy/lam4pa9e' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
-  {% assign clicktracking = '' %}
-  {% assign Link1 = BaseURL %}
-  {% assign Link2 = BaseURL | append: '/child-baby-girls-new-in/' %}
-  {% assign Link3 = BaseURL | append: '/rain-overall-60303574-968' %}
-  {% assign Link4 = BaseURL | append: '/hooded-rain-jacket-60303704-9507' %}
-  {% assign Link5 = BaseURL | append: '/classic-gumboot-60293428-7735' %}
-  {% assign Link6 = BaseURL | append: '/hooded-rain-jacket-60304122-968' %}
-  {% assign Link7 = BaseURL | append: '/child-girls-new-in/' %}
-  {% assign Link8 = BaseURL | append: '/rain-jacket-60303554-9480' %}
-  {% assign Link9 = BaseURL | append: '/classic-gumboot-60293427-8782' %}
+    {% assign clicktracking = '' %}
+    {% assign Link1 = BaseURL %}
+    {% assign Link2 = BaseURL | append: '/child-baby-girls-new-in/' %}
+    {% assign Link3 = BaseURL | append: '/rain-overall-60303574-968' %}
+    {% assign Link4 = BaseURL | append: '/hooded-rain-jacket-60303704-9507' %}
+    {% assign Link5 = BaseURL | append: '/classic-gumboot-60293428-7735' %}
+    {% assign Link6 = BaseURL | append: '/hooded-rain-jacket-60304122-968' %}
+    {% assign Link7 = BaseURL | append: '/child-girls-new-in/' %}
+    {% assign Link8 = BaseURL | append: '/rain-jacket-60303554-9480' %}
+    {% assign Link9 = BaseURL | append: '/classic-gumboot-60293427-8782' %}
 
 {% endif %}
 
@@ -798,6 +799,51 @@
     </td>
   </tr>
 </tbody></table>
+{% endif %}
+
+{% if {{custom_attribute.${total_reward_balance}}} > 8 %}
+<table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#e8d247" background="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666') top left / cover repeat; background-size: cover; height: inherit;">
+  <tr>
+    <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <!--[if !mso 9]><!-->
+      <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+        <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" style="mso-hide:all;" alt="SPEND & SAVE IS ON NOW*" border="0">
+      </div>
+      <!--<![endif]-->
+      <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" alt="SPEND & SAVE IS ON NOW*" border="0">
+    </td>
+  </tr>
+  <tr>
+    <td class="cta-link copy-pad" style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; color: #000000; line-height:28px; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
+      You have&nbsp;${{custom_attribute.${total_reward_balance}}}&nbsp;in rewards^
+    </td>
+  </tr>
+  <tr>
+    <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">&nbsp;</td>
+  </tr>
+</table>
+{% else %}
+<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#e8d247" background="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666') top left / cover repeat; background-size: cover; height: inherit;">
+  <tr>
+    <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <!--[if !mso 9]><!-->
+      <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+        <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" style="mso-hide:all;" alt="SPEND & SAVE IS ON NOW*" border="0">
+      </div>
+      <!--<![endif]-->
+      <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" alt="SPEND & SAVE IS ON NOW*" border="0">
+    </td>
+  </tr>
+  <tr>
+    <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">&nbsp;</td>
+  </tr>
+</table>
 {% endif %}
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
 	<tbody>
