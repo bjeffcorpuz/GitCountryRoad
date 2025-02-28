@@ -678,7 +678,7 @@
                             }
 
                             .padding_LF {
-                              padding: 0 5% !important;
+                              padding: 0 12.5% !important;
                               font-size: 14px !important;
                               line-height: 24px !important;
                               }
@@ -694,12 +694,6 @@
                               .font12{
                                 font-size: 12px !important;
                               }
-
-                              .bgMob {
-                                background: url(https://braze-images.com/appboy/communication/assets/image_assets/images/66907c7c74b798005ad7b192/original.jpg?1720745084) !important;
-                                background-size: cover !important;
-                              }
-
 
                           }
                         </style>
@@ -781,67 +775,74 @@
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-	{% assign clicktracking = '' %}
+	{% assign clicktracking = 'clicktracking=off ' %}
+	{% assign Link1 = '1' %}
+	{% assign Link2 = '2' %}
+	{% assign Link3 = '3' %}
+	{% assign Link4 = '4' %}
+	{% assign Link5 = '5' %}
+	{% assign Link6 = '6' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
 	{% assign clicktracking = '' %}
+	{% assign Link1 = BaseURL | append: '/new-in/' %}
+	{% assign Link2 = BaseURL | append: '/kiara-shoulder-bag-60303518-1' %}
+	{% assign Link3 = BaseURL | append: '/jamie-ruched-bag-60303514-278' %}
+	{% assign Link4 = BaseURL | append: '/emilia-shoulder-bag-60303521-225' %}
+	{% assign Link5 = BaseURL | append: '/new-in/' %}
+	{% assign Link6 = BaseURL | append: '/new-in-accessories/' %}
 
 {% endif %}
 
 {% comment %} No Deep Links {% endcomment %}
-	{% assign Link1 = BaseURL | append: '/new-in/' %}
-	{% assign Link2 = BaseURL | append: '/mesh-snake-dress-60307979-9965' %}
-	{% assign Link3 = BaseURL | append: '/mesh-check-dress-60302928-7464' %}
-	{% assign Link7 = BaseURL | append: '/new-in/' %}
-	{% assign Link8 = BaseURL | append: '/new-in-accessories/' %}
 
 -->
-
 
 <!-- Block 1 -->
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
 	<tbody>
     <tr>
-        <td align="center" valign="top">
+        <td align="center" valign="top" colspan="2">
             <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991f35fce00064f302db/original.jpg?1740740894" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="MODERN MESH MARCH-2025" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2ab1397790065856ff2/original.jpg?1740030634" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="THE BAG EDIT February-Drop 2 Meet the standout bags to have and to hold. Patent glazing and exaggerated ruching add an edgy twist to evening looks, while clean lines and molten hardware elevate any ensemble. Shop New" border="0">
             </a>
         </td>
     </tr>
 
     <tr>
-        <td align="center" valign="top">
+        <td align="center" valign="top" colspan="2">
             <a href="{{ Link2 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991e35fce00084f29fab/original.jpg?1740740894" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aa417d180067716a5f/original.jpg?1740030634" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Kiara Shoulder Bag $129.00 A sleek leather look finish offset with ruched hardware in classic 90s shape." border="0">
             </a>
         </td>
     </tr>
 
     <tr>
-        <td align="center" valign="top">
+        <td align="center" valign="top" colspan="2">
             <a href="{{ Link3 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                <img class="full-width" width="600" height="865" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991f03ea150064113c40/original.gif?1740740895" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important; height: auto !important" alt="" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aa8608510067bd8bf3/original.jpg?1740030634" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Jamie Ruched Bag $99.00 The crinkle patent hobo makes a modern statement piece in flame red and caramel." border="0">
             </a>
         </td>
     </tr>
-	</tbody>
-</table><!-- 3 column -->
-<!-- Slice 4 5 6 -->
-<table class="full-width" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
+
     <tr>
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link4 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991ecff4b60064607614/original.jpg?1740740894" alt="Charlie Woven Bag" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link5 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991eb277d000627c43aa/original.jpg?1740740894" alt="Wren Drop Earrings" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
-
-      <td valign="top" align="center" width="33.33%"><a href="{{ Link6 }}?" target="_blank" {{clicktracking}}style="font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000;"><img class="full-width" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991eb09a030063e58d1e/original.jpg?1740740894" alt="Iris Heel" width="200" height="auto" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" border="0"></a></td>
+        <td align="center" valign="top" colspan="2">
+            <a href="{{ Link4 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aa78ba240065f5e2f7/original.gif?1740030634" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="" border="0">
+            </a>
+        </td>
     </tr>
-  </tbody>
-</table>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
+
+    <tr>
+        <td align="center" valign="top" colspan="2">
+            <a href="{{ Link4 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aac45c260065c9b4df/original.png?1740030633" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Emilia Shoulder Bag $329.00 Butter-soft leather featuring dual straps for shoulder or crossbody wear; a work to weekend essential." border="0">
+            </a>
+        </td>
+    </tr>
+
     <tr>
         <td width="50%" valign="top" align="center">
             <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -849,8 +850,8 @@
                     
                 <tr>
                     <td valign="top" align="center">
-                        <a href="{{ Link7 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                            <img class="full-width" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991f03ea15008210d6f9/original.jpg?1740740894" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop New" border="0">                                
+                        <a href="{{ Link5 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                            <img class="full-width" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aac45c260085c98eed/original.jpg?1740030633" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="New Arrivals" border="0">                                
                         </a>
                     </td>
                 </tr>         
@@ -865,22 +866,14 @@
                     
                 <tr>
                     <td valign="top" align="center">
-                        <a href="{{ Link8 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                            <img class="full-width" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991f03ea15007310e8cb/original.jpg?1740740894" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop Accessories" border="0">                                
+                        <a href="{{ Link6 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                            <img class="full-width" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67b6c2aac45c260075c9965e/original.jpg?1740030633" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="New Accessories" border="0">                                
                         </a>    
                     </td>
                 </tr>      
             
                 </tbody>
             </table>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2">
-            <a href="{{ Link1 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67c1991e6ab87700645f6bf3/original.jpg?1740740894" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Rewards" border="0">
-            </a>
         </td>
     </tr>
 	</tbody>
