@@ -775,26 +775,21 @@
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-	{% assign clicktracking = 'clicktracking=off' %}
-	{% assign Link1 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
-	{% assign Link2 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
-	{% assign Link4 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
+	{% assign clicktracking = '' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
 	{% assign clicktracking = '' %}
-	{% assign Link1 = BaseURL | append: '/new-in/' %}
-	{% assign Link2 = BaseURL | append: '/new-in/' %}
-	{% assign Link4 = BaseURL | append: '/new-in/' %}
 
 {% endif %}
 
 {% comment %} No Deep Links {% endcomment %}
-	{% assign Link3 = BaseURL | append: '/lookbook/clear-focus/' %}
+	{% assign Link1 = BaseURL | append: '/new-in/' %}
+	{% assign Link3 = BaseURL | append: '/new-in/' %}
+	{% assign Link4 = BaseURL | append: '/stores' %}
 
 -->
-
 
 
 <!-- Block 1 -->
@@ -803,39 +798,7 @@
     <tr>
         <td align="center" valign="top">
             <a href="{{ Link1 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="900" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df71195c610066ad72e0/original.gif?1755832177" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important; height: auto" alt="GIF image" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f71bcb60065342141/original.png?1755832175" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Spring Reimagined: Clear Focus September Bold and directional, Clear Focus reimagines refined dressing with a modern outlook. Rendered in rich espresso browns, warm reds and elevated neutrals, this collection blends artisanal detail with sleek silhouettes. Think dynamic dresses, denim designed with purpose, and sophisticated layers to carry you confidently across seasons." border="0">
-            
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            <a href="{{ Link2 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f3e6c270067f2396b/original.png?1755832174" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop New" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            <a href="{{ Link3 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f7f36cb0086e128b6/original.png?1755832174" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="View The Lookbook" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            <a href="{{ Link4 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f195c610066ad72df/original.jpg?1755832175" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a555c5a3fbf40075636abd/original.png?1755665860" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="A Gift From Us $20 Reward Expires in 30 Days. T&C's Apply." border="0">
             </a>
         </td>
     </tr>
@@ -843,6 +806,77 @@
 </table>
 <!-- end of Block 1 -->        
         
+<!-- Block 2 -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
+	<tbody>
+    <tr>
+        <td align="left" class="padding_LF" style=" font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0 0 0 75px">
+
+            	
+          Hey {{ ${first_name} | capitalize }},
+          <br><br>
+          Even though we have closed our Northland store, this isn't a goodbye. As a thank you, we've added a <strong>$20 reward</strong> to your account to spend on your next purchase in-store or online. You <br class="mobile-hide">will also receive free shipping on all orders over&nbsp;$100.
+          <br><br>
+          You can still shop Witchery’s latest collections online or at <br class="mobile-hide">your new local store, Doncaster.
+        </td>
+    </tr>
+    <tr>
+      <td align="left" class="padding_LF" style=" font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0 0 0 75px">
+        <table align="left" border="0" cellpadding="0" cellspacing="0" class="full-width" width="402" style="width: 100%; max-width: 402px;">
+          <tbody>
+            <tr>
+                <td valign="top" align="center" class="custP" style="padding: 35px 0;">
+                    <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            
+                        <tr>
+                            <td valign="top" align="center" width="50%" >
+                                <a href="{{ Link3 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                                    <img class="full-width" width="206" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a555c4cdf3e20076c48da0/original.png?1755665859" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop Online" border="0">                                
+                                </a>
+                            </td>
+
+                            <td valign="top" align="center" width="50%" >
+                              &nbsp;
+                            </td>
+                        </tr>         
+                        <tr>
+                          <td height="10" style="height:10px !important;font-size: 1px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="center" width="50%" >
+                                <a href="{{ Link4 }}?" {{clicktracking}}style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank">
+                                    <img class="full-width" width="206" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a555c4b666070067af88ff/original.png?1755665859" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Find Your Nearest Store" border="0">                                
+                                </a>
+                            </td>
+
+                            <td valign="top" align="center" width="50%" >
+                              &nbsp;
+                            </td>
+                        </tr>                          
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+          </tbody>
+        </table>
+            
+      </td>
+  </tr>
+  <tr>
+    <td align="left" class="padding_LF" style=" font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; letter-spacing: 0.04em; text-align: left; color:#000000;font-weight:400;  -moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0 0 0 75px"> 
+      Warm regards,<br>
+      The Team at Witchery Northland
+      <br><br>
+    </td>
+</tr>
+<tr>
+  <td height="40" style="height:40px;font-size: 1px;">&nbsp;</td>
+</tr>
+	</tbody>
+</table>
+<!-- end of Block 2 -->           
         
         
 

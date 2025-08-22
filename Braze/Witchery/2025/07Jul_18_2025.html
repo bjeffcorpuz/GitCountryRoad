@@ -775,25 +775,26 @@
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-	{% assign clicktracking = 'clicktracking=off' %}
-	{% assign Link1 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
-	{% assign Link2 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
-	{% assign Link4 = 'https://witchery.onelink.me/BXdC/m53h1abr' %}
+	{% assign clicktracking = '' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
 	{% assign clicktracking = '' %}
-	{% assign Link1 = BaseURL | append: '/new-in/' %}
-	{% assign Link2 = BaseURL | append: '/new-in/' %}
-	{% assign Link4 = BaseURL | append: '/new-in/' %}
 
 {% endif %}
 
 {% comment %} No Deep Links {% endcomment %}
-	{% assign Link3 = BaseURL | append: '/lookbook/clear-focus/' %}
+	{% assign Link1 = BaseURL | append: '/style-collective/monogram/' %}     
+	{% assign Link2 = BaseURL | append: '/style-collective/monogram/' %}
+	{% assign Link3 = BaseURL | append: '/new-in-monogram/' %}
+	{% assign Link4 = BaseURL | append: '/style-collective/monogram/' %}
+	{% assign Link5 = BaseURL | append: '/new-in-monogram/' %}
 
 -->
+    
+
+
 
 
 
@@ -802,24 +803,24 @@
 	<tbody>
     <tr>
         <td align="center" valign="top">
+            
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745ecd14ff7009413896a/original.png?1752647148" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="spacer" border="0">
+            
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" valign="top">
             <a href="{{ Link1 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="900" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df71195c610066ad72e0/original.gif?1755832177" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important; height: auto" alt="GIF image" border="0">
+                <img class="full-width" width="600" height="675" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745ed8c2c3d0074fac379/original.gif?1752647149" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important; height:auto" alt="GIF Image monogram" border="0">
             </a>
         </td>
     </tr>
 
     <tr>
         <td align="center" valign="top">
-            
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f71bcb60065342141/original.png?1755832175" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Spring Reimagined: Clear Focus September Bold and directional, Clear Focus reimagines refined dressing with a modern outlook. Rendered in rich espresso browns, warm reds and elevated neutrals, this collection blends artisanal detail with sleek silhouettes. Think dynamic dresses, denim designed with purpose, and sophisticated layers to carry you confidently across seasons." border="0">
-            
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
             <a href="{{ Link2 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f3e6c270067f2396b/original.png?1755832174" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop New" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745edd14ff7006413a94c/original.png?1752647148" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="The Monogram Edit July-2025 Sophisticated, directional and undeniably contemporary: discover the Witchery Monogram, a bold new chapter in our legacy. A blend of the iconic Witchery W and a tailor's scissors, this dynamic marque will debut across a capsule of must-have wardrobe pieces." border="0">
             </a>
         </td>
     </tr>
@@ -827,7 +828,7 @@
     <tr>
         <td align="center" valign="top">
             <a href="{{ Link3 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f7f36cb0086e128b6/original.png?1755832174" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="View The Lookbook" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745ec1aa760008613bf8b/original.png?1752647148" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Shop the Monogrm Edit" border="0">
             </a>
         </td>
     </tr>
@@ -835,7 +836,15 @@
     <tr>
         <td align="center" valign="top">
             <a href="{{ Link4 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
-                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/68a7df6f195c610066ad72df/original.jpg?1755832175" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="" border="0">
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745ec79131c0066f2d3dc/original.png?1752647148" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="Discover the Monogram" border="0">
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" valign="top">
+            <a href="{{ Link5 }}?" style="text-decoration:none; font-family:Avenir, Helvetica, Arial, sans-serif; font-size:12px; color:#000000" target="_blank" {{clicktracking}}>
+                <img class="full-width" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/687745edace88700775a2987/original.jpg?1752647149" style="display: block; color: #54565b; font-family: sans-serif; font-size: 24px; width: 100%; max-width: 100%; margin: 0 !important;" alt="" border="0">
             </a>
         </td>
     </tr>
@@ -843,6 +852,8 @@
 </table>
 <!-- end of Block 1 -->        
         
+        
+         
         
         
 
@@ -854,9 +865,9 @@
   <tr>
     <td class="left-copy-pad-8perc right-copy-pad-8perc" align="left" valign="top" style="padding: 25px 40px 25px 40px; font-size: 11px; line-height: 18px; letter-spacing: 0.0em; font-family: Helvetica, Arial,  sans-serif;  color:#000000; text-align: left;font-weight: 300;">
       <strong>
-        <span style="font-weight: bold;">*$20 Reward Terms & Conditions</span>
+        <span style="font-weight: bold;">*Terms & Conditions — End Of Season Sale: New Markdowns</span>
       </strong><br>
-      The $20 Store Closure Reward is available from Saturday 23 August 2025 to Monday 22 September 2025. This reward is redeemable at Witchery stores (excluding Outlet stores), online and on Witchery merchandise in David Jones stores. This reward can be used once only and strictly expires Monday 22 September. This reward is available to the member printed above only. This reward cannot be used to purchase gift cards. This reward is not redeemable for cash and no change will be issued. This reward cannot be used on an existing or new lay-by. Witchery will not re-issue, replace nor be liable for any reward lost or stolen. This reward is not transferrable. The offer is subject to our General Terms and Conditions, Delivery, Returns, Loyalty Program and Privacy Policies which are available online at <a href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;" {{clicktracking}}><span style="color:#000000;">www.witchery.com.au</span></a>. For more information please contact Customer Care via one of the methods outlined at <a href="https://www.witchery.com.au/help/contact-us/" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;" {{clicktracking}}>www.witchery.com.au/help/contact-us/</span></a>. For full terms and conditions click <a href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?lid=2j6ec98mdo2z" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">here</span></a>.
+      This offer is available on Witchery full price Knits, Shirts, Tops, Boots & Jewellery only, on the Witchery app, online at <a {{clicktracking}} href="https://www.witchery.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com.au</span></a>, <a {{clicktracking}} href="https://www.witchery.com?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.witchery.com</span></a>, <a {{clicktracking}} href="https://www.witchery.co.nz?" target="_blank" style="color:#000000; text-decoration:underline;"> <span style="color:#000000;">www.witchery.co.nz</span></a>, at <a {{clicktracking}} href="https://www.theiconic.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.theiconic.com.au</span></a> <a {{clicktracking}} href="https://www.davidjones.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.davidjones.com.au</span></a> at <a {{clicktracking}} href="https://www.myer.com.au?" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">www.myer.com.au</span></a>, and available in Witchery stores and on Witchery items in Myer & David Jones stores stocking full price Witchery. Discount will be applied automatically to the ticketed price at checkout in store and online. This offer ends in all channels at 11:59pm AEDT Sunday 13 July 2025. The offer is not available in conjunction with any other offer unless otherwise stated. For full terms and conditions <a href="{{ BaseURL | append: '/help/terms-and-conditions/promotional/' }}?lid=2j6ec98mdo2z" target="_blank" style="color:#000000; text-decoration:underline;"><span style="color:#000000;">click here</span></a>.
     </td>
   </tr>
 </table>
@@ -932,11 +943,11 @@
 </div>
 
 <div style="display: none;">
-{% assign headH = '<head>' %}
-  {% assign closeC = '</head>' %}
+{% assign head = '<head>' %}
+  {% assign close = '</head>' %}
   
-  {{ headH }}
-  {{ closeC }}
+  {{ head }}
+  {{ close }}
 </div>
 
 <div style="display: none;">
