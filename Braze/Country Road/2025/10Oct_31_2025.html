@@ -701,37 +701,36 @@
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
-	{% assign clicktracking = '' %}
+	{% assign clicktracking = 'clicktracking=off ' %}
+	{% assign Link1 = 'https://countryroad.onelink.me/8pfy/45y073s5' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
 	{% assign clicktracking = '' %}
+	{% assign Link1 = BaseURL %}
 
 {% endif %}
 
 {% comment %} No Deep Links {% endcomment %}
-	{% assign Link1 = BaseURL %}
-	{% assign Link2 = BaseURL | append: '/search?q=julie+white' %}
 
 -->
-
 
 
 <!-- Block 1 -->
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
 	<tbody>
     <tr>
-        <td align="center" valign="top">
-            <a href="{{ Link1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7ea994ebd0075d84053/original.png?1751504873" style="mso-hide:all;" alt="Country Road Logo" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7ea994ebd0075d84053/original.png?1751504873" style="display:block; max-width: 600px; width:100%;" alt="Country Road Logo" border="0">
-            </a>
-        </td>
+      <td align="center" valign="top" colspan="2">
+        <a href="{{ Link1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
+          <!--[if !mso 9]><!-->
+          <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7ea994ebd0075d84053/original.png?1751504873" style="mso-hide:all;" alt="" border="0">
+          </div>
+          <!--<![endif]-->
+          <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7ea994ebd0075d84053/original.png?1751504873" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
+        </a>
+      </td>
     </tr>
 
     <tr>
@@ -739,83 +738,88 @@
             <a href="{{ Link1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903fb4957452100654d523d/original.gif?1761868617" style="mso-hide:all;" alt="GIF Image" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6902a60cdbf9ea0073fc31b7/original.jpg?1761781259" style="mso-hide:all;" alt="Hero Image" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903fb4957452100654d523d/original.gif?1761868617" style="display:block; max-width: 600px; width:100%;" alt="GIF Image" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6902a60cdbf9ea0073fc31b7/original.jpg?1761781259" style="display:block; max-width: 600px; width:100%;" alt="Hero Image" border="0">
             </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f55547fb2f00637eccfe/original.png?1761867093" style="mso-hide:all;" alt="Country Road x Julie White" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f55547fb2f00637eccfe/original.png?1761867093" style="display:block; max-width: 600px; width:100%;" alt="Country Road x Julie White" border="0">
-            
-        </td>
-    </tr>
-	<tr>
-        <td style="font-size: 18px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center;  line-height: 28px; color: #54555c; display:block; font-weight:400; margin:0 auto; padding: 0px 50px" valign="top" align="center" class="left-copy-pad-8 body-copy">
-
-Dear {{${first_name}  | capitalize | default:'Customer'}},
-<br><br>
-            As part of our Spring Summer 2025 collection, we <br class="mobile-hide">have collaborated with artist Julie White on a range <br class="mobile-hide">of designs that celebrate Australian flora.
-            <br><br>
-                We invite you to join us for the launch to enjoy <br class="mobile-hide">complimentary gelato and hear from Julie in conversation <br class="mobile-hide">with Ty Symonds, General Manager of Home.
-            <br><br>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555229e2e0074c2072f/original.png?1761867093" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555229e2e0074c2072f/original.png?1761867093" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            <a href="{{ Link2 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555d6cbfc0063bda589/original.png?1761867093" style="mso-hide:all;" alt="Discover the collection" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555d6cbfc0063bda589/original.png?1761867093" style="display:block; max-width: 600px; width:100%;" alt="Discover the collection" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555229e2e0064c24375/original.png?1761867093" style="mso-hide:all;" alt="spacer" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6903f555229e2e0064c24375/original.png?1761867093" style="display:block; max-width: 600px; width:100%;" alt="spacer" border="0">
-            
         </td>
     </tr>
 	</tbody>
 </table>
 <!-- end of Block 1 -->        
-          
+
+<!-- Block 2 -->
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#9fae7c">
+  <tbody>
+    <tr>
+      <td height="40" style="height: 40px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 40px; line-height: 50px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="mobile_copy_34 padding-lr-9" valign="top">
+        Just for you
+      </td>
+    </tr>
+    <tr>
+      <td height="30" style="height: 30px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Dear {{${first_name} | capitalize}},
+      </td>
+    </tr>
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        We hope you enjoy this exclusive reward to find <br class="mobile-hide">something&nbsp;new.
+      </td>
+    </tr>    
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Simply sign in to redeem your reward at checkout, <br class="mobile-hide">or share your email address with our team in&nbsp;store.
+      </td>
+    </tr>    
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>    
+    <tr>
+      <td style="font-size: 26px; line-height: 42px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="mobile_copy_24 padding-lr-9" valign="top">
+        $20 reward
+      </td>
+    </tr>
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Expires Sunday 19 October. Conditions&nbsp;apply.
+      </td>
+    </tr>
+    <tr>
+      <td height="30" style="height: 30px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="{{ Link1 }}?" {{clicktracking}} style="text-decoration: none;" target="_blank">
+          <!--[if !mso 9]><!-->
+          <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7eab617770066337d54/original.png?1751504873" style="mso-hide:all;" alt="Shop now" border="0">
+          </div>
+          <!--<![endif]-->
+          <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7eab617770066337d54/original.png?1751504873" style="display:block; max-width: 600px; width:100%;" alt="Shop now" border="0">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>         
         
         
-        
+<!-- end of Block 2 -->
         
         
 
