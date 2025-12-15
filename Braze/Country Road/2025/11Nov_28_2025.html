@@ -700,40 +700,18 @@
 
 
 
-
-
 {% comment %} Deep link code {% endcomment %}
 <!--
 
 {% if ${country} == 'Australia' or ${country} == 'AU' %}  
 	{% assign clicktracking = 'clicktracking=off data-msys-clicktrack="0" ses:no-track' %}
-	{% assign Link1 = 'https://countryroad.onelink.me/8pfy/jnb8zdkz' %}
-	{% assign Link2 = 'https://countryroad.onelink.me/8pfy/ftuk1j0j' %}
-	{% assign Link3 = 'https://countryroad.onelink.me/8pfy/xzkd3qei' %}
-	{% assign Link4 = 'https://countryroad.onelink.me/8pfy/09rm6np0' %}
-	{% assign Link5 = 'https://countryroad.onelink.me/8pfy/j7zkw6tp' %}
-	{% assign Link6 = 'https://countryroad.onelink.me/8pfy/a96qpk6c' %}
-	{% assign Link11 = 'https://countryroad.onelink.me/8pfy/gd0vb1p6' %}
-	{% assign Link7 = 'https://countryroad.onelink.me/8pfy/bnarxfqd' %}
-	{% assign Link8 = 'https://countryroad.onelink.me/8pfy/l6ydxqza' %}
-	{% assign Link9 = 'https://countryroad.onelink.me/8pfy/hxoft1se' %}
-	{% assign Link10 = 'https://countryroad.onelink.me/8pfy/54gzddfw' %}
+	{% assign Link1 = 'https://countryroad.onelink.me/8pfy/9yzaqrrt' %}
 
 {% else %}
 
 {% comment %} Set other countries links {% endcomment %}
 	{% assign clicktracking = '' %}
 	{% assign Link1 = BaseURL %}
-	{% assign Link2 = BaseURL | append: '/gifts-for-girls/' %}
-	{% assign Link3 = BaseURL | append: '/gifting-gift-guide/' %}
-	{% assign Link4 = BaseURL | append: '/mini-backpack-60301908-9366' %}
-	{% assign Link5 = BaseURL | append: '/terry-cable-polo-60313399-2708' %}
-	{% assign Link6 = BaseURL | append: '/spliced-weekender-60313557-4505' %}
-	{% assign Link11 = BaseURL | append: '/spliced-washbag-60313562-6565' %}
-	{% assign Link7 = BaseURL | append: '/oversized-cr-logo-t-shirt-60312988-7307' %}
-	{% assign Link8 = BaseURL | append: '/australian-cotton-lobster-poncho-60313384-448' %}
-	{% assign Link9 = BaseURL | append: '/one-size-lobster-t-shirt-60313368-1095' %}
-	{% assign Link10 = BaseURL | append: '/cr-varsity-cap-60313573-3510' %}
 
 {% endif %}
 
@@ -742,7 +720,7 @@
 --> 
     
     
-    
+
 
 
 <!-- Block 1 -->
@@ -760,384 +738,106 @@
             </a>
         </td>
     </tr>
-	</tbody>
-</table>
-<!-- end of Block 1 -->        
-        
-<!-- Spend and save top -->
-{% if {{custom_attribute.${total_reward_balance}}} &gt; 8 %}
-<table class="full-width" width="600" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#e8d247" background="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666') top left / cover repeat; background-size: cover; height: inherit;">
-  <tbody><tr>
-    <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">&nbsp;</td>
-  </tr>
-  <tr>
-    <td>
-      <!--[if !mso 9]><!-->
-      <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-        <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" style="mso-hide:all;" alt="SPEND &amp; SAVE IS ON NOW*" border="0">
-      </div>
-      <!--<![endif]-->
-      <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" alt="SPEND &amp; SAVE IS ON NOW*" border="0">
-    </td>
-  </tr>
-  <tr>
-    <td class="cta-link copy-pad" style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:center; color: #000000; line-height:28px; display:block; font-weight:400; margin:0 auto; padding: 0 0 0px 0px;" valign="top" align="center">
-      You have&nbsp;${{custom_attribute.${total_reward_balance}}}&nbsp;in rewards^
-    </td>
-  </tr>
-  <tr>
-    <td height="25" class="" style="font-size:1px; line-height:1px; height: 25px">&nbsp;</td>
-  </tr>
-</tbody></table>
-{% else %}
-<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#e8d247" background="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666" style="background: url('https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba316f2e006565d2d6/original.png?1739252666') top left / cover repeat; background-size: cover; height: inherit;">
-  <tbody><tr>
-    <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">&nbsp;</td>
-  </tr>
-  <tr>
-    <td>
-      <!--[if !mso 9]><!-->
-      <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-        <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" style="mso-hide:all;" alt="SPEND &amp; SAVE IS ON NOW*" border="0">
-      </div>
-      <!--<![endif]-->
-      <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/67aae3ba1b6593006632a5ec/original.png?1739252666" alt="SPEND &amp; SAVE IS ON NOW*" border="0">
-    </td>
-  </tr>
-  <tr>
-    <td height="20" class="" style="font-size:1px; line-height:1px; height: 20px">&nbsp;</td>
-  </tr>
-</tbody></table>
-{% endif %}
-
-<!-- Block 2 -->
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link2 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627fc5cace00641a7fd0/original.jpg?1764647550" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627fc5cace00641a7fd0/original.jpg?1764647550" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c7d43900073783c03/original.png?1764647548" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c7d43900073783c03/original.png?1764647548" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link2 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c8181c3006375e075/original.png?1764647548" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c8181c3006375e075/original.png?1764647548" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link3 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c73828c00639f53d0/original.png?1764647548" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627c73828c00639f53d0/original.png?1764647548" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link4 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f98c78a0063bce4ff/original.jpg?1764647550" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f98c78a0063bce4ff/original.jpg?1764647550" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link5 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f8181c3006375e076/original.jpg?1764647550" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f8181c3006375e076/original.jpg?1764647550" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>            
-            
-                </tbody>
-            </table>
-        </th>
-
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link6 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d9410740063de152d/original.jpg?1764647549" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d9410740063de152d/original.jpg?1764647549" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>           
-            
-                </tbody>
-            </table>
-        </th>
-    </tr>
-
-    <tr>
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link11 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627da6b74f00634e11d3/original.jpg?1764647549" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627da6b74f00634e11d3/original.jpg?1764647549" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>            
-            
-                </tbody>
-            </table>
-        </th>
-
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link7 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d174e4300643ddb7f/original.jpg?1764647549" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d174e4300643ddb7f/original.jpg?1764647549" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>           
-            
-                </tbody>
-            </table>
-        </th>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link8 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e62803610a30065cd14e2/original.jpg?1764647551" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e62803610a30065cd14e2/original.jpg?1764647551" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link9 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f4b0d1600632ed9e6/original.jpg?1764647551" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f4b0d1600632ed9e6/original.jpg?1764647551" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link4 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f63609500639472a8/original.jpg?1764647550" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627f63609500639472a8/original.jpg?1764647550" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>            
-            
-                </tbody>
-            </table>
-        </th>
-
-        <th class="half-width" width="300" valign="top">
-            <table class="full-width" width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tbody>
-                    
-                    <tr>
-                    <td align="center" style="padding: 0px 0px 0px 0px">
-                        <a href="{{ Link10 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                            <!--[if !mso 9]><!-->
-                            <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627ee661b900632cef95/original.jpg?1764647550" style="mso-hide:all;" alt="" border="0">
-                            </div>
-                            <!--<![endif]--> 
-                            <img class="mobile-hide" width="300" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627ee661b900632cef95/original.jpg?1764647550" style="display:block; max-width: 300px; width:100%;" alt="" border="0">                                
-                        </a>
-                    </td>
-                    </tr>           
-            
-                </tbody>
-            </table>
-        </th>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2" >
-            <a href="{{ Link3 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d39e73c0063c92de2/original.png?1764647549" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e627d39e73c0063c92de2/original.png?1764647549" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2">
-            <a href="{{ LinkA1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/693222e1b6143c0063f8f6fd/original.jpg?1764893408" style="mso-hide:all;" alt="Gifts under $100" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/693222e1b6143c0063f8f6fd/original.jpg?1764893408" style="display:block; max-width: 600px; width:100%;" alt="Gifts under $100" border="0">
-            </a>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center" valign="top" colspan="2">
-            <a href="{{ LinkA1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/693222e085a522007314f5a3/original.png?1764893407" style="mso-hide:all;" alt="Shop gifts under $100" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/693222e085a522007314f5a3/original.png?1764893407" style="display:block; max-width: 600px; width:100%;" alt="Shop gifts under $100" border="0">
-            </a>
-        </td>
-    </tr>    
-	</tbody>
-</table>
-<!-- end of Block 2 -->        
-        
-<!-- Block 3 -->
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600">
-	<tbody>
-    {% if ${country} == 'Australia' or ${country} == 'AU' %}
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692d0833e2552e006336d7ea/original.jpg?1764558899" style="mso-hide:all;" alt="AU Banner" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692d0833e2552e006336d7ea/original.jpg?1764558899" style="display:block; max-width: 600px; width:100%;" alt="AU Banner" border="0">
-            
-        </td>
-    </tr>
-{% else %}
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e65d958364700639bef7f/original.jpg?1764648408" style="mso-hide:all;" alt="NZ Banner" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e65d958364700639bef7f/original.jpg?1764648408" style="display:block; max-width: 600px; width:100%;" alt="NZ Banner" border="0">
-            
-        </td>
-    </tr>
-{% endif %}
-    <tr>
-        <td align="center" valign="top">
-            
-                <!--[if !mso 9]><!-->
-                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e58fbe1f4470063789390/original.png?1764645114" style="mso-hide:all;" alt="" border="0">
-                </div>
-                <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e58fbe1f4470063789390/original.png?1764645114" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
-            
-        </td>
-    </tr>
 
     <tr>
         <td align="center" valign="top">
             <a href="{{ Link1 }}?" style="text-decoration: none;" target="_blank" {{clicktracking}}>
                 <!--[if !mso 9]><!-->
                 <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
-                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e58fb8ef42000638a0619/original.png?1764645114" style="mso-hide:all;" alt="" border="0">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6928f501df6be4006386b0c5/original.jpg?1764291841" style="mso-hide:all;" alt="" border="0">
                 </div>
                 <!--<![endif]-->
-                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/692e58fb8ef42000638a0619/original.png?1764645114" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6928f501df6be4006386b0c5/original.jpg?1764291841" style="display:block; max-width: 600px; width:100%;" alt="" border="0">
             </a>
         </td>
     </tr>
 	</tbody>
 </table>
-<!-- end of Block 3 -->        
+<!-- end of Block 1 -->        
+          
+
+<!-- Block 2 -->
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="full-width" width="600" bgcolor="#9fae7c">
+  <tbody>
+    <tr>
+      <td height="40" style="height: 40px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 40px; line-height: 50px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="mobile_copy_34 padding-lr-9" valign="top">
+        Just for you
+      </td>
+    </tr>
+    <tr>
+      <td height="30" style="height: 30px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Dear {{${first_name} | capitalize}},
+      </td>
+    </tr>
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        We hope you enjoy this exclusive Cyber Week <br class="mobile-hide">reward to find something&nbsp;new.
+      </td>
+    </tr>    
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Simply sign in to redeem your reward at checkout, <br class="mobile-hide">or share your email address with our team in&nbsp;store.
+      </td>
+    </tr>    
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>    
+    <tr>
+      <td style="font-size: 30px; line-height: 46px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; color: #000000; font-weight:bold; margin:0 auto; padding: 0 52px;" align="left" class="mobile_copy_24 padding-lr-9" valign="top">
+        $20 bonus <br class="mobile-hide">cyber week&nbsp;reward
+      </td>
+    </tr>
+    <tr>
+      <td height="20" style="height: 20px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="font-size: 16px; font-family:'Roboto',Arial, sans-serif; letter-spacing:0px; text-align:left; mso-line-height-rule:exactly; line-height: 26px; color: #000000; font-weight:400; margin:0 auto; padding: 0 52px;" align="left" class="body-copy padding-lr-9" valign="top">
+        Expires Monday 1 December. Conditions&nbsp;apply.
+      </td>
+    </tr>
+    <tr>
+      <td height="30" style="height: 30px; font-size: 1px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="{{ Link1 }}?" {{clicktracking}} style="text-decoration: none;" target="_blank">
+          <!--[if !mso 9]><!-->
+          <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+            <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7eab617770066337d54/original.png?1751504873" style="mso-hide:all;" alt="Shop now" border="0">
+          </div>
+          <!--<![endif]-->
+          <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6865d7eab617770066337d54/original.png?1751504873" style="display:block; max-width: 600px; width:100%;" alt="Shop now" border="0">
+        </a>
+      </td>
+    </tr>
+        <tr>
+        <td align="center" valign="top">
+            
+                <!--[if !mso 9]><!-->
+                <div class="mobile-show" width="100%" style="mso-hide: all; display:none; overflow: hidden; max-height: 0px; line-height:0;">
+                <img width="100%" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6928f501fc3fc30063399957/original.png?1764291840" style="mso-hide:all;" alt="spacer" border="0">
+                </div>
+                <!--<![endif]-->
+                <img class="mobile-hide" width="600" height="auto" src="https://braze-images.com/appboy/communication/assets/image_assets/images/6928f501fc3fc30063399957/original.png?1764291840" style="display:block; max-width: 600px; width:100%;" alt="spacer" border="0">
+            
+        </td>
+    </tr>
+  </tbody>
+</table>   
         
-                      
         
         
         
@@ -1156,7 +856,7 @@
         <tr>
           <td class="copy-pad" style="font-family: Helvetica, Arial, Roboto, sans-serif; font-size:10px;line-height:13px; padding:0px 40px; color: #000000;text-align: center;" valign="top" align="center">
             <!--Enter T+Cs here -->
-              *Spend & Save is available at Country Road stores in Australia and New Zealand, online at <a href="{{ BaseURL }}?lid=140zya4x7y4x" style="text-decoration: underline !important; color: #000000;" target="_blank">countryroad.com.au</a>, <a href="https://m.countryroad.co.nz?lid=ug8lzjrklxsb" style="text-decoration: underline !important; color: #000000;" target="_blank">coutryroad.co.nz</a> and <a href="https://m.countryroad.com?lid=43uht3k0m9t3" style="text-decoration: underline !important; color: #000000;" target="_blank">countryroad.com</a>, on the Country Road app (AU) and on Country Road merchandise in selected David Jones and Myer stores, for a limited time only. The offer is not available at <a href="{{ OutletbaseURL }}?lid=x91ghj6dw98j" style="text-decoration: underline !important; color: #000000;" target="_blank">outlet.countryroad.com.au</a>, Ebay or The Iconic. The offer is not available to Country Road rewards members online at <a href="https://www.davidjones.com/?lid=l8xnb43ty787" style="text-decoration: underline !important; color: #000000;" target="_blank">davidjones.com</a> and <a href="https://www.myer.com.au/?lid=fq8abvmd2odz" style="text-decoration: underline !important; color: #000000;" target="_blank">myer.com.au</a>.  Full terms and conditions&nbsp;<a href="{{ BaseURL | append: '/terms-and-conditions' }}?" style="text-decoration: underline !important; color: #000000;" target="_blank">here</a>.
+              *Cyber Week 25% off* available at Country Road stores in Australia and New Zealand, online at <a href="https://www.countryroad.com.au/?" style="text-decoration: underline !important; color: #000000;" target="_blank">countryroad.com.au</a>, <a href="https://m.countryroad.co.nz?" style="text-decoration: underline !important; color: #000000;" target="_blank">coutryroad.co.nz</a> and <a href="https://m.countryroad.com?" style="text-decoration: underline !important; color: #000000;" target="_blank">countryroad.com</a>, on the Country Road app (AU) and on Country Road merchandise in selected David Jones and Myer stores for Members from 8:00am AEDT Saturday 15 2025 and for the public on 8:00am AEDT Friday 21 November 2025 until Monday 1 December 2025. Full terms and conditions&nbsp;<a href="{{ BaseURL | append: '/terms-and-conditions' }}?" style="text-decoration: underline !important; color: #000000;" target="_blank">here</a>.
           </td>
         </tr>
         <tr>
