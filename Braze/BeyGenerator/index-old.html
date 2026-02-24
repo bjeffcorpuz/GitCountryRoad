@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyblade X</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #0c0c10, #1b1b2f);
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00f;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  margin: 15px auto;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 30px solid #ff0044;
+  filter: drop-shadow(0 0 10px #ff0044);
+  animation: pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.roulette-wrapper {
+  overflow: hidden;
+  background: #111;
+  padding: 20px 0;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.roulette-label {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px #0ff;
+}
+
+.roulette {
+  display: flex;
+  gap: 15px;
+  will-change: transform;
+}
+
+.card {
+  width: 250px;
+  height: 250px;
+  flex-shrink: 0;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: 0.6s;
+}
+
+.card.flip .inner {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: #0ff;
+}
+
+.front {
+  background: #222;
+}
+
+.back {
+  transform: rotateY(180deg);
+  overflow: hidden;
+}
+
+.back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+button {
+  margin-top: 20px;
+  width: 300px;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff0055, #ff9900);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+}
+
+@media screen and (max-width: 700px) {
+  .card { width: 180px; height: 180px; }
+  .front { font-size: 4rem; }
+  button { width: 200px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Beyblade X Random Builder</h2>
+  <div class="arrow"></div>
+
+  <div class="roulette-label">Blades</div>
+  <div class="roulette-wrapper" id="wrapper1">
+    <div class="roulette" id="roulette1"></div>
+  </div>
+
+  <div class="roulette-label">Ratchets</div>
+  <div class="roulette-wrapper" id="wrapper2">
+    <div class="roulette" id="roulette2"></div>
+  </div>
+
+  <div class="roulette-label">Bits</div>
+  <div class="roulette-wrapper" id="wrapper3">
+    <div class="roulette" id="roulette3"></div>
+  </div>
+
+  <button id="spinBtn">Generate Beyblade</button>
+</div>
+
+<script>
+let blades = [
+  {src:"images/image1.png"},
+  {src:"images/image2.png"},
+  {src:"images/image3.png"}
+];
+let ratchets = [
+  {src:"images/image4.png"},
+  {src:"images/image5.png"},
+  {src:"images/image6.png"}
+];
+let bits = [
+  {src:"images/image2.png"},
+  {src:"images/image5.png"},
+  {src:"images/image6.png"}
+];
+
+const CARD_COUNT = 5;
+
+// --- Containers ---
+const containers = [
+  {wrapper: document.getElementById("wrapper1"), roulette: document.getElementById("roulette1"), data: blades, label: "Blades", pos:0, vel:0, spinning:false, direction:1},
+  {wrapper: document.getElementById("wrapper2"), roulette: document.getElementById("roulette2"), data: ratchets, label: "Ratchets", pos:0, vel:0, spinning:false, direction:-1},
+  {wrapper: document.getElementById("wrapper3"), roulette: document.getElementById("roulette3"), data: bits, label: "Bits", pos:0, vel:0, spinning:false, direction:1}
+];
+
+let animationFrameId;
+
+// --- Card creation ---
+function createCard(src="", isEmpty=false) {
+  let card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="inner">
+      <div class="front">?</div>
+      <div class="back">${isEmpty ? "<span style='color:#555;font-size:4rem;'>—</span>" : (src ? `<img src="${src}">` : "")}</div>
+    </div>`;
+  return card;
+}
+
+function buildCards() {
+  containers.forEach(c=>{
+    c.roulette.innerHTML = "";
+    for(let i=0;i<CARD_COUNT*2;i++){
+      let img = c.data.length > 0 ? c.data[i % c.data.length].src : "";
+      let isEmpty = c.data.length === 0;
+      c.roulette.appendChild(createCard(img, isEmpty));
+    }
+  });
+}
+
+buildCards();
+
+// --- Animation ---
+function animate() {
+  let anySpinning = containers.some(c=>c.spinning);
+  if(!anySpinning) {
+    cancelAnimationFrame(animationFrameId);
+    return;
+  }
+
+  containers.forEach(c=>{
+    if(c.spinning){
+      c.pos -= c.vel * c.direction;
+      c.roulette.style.transform = `translateX(${c.pos}px)`;
+      if(c.direction > 0 && c.pos <= -c.roulette.scrollWidth/2) c.pos = 0;
+      if(c.direction < 0 && c.pos >= 0) c.pos = -c.roulette.scrollWidth/2;
+    }
+  });
+
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+// --- Stop Spin & Center ---
+function getClosestCard(wrapper){
+  let cards = [...wrapper.querySelectorAll(".card")];
+  let center = wrapper.getBoundingClientRect().left + wrapper.offsetWidth/2;
+  let bestCard = null, bestDist = 99999;
+  cards.forEach(card=>{
+    let rect = card.getBoundingClientRect();
+    let cardCenter = rect.left + rect.width/2;
+    let dist = Math.abs(center - cardCenter);
+    if(dist < bestDist){
+      bestDist = dist;
+      bestCard = card;
+    }
+  });
+  return bestCard;
+}
+
+function stopSpin(c){
+  c.spinning = false;
+
+  if(c.data.length === 0){
+    alert(`No more data on ${c.label}`);
+    return;
+  }
+
+  let randomIndex = Math.floor(Math.random() * c.data.length);
+  let chosen = c.data.splice(randomIndex, 1)[0];
+
+  let selected = getClosestCard(c.wrapper);
+  selected.querySelector(".back").innerHTML = `<img src="${chosen.src}">`;
+  selected.classList.add("flip");
+
+  let wrapperCenter = c.wrapper.getBoundingClientRect().left + c.wrapper.offsetWidth/2;
+  let cardCenter = selected.getBoundingClientRect().left + selected.offsetWidth/2;
+  let adjust = wrapperCenter - cardCenter;
+  c.pos += adjust;
+  c.roulette.style.transition = "transform 0.4s ease-out";
+  c.roulette.style.transform = `translateX(${c.pos}px)`;
+  setTimeout(()=>{ c.roulette.style.transition = "none"; }, 500);
+}
+
+// --- Spin Button ---
+spinBtn.onclick = function(){
+  cancelAnimationFrame(animationFrameId);
+
+  containers.forEach(c=>{
+    c.roulette.querySelectorAll(".card").forEach(card=>{
+      card.classList.remove("flip");
+      card.querySelector(".front").textContent = "?";
+      if(c.data.length === 0){
+        card.querySelector(".back").innerHTML = "<span style='color:#555;font-size:4rem;'>—</span>";
+      }
+    });
+    c.spinning = true;
+    c.vel = 2 + Math.random();
+    c.pos = 0;
+  });
+
+  animate();
+
+  containers.forEach((c,i)=>{
+    setTimeout(()=>{ stopSpin(c); }, 2000 + i*600);
+  });
+};
+</script>
+</body>
+</html>

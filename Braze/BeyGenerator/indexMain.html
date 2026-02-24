@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyblade X</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #0c0c10, #1b1b2f);
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1400px;
+  width: 100%;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #00f;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  margin: 15px auto 0px;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 30px solid #ff0044;
+  filter: drop-shadow(0 0 10px #ff0044);
+  animation: pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.cell {
+  background: rgba(0,0,0,0.25);
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* ROULETTE */
+
+.roulette-wrapper {
+  overflow: hidden;
+  background: #111;
+  padding: 20px 0;
+}
+
+.roulette-label {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px #0ff;
+}
+
+.roulette {
+  display: flex;
+  gap: 15px;
+  will-change: transform;
+}
+
+/* CARD */
+
+.card {
+  width: 220px;
+  height: 300px;
+  flex-shrink: 0;
+  perspective: 1000px;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: 0.6s;
+}
+
+.card.flip .inner {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #0ff;
+  border-radius: 12px;
+}
+
+.front {
+  background: #222;
+  font-size: 4.5rem;
+}
+
+.back {
+  background: #000;
+  transform: rotateY(180deg);
+  padding: 8px;
+}
+
+.back img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  margin-top: 6px;
+}
+
+/* STATS */
+
+.stats-box {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px;
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+.part-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #6dd5fa;
+}
+
+.stat-row { margin-bottom: 5px; }
+.stat-label { width: 55px; display: inline-block; }
+.stat-value { width: 30px; display: inline-block; text-align: right; }
+
+.bar-bg {
+  width: 100%;
+  height: 7px;
+  background: #2a2a2a;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#6dd5fa,#00c6ff);
+}
+
+/* BUTTON */
+
+button {
+  margin-top: 30px;
+  width: 320px;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff0055, #ff9900);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#downloadBtn{
+  margin-top: 1500px;
+}
+
+#downloadArea{
+  max-width: 500px;
+  width: 100%;
+  margin:0 auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Beyblade X Random Builder</h2>
+  
+
+  <div class="grid">
+    <div class="cell">
+      <div class="roulette-label">Main Blade</div>
+      <div class="arrow"></div>
+      <div class="roulette-wrapper" id="wrapper1">
+        <div class="roulette" id="roulette1"></div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div class="roulette-label">Assist Blade</div>
+      <div class="arrow"></div>
+      <div class="roulette-wrapper" id="assistWrapper">
+        <div class="roulette" id="rouletteAssist"></div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div class="roulette-label">Ratchet</div>
+      <div class="arrow"></div>
+      <div class="roulette-wrapper" id="wrapper2">
+        <div class="roulette" id="roulette2"></div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div class="roulette-label">Bit</div>
+      <div class="arrow"></div>
+      <div class="roulette-wrapper" id="wrapper3">
+        <div class="roulette" id="roulette3"></div>
+      </div>
+    </div>
+  </div>
+
+  <button id="spinBtn">Generate Beyblade</button>
+<div id="downloadArea">
+    <canvas id="radarChart" width="420" height="420" style="margin:40px auto; display:block;"></canvas>
+
+    <div id="beyName" style="
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #6dd5fa;
+    text-shadow: 0 0 10px rgba(109,213,250,0.6);
+  "></div>
+</div>
+<button id="downloadBtn">Download Image</button>
+<div id="beyDataOutput"></div>
+</div>
+
+<script>
+/* ================= DATA (UNCHANGED) ================= */
+/* (your data arrays stay exactly the same) */
+let blades = [
+{src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,astBlade:'No'},
+{src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,astBlade:'No'},
+{src:'images/blades/HellsBrave.png',name:'HellsBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
+{src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,astBlade:'No'},
+{src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,astBlade:'No'},
+{src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,astBlade:'No'},
+[{src:'images/blades/HellsHammer01.png',name:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,astBlade:'No'},
+{src:'images/blades/HellsHammer02.png',name:'HellsHammer',weight:33,atk:50,def:25,sta:25,astBlade:'No'}],
+{src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,astBlade:'No'},
+{src:'images/blades/WolfHunt.png',name:'WolfHunt',weight:33.3,atk:20,def:10,sta:30,astBlade:'Yes'},
+[{src:'images/blades/GolemRock01.png',name:'GolemRock',weight:34,atk:30,def:60,sta:10,astBlade:'No'},
+{src:'images/blades/GolemRock02.png',name:'GolemRock',weight:34,atk:35,def:65,sta:15,astBlade:'No'}],
+{src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,astBlade:'No'},
+{src:'images/blades/RockLeone.png',name:'RockLeone',weight:30.1,atk:30,def:55,sta:15,astBlade:'No'},
+{src:'images/blades/PegasusBlast.png',name:'PegasusBlast',weight:34.5,atk:50,def:10,sta:15,astBlade:'Yes'},
+{src:'images/blades/DranBrave.png',name:'DranBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
+{src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,astBlade:'No'},
+{src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,astBlade:'No'},
+{src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,astBlade:'No'},
+{src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,astBlade:'No'},
+{src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,astBlade:'No'},
+[{src:'images/blades/SolEclipseUpper.png',name:'SolEclipse',weight:34,atk:30,def:20,sta:10,astBlade:'Yes'},
+{src:'images/blades/SolEclipseSmash.png',name:'SolEclipse',weight:34,atk:20,def:30,sta:10,astBlade:'Yes'}],
+{src:'images/blades/PerseusDark.png',name:'PerseusDark',weight:32,atk:10,def:40,sta:10,astBlade:'Yes'},
+{src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,astBlade:'No'},
+{src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,astBlade:'No'},
+{src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,astBlade:'No'},
+{src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,astBlade:'No'},
+{src:'images/blades/EmperorMight.png',name:'EmperorMight',weight:37.4,atk:25,def:25,sta:25,astBlade:'Yes'},
+{src:'images/blades/WizardArc.png',name:'WizardArc',weight:31.3,atk:10,def:10,sta:40,astBlade:'Yes'}
+];
+
+let ratchets = [
+{src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,bit:'Yes'},
+{src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,bit:'Yes'},
+{src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,bit:'Yes'},
+{src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,bit:'Yes'},
+{src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,bit:'Yes'},
+{src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,bit:'Yes'},
+{src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,bit:'Yes'},
+{src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,bit:'Yes'},
+{src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,bit:'Yes'},
+{src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,bit:'Yes'},
+{src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,bit:'Yes'},
+{src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,bit:'Yes'},
+{src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,bit:'Yes'},
+{src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,bit:'Yes'},
+{src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,bit:'Yes'},
+{src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,bit:'Yes'},
+{src:"images/ratchets/Turbo.png",name:"Turbo",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No"},
+[{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No"},
+{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No"}],
+{src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,bit:'Yes'},
+{src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,bit:'Yes'}
+];
+
+let bits = [
+{src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
+{src:'images/bits/BoundSpike.png',name:'Bound Spike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
+{src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
+{src:'images/bits/DiscBall.png',name:'Disc Ball',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
+{src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
+{src:'images/bits/FreeBall.png',name:'Free Ball',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
+{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
+{src:'images/bits/GearFlat.png',name:'Gear Flat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
+{src:'images/bits/GearNeedle.png',name:'Gear Needle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
+{src:'images/bits/HighNeedle.png',name:'High Needle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
+{src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
+{src:'images/bits/LowRush.png',name:'Low Rush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
+{src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
+{src:'images/bits/MetalNeedle.png',name:'Metal Needle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
+{src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
+{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
+{src:'images/bits/RubberAccel.png',name:'Rubber Accel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
+{src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
+{src:'images/bits/TransKick.png',name:'Trans Kick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
+{src:'images/bits/UnderFlat.png',name:'Under Flat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
+{src:'images/bits/UnderNeedle.png',name:'Under Needle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
+{src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
+{src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
+{src:'images/bits/LowOrb.png',name:'Low Orb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
+{src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80}
+];
+
+let assist = [
+  {src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
+  {src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
+  {src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
+  {src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
+  [{src:'images/assist/DualUpper.png',name:'Dual(Upper)',weight:5.9,atk:17,def:13,sta:10},
+  {src:'images/assist/DualSmash.png',name:'Dual(Smash)',weight:5.9,atk:13,def:17,sta:10}],
+  {src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+  {src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+  {src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20}
+];
+
+let selectedParts = {
+  blade: null,
+  assist: null,
+  ratchet: null,
+  bit: null
+};
+
+/* ================= SYSTEM ================= */
+let rafId = null;
+const CARD_COUNT = 3;
+let skipBit = false;
+let allowAssist = false;
+
+const containers = [
+  {wrapper: wrapper1, roulette: roulette1, data: blades, label:"Blades", pos:0, vel:0, spinning:false, direction:1},
+  {wrapper: wrapper2, roulette: roulette2, data: ratchets, label:"Ratchets", pos:0, vel:0, spinning:false, direction:-1},
+  {wrapper: wrapper3, roulette: roulette3, data: bits, label:"Bits", pos:0, vel:0, spinning:false, direction:1}
+];
+
+const assistContainer = {
+  wrapper: assistWrapper,
+  roulette: rouletteAssist,
+  data: assist,
+  label:"Assist Blade",
+  pos:0, vel:0, spinning:false, direction:1
+};
+
+/* ================= HELPERS ================= */
+
+function createCard(){
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <div class="inner">
+      <div class="front">?</div>
+      <div class="back"></div>
+    </div>`;
+  return card;
+}
+
+function buildCards(c){
+  c.roulette.innerHTML="";
+  for(let i=0;i<CARD_COUNT*2;i++) c.roulette.appendChild(createCard());
+}
+
+[...containers, assistContainer].forEach(buildCards);
+
+function resolveAndRemove(arr){
+  if(!arr.length) return null;
+  const i=Math.floor(Math.random()*arr.length);
+  const raw=arr.splice(i,1)[0];
+  return Array.isArray(raw) ? raw[Math.floor(Math.random()*raw.length)] : raw;
+}
+
+function getClosestCard(wrapper){
+  const cards=[...wrapper.querySelectorAll(".card")];
+  const center=wrapper.getBoundingClientRect().left + wrapper.offsetWidth/2;
+  let best=null, dist=Infinity;
+  cards.forEach(card=>{
+    const r=card.getBoundingClientRect();
+    const d=Math.abs(center-(r.left+r.width/2));
+    if(d<dist){ dist=d; best=card; }
+  });
+  return best;
+}
+
+/* ================= STATS ================= */
+
+function createStatsHTML(item, label){
+  let stats = ["atk","def","sta"];
+
+  // 🟢 Bits always show full stats
+  if(label === "Bits"){
+    stats = ["atk","def","sta","dash","burstR"];
+  }
+
+  // 🟢 Ratchets with bit === "No" also show dash + burstR
+  if(label === "Ratchets" && item.bit === "No"){
+    stats = ["atk","def","sta","dash","burstR"];
+  }
+
+  return `
+    <div class="stats-box">
+      <div class="part-name">${item.name}</div>
+      ${stats.map(s => `
+        <div class="stat-row">
+          <span class="stat-label">${s.toUpperCase()}</span>
+          <span class="stat-value">${item[s] ?? 0}</span>
+          <div class="bar-bg">
+            <div class="bar-fill" style="width:${Math.min(item[s] ?? 0,100)}%"></div>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+/* ================= ANIMATION (FIXED) ================= */
+
+function animate(){
+  if(rafId) return; // ⛔ prevent stacking
+
+  function frame(){
+    let active = false;
+
+    [...containers, assistContainer].forEach(c=>{
+      // 🚫 HARD STOP FOR BITS WHEN SKIPPED
+      if(c.label==="Bits" && skipBit) return;
+
+      if(c.spinning){
+        active = true;
+
+        c.pos -= c.vel * c.direction;
+
+        // 🧈 smooth damping (prevents long-term jitter)
+        c.vel *= 0.995;
+
+        c.roulette.style.transform = `translateX(${c.pos}px)`;
+
+        const limit = c.roulette.scrollWidth / 2;
+        if(c.direction > 0 && c.pos <= -limit) c.pos = 0;
+        if(c.direction < 0 && c.pos >= 0) c.pos = -limit;
+      }
+    });
+
+    if(active){
+      rafId = requestAnimationFrame(frame);
+    } else {
+      cancelAnimationFrame(rafId);
+      rafId = null; // ✅ fully clean
+    }
+  }
+
+  frame();
+}
+
+
+
+/* ================= STOP ================= */
+
+
+function stopSpin(c){
+  const chosen = resolveAndRemove(c.data);
+  if(!chosen){ c.spinning=false; return; }
+
+  c.spinning=false;
+
+  const card = getClosestCard(c.wrapper);
+  const w = c.wrapper.getBoundingClientRect();
+  const r = card.getBoundingClientRect();
+  c.pos -= (r.left + r.width/2) - (w.left + w.width/2);
+  c.roulette.style.transform = `translateX(${c.pos}px)`;
+
+  card.querySelector(".back").innerHTML =
+    `<img src="${chosen.src}">${createStatsHTML(chosen,c.label)}`;
+  card.classList.add("flip");
+
+  // ✅ RATchet → HARD DISABLE BITS
+  if(c.label==="Ratchets" && chosen.bit==="No"){
+    skipBit = true;
+    const bitC = containers.find(x=>x.label==="Bits");
+    bitC.spinning = false;
+    bitC.vel = 0;
+    bitC.pos = 0;
+    bitC.roulette.style.transform = "translateX(0)";
+  }
+
+  if(c.label==="Blades") allowAssist = chosen.astBlade==="Yes";
+
+  if (c.label === "Blades") selectedParts.blade = chosen;
+  if (c.label === "Assist Blade") selectedParts.assist = chosen;
+  if (c.label === "Ratchets") selectedParts.ratchet = chosen;
+  if (c.label === "Bits") selectedParts.bit = chosen;
+
+  /* UPDATE RADAR */
+  const total = { atk:0, def:0, sta:0, dash:0, burstR:0 };
+
+  Object.values(selectedParts)
+    .filter(Boolean)
+    .forEach(p => {
+      total.atk += p.atk || 0;
+      total.def += p.def || 0;
+      total.sta += p.sta || 0;
+      total.dash += p.dash || 0;
+      total.burstR += p.burstR || 0;
+    });
+
+  drawRadar(total);
+  updateBeyName();
+  
+}
+
+/* ================= BUTTON ================= */
+
+spinBtn.onclick=()=>{
+
+document.getElementById("beyName").textContent = "";
+
+  selectedParts = {
+    blade: null,
+    assist: null,
+    ratchet: null,
+    bit: null
+  };
+
+  // 🔄 reset radar immediately
+  drawRadar({ atk:0, def:0, sta:0, dash:0, burstR:0 });
+
+
+  if(containers.some(c=>c.spinning) || assistContainer.spinning) return;
+
+  skipBit=false;
+  allowAssist=false;
+
+  [...containers, assistContainer].forEach(c=>{
+    c.spinning=false;
+    c.pos=0;
+    c.roulette.style.transform="translateX(0)";
+    c.roulette.querySelectorAll(".card").forEach(card=>{
+      card.classList.remove("flip");
+      card.querySelector(".back").innerHTML="";
+    });
+  });
+
+containers.forEach(c=>{
+  c.spinning = true;
+  c.vel = 3.8 + Math.random() * 1.5; // 🔥 faster but controlled
+});
+
+  animate();
+
+  setTimeout(()=>stopSpin(containers[0]),2000);
+
+  setTimeout(()=>{
+    if(allowAssist){
+      assistContainer.spinning=true;
+      assistContainer.vel = 3.8 + Math.random() * 1.5;
+      animate();
+      setTimeout(()=>stopSpin(assistContainer),2000);
+    }
+  },2600);
+
+  setTimeout(()=>stopSpin(containers[1]),2600);
+  setTimeout(()=>{ if(!skipBit) stopSpin(containers[2]); },3200);
+};
+
+
+/* ================= RADAR GRAPH ================= */
+
+const radar = document.getElementById("radarChart");
+const ctx = radar.getContext("2d");
+
+function drawRadar(stats) {
+  ctx.clearRect(0, 0, radar.width, radar.height);
+
+  const labels = ["ATK", "DEF", "STA", "DASH", "BURST RES"];
+  const max = 150;
+  const values = [
+    Math.min(stats.atk, max),
+    Math.min(stats.def, max),
+    Math.min(stats.sta, max),
+    Math.min(stats.dash, max),
+    Math.min(stats.burstR, max)
+  ];
+
+  
+  const cx = radar.width / 2;
+  const cy = radar.height / 2;
+  const radius = 150;
+  const levels = 5;
+
+  ctx.strokeStyle = "rgba(255,255,255,1)";
+  ctx.lineWidth = 1;
+
+  /* GRID */
+  for (let i = 1; i <= levels; i++) {
+    const r = (radius / levels) * i;
+    ctx.beginPath();
+    for (let j = 0; j < labels.length; j++) {
+      const angle = (Math.PI * 2 / labels.length) * j - Math.PI / 2;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      j === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  /* AXES */
+  labels.forEach((label, i) => {
+    const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    ctx.fillStyle = "#fff";
+    ctx.font = "12px Segoe UI";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      `${label} (${values[i]})`,
+      cx + Math.cos(angle) * (radius + 22),
+      cy + Math.sin(angle) * (radius + 22)
+    );
+  });
+
+  /* DATA POLYGON */
+  ctx.beginPath();
+  values.forEach((val, i) => {
+    const r = (val / max) * radius;
+    const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+
+  ctx.fillStyle = "rgba(109,213,250,0.35)";
+  ctx.strokeStyle = "#6dd5fa";
+  ctx.lineWidth = 2;
+  ctx.fill();
+  ctx.stroke();
+}
+
+function updateBeyName() {
+  if (!selectedParts.blade || !selectedParts.ratchet) return;
+
+  let name = "";
+
+  // Blade (required)
+  name += selectedParts.blade.name + " ";
+
+  // Assist first letter (if exists)
+  if (selectedParts.assist) {
+    name += selectedParts.assist.name.charAt(0);
+  }
+
+  // Ratchet (required)
+  name += selectedParts.ratchet.name;
+
+  // Bit (optional)
+  if (selectedParts.bit) {
+    name += selectedParts.bit.abbr;
+  }
+
+  document.getElementById("beyName").textContent = name;
+}
+
+document.getElementById("downloadBtn").addEventListener("click", function () {
+    const target = document.getElementById("downloadArea");
+    const nameElement = document.getElementById("beyName");
+
+    // Get name text
+    let fileName = nameElement.textContent.trim();
+
+    // Replace spaces with underscores
+    fileName = fileName.replace(/\s+/g, "_");
+
+    html2canvas(target, {
+        backgroundColor: null,
+        scale: 2
+    }).then(canvas => {
+
+        const link = document.createElement("a");
+        link.download = fileName + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+    });
+
+    outputBeyData();
+});
+
+function outputBeyData() {
+  const data = {
+    blade: selectedParts.blade ? selectedParts.blade.name : "",
+    asst: selectedParts.assist ? selectedParts.assist.name.charAt(0) : "",
+    ratchet: selectedParts.ratchet ? selectedParts.ratchet.name : "",
+    bit: selectedParts.bit ? selectedParts.bit.abbr : ""
+  };
+
+  const jsonString = JSON.stringify(data);
+
+  document.getElementById("beyDataOutput").textContent = jsonString;
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>

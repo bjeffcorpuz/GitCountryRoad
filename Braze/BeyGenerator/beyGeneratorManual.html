@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyblade Generator</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:radial-gradient(circle at top,#0c0c10,#1b1b2f);
+  color:white;
+}
+
+h1{
+  text-align:center;
+  padding:20px;
+  margin:0;
+  text-shadow:0 0 10px #00f;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:1fr 1.5fr 1fr;
+  gap:20px;
+  padding:20px;
+}
+
+.column{
+  background:rgba(0,0,0,0.3);
+  padding:15px;
+  border-radius:12px;
+}
+
+.dropdown{
+  position:relative;
+  margin-bottom:20px;
+}
+
+.dropdown button{
+  width:100%;
+  padding:10px;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  text-align:left;
+}
+
+.dropdown.disabled button{
+  background:#444;
+  cursor:not-allowed;
+}
+
+.dropdown-content{
+  display:none;
+  position:absolute;
+  width:100%;
+  background:#111;
+  border-radius:6px;
+  max-height:250px;
+  overflow:auto;
+  z-index:5;
+  padding:5px;
+}
+
+.dropdown-content input{
+  width:100%;
+  padding:6px;
+  margin-bottom:5px;
+  border:none;
+  border-radius:4px;
+}
+
+.dropdown-content div{
+  padding:6px;
+  cursor:pointer;
+}
+
+.dropdown-content div:hover{
+  background:#222;
+}
+
+.part{
+  display:flex;
+  gap:15px;
+  margin-bottom:20px;
+  padding:10px;
+  background:#111;
+  border-radius:10px;
+}
+
+.part img{
+  width:120px;
+  height:120px;
+  object-fit:contain;
+}
+
+.stats{
+  flex:1;
+  font-size:13px;
+}
+
+.stat-row{
+  margin-bottom:6px;
+}
+
+.bar-bg{
+  background:#2a2a2a;
+  height:6px;
+  border-radius:4px;
+  overflow:hidden;
+}
+
+.bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,#6dd5fa,#00c6ff);
+}
+
+canvas{
+  display:block;
+  margin:auto;
+}
+
+#totalWeight{
+  text-align:center;
+  font-size:18px;
+  margin-top:15px;
+  color:#6dd5fa;
+}
+
+#beyName{
+  margin-top:15px;
+  text-align:center;
+  font-size:20px;
+  font-weight:600;
+  color:#66ccff;
+  letter-spacing:1px;
+}
+
+.downloadBtn {
+  display: block;
+  margin: 15px auto 0 auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #6dd5fa, #00c6ff);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 5px #000;
+  transition: all 0.2s ease;
+}
+
+.downloadBtn:hover {
+  background: linear-gradient(90deg, #00c6ff, #6dd5fa);
+  transform: scale(1.05);
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 2px solid #00c6ff;
+  background: linear-gradient(145deg, #111, #1b1b2f);
+  color: #66ccff;
+  font-weight: bold;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.dropdown button::after {
+  content: '▼';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #66ccff;
+  transition: transform 0.25s ease;
+}
+
+.dropdown button.active::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: #0c0c10;
+  border-radius: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+  padding: 5px 0;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content input {
+  width: 90%;
+  margin: 0 auto 8px auto;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #00c6ff;
+  background: #111;
+  color: #66ccff;
+  display: block;
+}
+
+.dropdown-content div {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.dropdown-content div:hover {
+  background: #00c6ff22;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Beyblade Generator</h1>
+
+<div class="layout">
+
+  <div class="column">
+    <div id="bladeDropdown" class="dropdown"></div>
+    <div id="assistDropdown" class="dropdown disabled"></div>
+    <div id="ratchetDropdown" class="dropdown"></div>
+    <div id="bitDropdown" class="dropdown disabled"></div>
+  </div>
+
+  <div class="column" id="displayColumnContainer">
+  <div id="displayColumn"></div>
+  <button id="downloadPartsBtn" class="downloadBtn">Download Parts</button>
+</div>
+
+<div class="column">
+  <div id="downloadArea">
+  <canvas id="spiderChart" width="450" height="450"></canvas>
+  <div id="totalWeight"></div>
+  <div id="beyName"></div>
+  </div>
+
+  <button id="downloadBtn" class="downloadBtn">Download Graph</button>
+</div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+/* =====================
+   🔥 PASTE YOUR DATA BELOW
+   const blades = [...]
+   const ratchets = [...]
+   const bits = [...]
+====================== */
+let blades = flattenArray([
+{src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,astBlade:'No'},
+{src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,astBlade:'No'},
+{src:'images/blades/HellsBrave.png',name:'HellsBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
+{src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,astBlade:'No'},
+{src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,astBlade:'No'},
+{src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,astBlade:'No'},
+[{src:'images/blades/HellsHammer01.png',name:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,astBlade:'No'},
+{src:'images/blades/HellsHammer02.png',name:'HellsHammer',weight:33,atk:50,def:25,sta:25,astBlade:'No'}],
+{src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,astBlade:'No'},
+{src:'images/blades/WolfHunt.png',name:'WolfHunt',weight:33.3,atk:20,def:10,sta:30,astBlade:'Yes'},
+[{src:'images/blades/GolemRock01.png',name:'GolemRock',weight:34,atk:30,def:60,sta:10,astBlade:'No'},
+{src:'images/blades/GolemRock02.png',name:'GolemRock',weight:34,atk:35,def:65,sta:15,astBlade:'No'}],
+{src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,astBlade:'No'},
+{src:'images/blades/RockLeone.png',name:'RockLeone',weight:30.1,atk:30,def:55,sta:15,astBlade:'No'},
+{src:'images/blades/PegasusBlast.png',name:'PegasusBlast',weight:34.5,atk:50,def:10,sta:15,astBlade:'Yes'},
+{src:'images/blades/DranBrave.png',name:'DranBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
+{src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,astBlade:'No'},
+{src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,astBlade:'No'},
+{src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,astBlade:'No'},
+{src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,astBlade:'No'},
+{src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,astBlade:'No'},
+[{src:'images/blades/SolEclipseUpper.png',name:'SolEclipse',weight:34,atk:30,def:20,sta:10,astBlade:'Yes'},
+{src:'images/blades/SolEclipseSmash.png',name:'SolEclipse',weight:34,atk:20,def:30,sta:10,astBlade:'Yes'}],
+{src:'images/blades/PerseusDark.png',name:'PerseusDark',weight:32,atk:10,def:40,sta:10,astBlade:'Yes'},
+{src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,astBlade:'No'},
+{src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,astBlade:'No'},
+{src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,astBlade:'No'},
+{src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,astBlade:'No'},
+{src:'images/blades/EmperorMight.png',name:'EmperorMight',weight:37.4,atk:25,def:25,sta:25,astBlade:'Yes'},
+{src:'images/blades/WizardArc.png',name:'WizardArc',weight:31.3,atk:10,def:10,sta:40,astBlade:'Yes'}
+]).sort((a,b)=>a.name.localeCompare(b.name));
+
+let assist = flattenArray([
+  {src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
+  {src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
+  {src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
+  {src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
+  {src:'images/assist/DualUpper.png',name:'Dual(Upper)',weight:5.9,atk:17,def:13,sta:10},
+  {src:'images/assist/DualSmash.png',name:'Dual(Smash)',weight:5.9,atk:13,def:17,sta:10},
+  {src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+  {src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+  {src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20}
+]).sort((a,b)=>a.name.localeCompare(b.name));
+
+let ratchets = ([
+{src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,bit:'Yes'},
+{src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,bit:'Yes'},
+{src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,bit:'Yes'},
+{src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,bit:'Yes'},
+{src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,bit:'Yes'},
+{src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,bit:'Yes'},
+{src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,bit:'Yes'},
+{src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,bit:'Yes'},
+{src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,bit:'Yes'},
+{src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,bit:'Yes'},
+{src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,bit:'Yes'},
+{src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,bit:'Yes'},
+{src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,bit:'Yes'},
+{src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,bit:'Yes'},
+{src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,bit:'Yes'},
+{src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,bit:'Yes'},
+{src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,bit:'Yes'},
+{src:"images/ratchets/Turbo.png",name:"Turbo",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No"},
+{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No"},
+{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No"},
+{src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,bit:'Yes'},
+{src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,bit:'Yes'}
+]).sort((a,b)=>a.name.localeCompare(b.name));
+
+let bits = ([
+{src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
+{src:'images/bits/BoundSpike.png',name:'Bound Spike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
+{src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
+{src:'images/bits/DiscBall.png',name:'Disc Ball',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
+{src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
+{src:'images/bits/FreeBall.png',name:'Free Ball',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
+{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
+{src:'images/bits/GearFlat.png',name:'Gear Flat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
+{src:'images/bits/GearNeedle.png',name:'Gear Needle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
+{src:'images/bits/HighNeedle.png',name:'High Needle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
+{src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
+{src:'images/bits/LowRush.png',name:'Low Rush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
+{src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
+{src:'images/bits/MetalNeedle.png',name:'Metal Needle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
+{src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
+{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
+{src:'images/bits/RubberAccel.png',name:'Rubber Accel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
+{src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
+{src:'images/bits/TransKick.png',name:'Trans Kick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
+{src:'images/bits/UnderFlat.png',name:'Under Flat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
+{src:'images/bits/UnderNeedle.png',name:'Under Needle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
+{src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
+{src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
+{src:'images/bits/LowOrb.png',name:'Low Orb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
+{src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80}
+]).sort((a,b)=>a.name.localeCompare(b.name));
+
+/* ===== UTIL ===== */
+
+function flattenArray(arr){
+  return arr.flatMap(item => Array.isArray(item)?item:[item]);
+}
+
+/* ===== STATE ===== */
+
+let selected={blade:null,assist:null,ratchet:null,bit:null};
+
+/* ===== DISPLAY ===== */
+
+
+function createPart(part){
+  if(!part) return "";
+
+  const baseStats = ["atk","def","sta"];
+  const extraStats = ["dash","burstR"];
+  
+  // Start with base stats
+  let statsToShow = baseStats.slice();
+
+  // Add extra stats if they exist
+  statsToShow = statsToShow.concat(extraStats.filter(stat => part[stat] !== undefined));
+
+  // Finally, always add weight at the end
+  statsToShow.push("weight");
+
+  return `
+  <div class="part">
+    <img src="${part.src}">
+    <div class="stats">
+      <strong>${part.name}</strong>
+      ${statsToShow.map(s=>`
+      <div class="stat-row">
+        ${s.toUpperCase()}: ${part[s] || 0}
+        <div class="bar-bg">
+          <div class="bar-fill" style="width:${Math.min(part[s] || 0,100)}%"></div>
+        </div>
+      </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ===== MAIN UPDATE ===== */
+
+function updateAll(){
+
+  const displayColumn = document.getElementById("displayColumn");
+  const totalWeightDiv = document.getElementById("totalWeight");
+
+  displayColumn.innerHTML="";
+
+  if(selected.blade) displayColumn.innerHTML+=createPart(selected.blade);
+  if(selected.assist) displayColumn.innerHTML+=createPart(selected.assist);
+  if(selected.ratchet) displayColumn.innerHTML+=createPart(selected.ratchet);
+  if(selected.bit) displayColumn.innerHTML+=createPart(selected.bit);
+
+  // weight handled here ONLY
+  let weightTotal = 0;
+  Object.values(selected).forEach(p=>{
+    if(p) weightTotal += p.weight || 0;
+  });
+
+  totalWeightDiv.textContent = "Total Weight: "+weightTotal.toFixed(1)+"g";
+
+  updateSpiderChart();
+  updateBeyName();
+}
+
+/* ===== NAME FUNCTION ===== */
+
+function updateBeyName(){
+
+  const nameDiv = document.getElementById("beyName");
+
+  if(!selected.blade || !selected.ratchet){
+    nameDiv.textContent="";
+    return;
+  }
+
+  let name = selected.blade.name + " ";
+
+  if(selected.assist){
+    name += selected.assist.name.charAt(0);
+  }
+
+  name += selected.ratchet.name;
+
+  if(selected.bit){
+    name += selected.bit.abbr;
+  }
+
+  nameDiv.textContent=name;
+}
+
+/* ===== RADAR CHART ===== */
+
+let spiderChart;
+
+function updateSpiderChart(){
+
+  const parts = Object.values(selected);
+
+  const stats={
+    atk:0,def:0,sta:0,dash:0,burstR:0
+  };
+
+  parts.forEach(p=>{
+    if(p){
+      stats.atk+=p.atk||0;
+      stats.def+=p.def||0;
+      stats.sta+=p.sta||0;
+      stats.dash+=p.dash||0;
+      stats.burstR+=p.burstR||0;
+    }
+  });
+
+  const labels=[
+    `ATK (${stats.atk})`,
+    `DEF (${stats.def})`,
+    `STA (${stats.sta})`,
+    `DASH (${stats.dash})`,
+    `BURST R (${stats.burstR})`
+  ];
+
+  const config={
+    type:'radar',
+    data:{
+      labels:labels,
+      datasets:[{
+        data:Object.values(stats),
+        fill:true,
+        backgroundColor:'rgba(102,204,255,0.35)',
+        borderColor:'#66ccff',
+        borderWidth:2,
+        pointBackgroundColor:'#66ccff'
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false}},
+      scales:{
+        r:{
+          beginAtZero:true,
+          max:150,
+          grid:{color:'rgba(255,255,255,0.4)',circular:false},
+          angleLines:{color:'rgba(255,255,255,0.7)'},
+          pointLabels:{color:'#fff'},
+          ticks:{display:false,stepSize:30}
+        }
+      }
+    }
+  };
+
+  if(spiderChart) spiderChart.destroy();
+
+  const ctx=document.getElementById("spiderChart").getContext("2d");
+  spiderChart=new Chart(ctx,config);
+}
+
+/* ===== DROPDOWN SYSTEM ===== */
+
+function createDropdown(containerId, label, dataArray, type){
+    const container = document.getElementById(containerId);
+
+    container.innerHTML = `
+      <button>${label}</button>
+      <div class="dropdown-content">
+        <input type="text" placeholder="Search ${label}...">
+        <div class="items"></div>
+      </div>
+    `;
+
+    const button = container.querySelector("button"); // ✅ local scope
+    const content = container.querySelector(".dropdown-content");
+    const searchInput = container.querySelector("input");
+    const itemsDiv = container.querySelector(".items");
+
+    function populateList(filter=""){
+        itemsDiv.innerHTML = "";
+        dataArray
+            .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+            .forEach(item => {
+                const div = document.createElement("div");
+                div.textContent = item.name;
+                div.onclick = () => {
+                    selected[type] = item;
+                    button.textContent = item.name;
+                    content.classList.remove("show");
+                    button.classList.remove("active");
+
+                    handleDependencies(type);
+                    updateAll();
+                };
+                itemsDiv.appendChild(div);
+            });
+    }
+
+    populateList();
+
+    // Fancy dropdown toggle must stay here
+button.onclick = () => {
+    if(container.classList.contains("disabled")) return;
+
+    const isVisible = content.classList.contains("show");
+    
+    // Close other dropdowns if needed
+    document.querySelectorAll('.dropdown-content.show').forEach(dc => {
+        if(dc !== content) {
+            dc.classList.remove('show');
+            dc.previousElementSibling.classList.remove('active');
+        }
+    });
+
+    content.classList.toggle("show", !isVisible);
+    button.classList.toggle("active", !isVisible);
+};
+    searchInput.oninput = e => populateList(e.target.value);
+
+    document.addEventListener("click", e => {
+        if(!container.contains(e.target)){
+            content.classList.remove("show");
+            button.classList.remove("active");
+        }
+    });
+}
+
+/* ===== DEPENDENCY LOGIC ===== */
+
+function handleDependencies(type){
+
+  const assistDropdown=document.getElementById("assistDropdown");
+  const bitDropdown=document.getElementById("bitDropdown");
+
+  // Assist depends on blade
+  if(type==="blade"){
+    selected.assist=null;
+    if(selected.blade && selected.blade.astBlade==="Yes"){
+      assistDropdown.classList.remove("disabled");
+    }else{
+      assistDropdown.classList.add("disabled");
+    }
+  }
+
+  // Bit depends on ratchet
+  if(type==="ratchet"){
+    selected.bit=null;
+    if(selected.ratchet && selected.ratchet.bit==="Yes"){
+      bitDropdown.classList.remove("disabled");
+    }else{
+      bitDropdown.classList.add("disabled");
+    }
+  }
+}
+
+
+/* ===== INITIALIZE ===== */
+
+createDropdown("bladeDropdown","Select Main Blade",blades,"blade");
+createDropdown("assistDropdown","Select Assist Blade",assist,"assist");
+createDropdown("ratchetDropdown","Select Ratchet",ratchets,"ratchet");
+createDropdown("bitDropdown","Select Bit",bits,"bit");
+
+updateSpiderChart();
+
+
+document.getElementById("downloadBtn").addEventListener("click", function () {
+    const target = document.getElementById("downloadArea");
+    const nameElement = document.getElementById("beyName");
+
+    // Get name text
+    let fileName = nameElement.textContent.trim() || "Beyblade";
+    fileName = fileName.replace(/\s+/g, "_");
+
+    // Calculate scale to make width exactly 450px
+    const targetWidth = 450;
+    const scale = targetWidth / target.offsetWidth;
+
+    html2canvas(target, {
+        backgroundColor: null,
+        scale: scale
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = fileName + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+});
+
+
+document.getElementById("downloadPartsBtn").addEventListener("click", function() {
+    const target = document.getElementById("displayColumn"); // column 2
+    const nameElement = document.getElementById("beyName");
+
+    let fileName = nameElement.textContent.trim() || "Beyblade";
+    fileName = fileName.replace(/\s+/g, "_") + "_parts";
+
+    html2canvas(target, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true // important for images
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = fileName + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }).catch(err => console.error(err));
+});
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
