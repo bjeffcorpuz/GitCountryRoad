@@ -2,173 +2,179 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyblade Generator</title>
+<title>Beyblade Builder Multi</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI, sans-serif;
-  background:radial-gradient(circle at top,#0c0c10,#1b1b2f);
-  color:white;
+/* ================= GLOBAL THEME ================= */
+:root {
+  --neon-blue: #00f3ff;
+  --neon-green: #00ff41;
+  --neon-pink: #ff0055;
+  --bg-dark: #0a0a12;
+  --panel-bg: rgba(20, 20, 35, 0.85); /* Slightly more opaque for grouping */
+  --border-color: rgba(0, 243, 255, 0.3);
 }
 
-h1{
-  text-align:center;
-  padding:20px;
-  margin:0;
-  text-shadow:0 0 10px #00f;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(circle at center top, #1a1a2e, #000);
+  color: #e0e0e0;
+  min-height: 100vh;
+  overflow-x: hidden; 
+  padding-bottom: 100px; /* Space for add button */
 }
 
-.layout{
-  display:grid;
-  grid-template-columns:1fr 1.5fr 1fr;
-  gap:20px;
-  padding:20px;
-}
-
-.column{
-  background:rgba(0,0,0,0.3);
-  padding:15px;
-  border-radius:12px;
-}
-
-.dropdown{
-  position:relative;
-  margin-bottom:20px;
-}
-
-.dropdown button{
-  width:100%;
-  padding:10px;
-  border-radius:6px;
-  border:none;
-  cursor:pointer;
-  text-align:left;
-}
-
-.dropdown.disabled button{
-  background:#444;
-  cursor:not-allowed;
-}
-
-.dropdown-content{
-  display:none;
-  position:absolute;
-  width:100%;
-  background:#111;
-  border-radius:6px;
-  max-height:250px;
-  overflow:auto;
-  z-index:5;
-  padding:5px;
-}
-
-.dropdown-content input{
-  width:100%;
-  padding:6px;
-  margin-bottom:5px;
-  border:none;
-  border-radius:4px;
-}
-
-.dropdown-content div{
-  padding:6px;
-  cursor:pointer;
-}
-
-.dropdown-content div:hover{
-  background:#222;
-}
-
-.part{
-  display:flex;
-  gap:15px;
-  margin-bottom:20px;
-  padding:10px;
-  background:#111;
-  border-radius:10px;
-}
-
-.part img{
-  width:120px;
-  height:120px;
-  object-fit:contain;
-}
-
-.stats{
-  flex:1;
-  font-size:13px;
-}
-
-.stat-row{
-  margin-bottom:6px;
-}
-
-.bar-bg{
-  background:#2a2a2a;
-  height:6px;
-  border-radius:4px;
-  overflow:hidden;
-}
-
-.bar-fill{
-  height:100%;
-  background:linear-gradient(90deg,#6dd5fa,#00c6ff);
-}
-
-canvas{
-  display:block;
-  margin:auto;
-}
-
-#totalWeight{
-  text-align:center;
-  font-size:18px;
-  margin-top:15px;
-  color:#6dd5fa;
-}
-
-#beyName{
-  margin-top:15px;
-  text-align:center;
-  font-size:20px;
-  font-weight:600;
-  color:#66ccff;
-  letter-spacing:1px;
-}
-
-.downloadBtn {
-  display: block;
-  margin: 15px auto 0 auto;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
+/* ================= TITLE ANIMATION ================= */
+h1 {
+  text-align: center;
+  padding: 30px 0;
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
   color: #fff;
-  background: linear-gradient(90deg, #6dd5fa, #00c6ff);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  text-shadow: 0 0 5px #000;
-  transition: all 0.2s ease;
+  position: relative;
+  animation: lightning 3s infinite alternate;
 }
 
-.downloadBtn:hover {
-  background: linear-gradient(90deg, #00c6ff, #6dd5fa);
-  transform: scale(1.05);
+@keyframes lightning {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+    opacity: 1;
+  }
+  20%, 24%, 55% { text-shadow: none; opacity: 0.6; }
+}
+
+/* ================= BUILD ROW CONTAINER (THE GROUP) ================= */
+#builders-list {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.build-row {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  margin-bottom: 50px;
+  padding: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.row-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--neon-blue);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.delete-row-btn {
+  background: transparent;
+  border: 1px solid var(--neon-pink);
+  color: var(--neon-pink);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.delete-row-btn:hover {
+  background: var(--neon-pink);
+  color: white;
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+/* ================= 3-COLUMN LAYOUT (Inside Row) ================= */
+.layout {
+  display: grid;
+  grid-template-columns: 350px 1fr 400px;
+  gap: 25px;
+  align-items: start;
+}
+
+.column {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 0; 
+}
+
+/* System Logo */
+.systemLogo {
+  display: none;
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto 25px auto;
+  filter: drop-shadow(0 0 10px var(--neon-blue));
+}
+
+/* ================= DROPDOWNS ================= */
+.dropdown {
+  position: relative;
+  margin-bottom: 15px;
+  z-index: 10;
+  transition: z-index 0s linear 0.2s;
+}
+
+.dropdown.is-open {
+  z-index: 1000;
+  transition: z-index 0s;
+}
+
+.dropdown.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(1);
 }
 
 .dropdown button {
   width: 100%;
-  padding: 10px 15px;
+  padding: 14px 20px;
   border-radius: 8px;
-  border: 2px solid #00c6ff;
-  background: linear-gradient(145deg, #111, #1b1b2f);
-  color: #66ccff;
-  font-weight: bold;
+  border: 1px solid var(--neon-blue);
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(0,0,0,0.4));
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
   text-align: left;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   position: relative;
+  overflow: hidden;
+}
+
+.dropdown button:hover {
+  background: rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
 }
 
 .dropdown button::after {
@@ -177,9 +183,9 @@ canvas{
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 12px;
-  color: #66ccff;
-  transition: transform 0.25s ease;
+  font-size: 0.8rem;
+  color: var(--neon-blue);
+  transition: transform 0.3s;
 }
 
 .dropdown button.active::after {
@@ -189,122 +195,286 @@ canvas{
 .dropdown-content {
   display: none;
   position: absolute;
-  width: 100%;
-  background: #0c0c10;
-  border-radius: 8px;
-  max-height: 250px;
-  overflow-y: auto;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.6);
-  padding: 5px 0;
-  z-index: 10;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  top: 110%;
+  left: 0;
+  width: 100%; 
+  min-width: 300px;
+  background: #0c0c10; 
+  border: 1px solid var(--neon-blue);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,1);
+  z-index: 100;
 }
 
 .dropdown-content.show {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-content input {
-  width: 90%;
-  margin: 0 auto 8px auto;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #00c6ff;
-  background: #111;
-  color: #66ccff;
-  display: block;
-}
-
-.dropdown-content div {
-  padding: 8px 12px;
-  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #1f1f2e; 
+  border: 1px solid #444;
   color: #fff;
-  transition: background 0.2s ease;
+  border-radius: 6px;
+  outline: none;
 }
 
-.dropdown-content div:hover {
-  background: #00c6ff22;
+.dropdown-content input:focus { border-color: var(--neon-blue); }
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
+.items-grid::-webkit-scrollbar { width: 6px; }
+.items-grid::-webkit-scrollbar-track { background: #111; }
+.items-grid::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+.grid-item {
+  background: #1a1a24;
+  border-radius: 8px;
+  padding: 6px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #333;
+  transition: all 0.2s;
+}
+
+.grid-item:hover { background: #2a2a34; border-color: #fff; }
+.grid-item.selected {
+  border-color: var(--neon-blue);
+  background: #1a3a4a;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.grid-item img {
+  width: 100%;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.grid-item span {
+  font-size: 0.75rem;
+  color: #ddd;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ================= PARTS DISPLAY ================= */
+.displayColumnContainer {
+  overflow-y: auto;
+  max-height: 80vh; 
+}
+
+.part {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(0,0,0,0.4);
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 4px solid var(--neon-blue);
+  transition: transform 0.2s;
+}
+
+.part:hover {
+  transform: translateX(5px);
+  background: rgba(0,0,0,0.6);
+}
+
+.part img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+
+.stats { flex: 1; }
+.stats strong {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--neon-blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.bar-bg {
+  flex: 1;
+  background: #222;
+  height: 6px;
+  border-radius: 3px;
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+}
+
+/* ================= RIGHT COLUMN (Stats) ================= */
+.downloadArea {
+  background: #000;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 350px; 
+  width: 100%;
+  margin: 0 auto;
+}
+
+.beyName {
+  margin-top: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px var(--neon-blue);
+  letter-spacing: 1px;
+  min-height: 1.5em; 
+}
+
+.totalWeight {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+/* ================= ACTION BUTTONS ================= */
+button.downloadBtn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--neon-blue);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+  transition: all 0.2s;
+}
+
+button.downloadBtn:hover {
+  background: #fff;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
+  transform: scale(1.02);
+}
+
+/* MAIN ADD BUTTON */
+#addBuildBtn {
+  display: block;
+  width: 300px;
+  margin: 40px auto;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #00ff41, #008f11);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#addBuildBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .column:nth-child(3) { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+  .column:nth-child(3) { grid-column: span 1; }
+  .items-grid { grid-template-columns: repeat(4, 1fr); }
+  h1 { font-size: 2rem; }
+}
 </style>
 </head>
 
 <body>
 
-<h1>Beyblade Generator</h1>
+<h1>Beyblade Builder</h1>
 
-<div class="layout">
+<div id="builders-list"></div>
 
-  <div class="column">
-    <div id="bladeDropdown" class="dropdown"></div>
-    <div id="assistDropdown" class="dropdown disabled"></div>
-    <div id="ratchetDropdown" class="dropdown"></div>
-    <div id="bitDropdown" class="dropdown disabled"></div>
-  </div>
-
-  <div class="column" id="displayColumnContainer">
-  <div id="displayColumn"></div>
-  <button id="downloadPartsBtn" class="downloadBtn">Download Parts</button>
-</div>
-
-<div class="column">
-  <div id="downloadArea">
-  <canvas id="spiderChart" width="450" height="450"></canvas>
-  <div id="totalWeight"></div>
-  <div id="beyName"></div>
-  </div>
-
-  <button id="downloadBtn" class="downloadBtn">Download Graph</button>
-</div>
-
-
-</div>
+<button id="addBuildBtn">+ Add New Build</button>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
 
-/* =====================
-   🔥 PASTE YOUR DATA BELOW
-   const blades = [...]
-   const ratchets = [...]
-   const bits = [...]
-====================== */
+/* ===================== UTIL ====================== */
+function flattenArray(arr){
+  return arr.flatMap(item => Array.isArray(item)?item:[item]);
+}
+
+/* ===================== DATA ====================== */
+// Global data used by all instances
 let blades = flattenArray([
-{src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,astBlade:'No'},
-{src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,astBlade:'No'},
-{src:'images/blades/HellsBrave.png',name:'HellsBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
-{src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,astBlade:'No'},
-{src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,astBlade:'No'},
-{src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,astBlade:'No'},
-[{src:'images/blades/HellsHammer01.png',name:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,astBlade:'No'},
-{src:'images/blades/HellsHammer02.png',name:'HellsHammer',weight:33,atk:50,def:25,sta:25,astBlade:'No'}],
-{src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,astBlade:'No'},
-{src:'images/blades/WolfHunt.png',name:'WolfHunt',weight:33.3,atk:20,def:10,sta:30,astBlade:'Yes'},
-[{src:'images/blades/GolemRock01.png',name:'GolemRock',weight:34,atk:30,def:60,sta:10,astBlade:'No'},
-{src:'images/blades/GolemRock02.png',name:'GolemRock',weight:34,atk:35,def:65,sta:15,astBlade:'No'}],
-{src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,astBlade:'No'},
-{src:'images/blades/RockLeone.png',name:'RockLeone',weight:30.1,atk:30,def:55,sta:15,astBlade:'No'},
-{src:'images/blades/PegasusBlast.png',name:'PegasusBlast',weight:34.5,atk:50,def:10,sta:15,astBlade:'Yes'},
-{src:'images/blades/DranBrave.png',name:'DranBrave',weight:32.9,atk:40,def:10,sta:10,astBlade:'Yes'},
-{src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,astBlade:'No'},
-{src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,astBlade:'No'},
-{src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,astBlade:'No'},
-{src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,astBlade:'No'},
-{src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,astBlade:'No'},
-[{src:'images/blades/SolEclipseUpper.png',name:'SolEclipse',weight:34,atk:30,def:20,sta:10,astBlade:'Yes'},
-{src:'images/blades/SolEclipseSmash.png',name:'SolEclipse',weight:34,atk:20,def:30,sta:10,astBlade:'Yes'}],
-{src:'images/blades/PerseusDark.png',name:'PerseusDark',weight:32,atk:10,def:40,sta:10,astBlade:'Yes'},
-{src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,astBlade:'No'},
-{src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,astBlade:'No'},
-{src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,astBlade:'No'},
-{src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,astBlade:'No'},
-{src:'images/blades/EmperorMight.png',name:'EmperorMight',weight:37.4,atk:25,def:25,sta:25,astBlade:'Yes'},
-{src:'images/blades/WizardArc.png',name:'WizardArc',weight:31.3,atk:10,def:10,sta:40,astBlade:'Yes'}
+  {src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Strafe',astBlade:'No',system:'BX'},
+  [{src:'images/blades/GolemRock01.png',name:'GolemRock01',weight:34,atk:30,def:60,sta:10,core:'Round',astBlade:'No',system:'UX'},
+  {src:'images/blades/GolemRock02.png',name:'GolemRock02',weight:34,atk:35,def:65,sta:15,core:'Round',astBlade:'No',system:'UX'}],
+  {src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Round',astBlade:'No',system:'UX'},
+  {src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
+  {src:'images/blades/Might.png',name:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
+  {src:'images/blades/Arc.png',name:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
 ]).sort((a,b)=>a.name.localeCompare(b.name));
+
+let chips = [
+  {src:'images/chips/Hells.png',name:'Hells',weight:1.7},
+  {src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
+  {src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
+  {src:'images/chips/Dran.png',name:'Dran',weight:1.7},
+  {src:'images/blades/Sol.png',name:'Sol',weight:1.7},
+].sort((a,b)=>a.name.localeCompare(b.name));
 
 let assist = flattenArray([
   {src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
@@ -318,374 +488,430 @@ let assist = flattenArray([
   {src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20}
 ]).sort((a,b)=>a.name.localeCompare(b.name));
 
-let ratchets = ([
-{src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,bit:'Yes'},
-{src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,bit:'Yes'},
-{src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,bit:'Yes'},
-{src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,bit:'Yes'},
-{src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,bit:'Yes'},
-{src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,bit:'Yes'},
-{src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,bit:'Yes'},
-{src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,bit:'Yes'},
-{src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,bit:'Yes'},
-{src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,bit:'Yes'},
-{src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,bit:'Yes'},
-{src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,bit:'Yes'},
-{src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,bit:'Yes'},
-{src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,bit:'Yes'},
-{src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,bit:'Yes'},
-{src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,bit:'Yes'},
-{src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,bit:'Yes'},
-{src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,bit:'Yes'},
-{src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,bit:'Yes'},
-{src:"images/ratchets/Turbo.png",name:"Turbo",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No"},
-{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No"},
-{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No"},
-{src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,bit:'Yes'},
-{src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,bit:'Yes'}
+let ratchets = flattenArray([
+  [{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
+  {src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}],
+  {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
+  {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
+  {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
+  {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
+  {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
+  {src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,core:'W',bit:'Yes'},
+  {src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,core:'W',bit:'Yes'},
+  {src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,core:'W',bit:'Yes'}
 ]).sort((a,b)=>a.name.localeCompare(b.name));
 
-let bits = ([
-{src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
-{src:'images/bits/BoundSpike.png',name:'Bound Spike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
-{src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
-{src:'images/bits/DiscBall.png',name:'Disc Ball',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
-{src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
-{src:'images/bits/FreeBall.png',name:'Free Ball',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
-{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
-{src:'images/bits/GearFlat.png',name:'Gear Flat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
-{src:'images/bits/GearNeedle.png',name:'Gear Needle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
-{src:'images/bits/HighNeedle.png',name:'High Needle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
-{src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
-{src:'images/bits/LowRush.png',name:'Low Rush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
-{src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
-{src:'images/bits/MetalNeedle.png',name:'Metal Needle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
-{src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
-{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
-{src:'images/bits/RubberAccel.png',name:'Rubber Accel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
-{src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
-{src:'images/bits/TransKick.png',name:'Trans Kick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
-{src:'images/bits/UnderFlat.png',name:'Under Flat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
-{src:'images/bits/UnderNeedle.png',name:'Under Needle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
-{src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
-{src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
-{src:'images/bits/LowOrb.png',name:'Low Orb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
-{src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80}
+let bits = flattenArray([
+  {src:'images/bits/UnderNeedle.png',name:'Under Needle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
+  {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
+  {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
+  {src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
+  {src:'images/bits/LowOrb.png',name:'Low Orb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
+  {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80}
 ]).sort((a,b)=>a.name.localeCompare(b.name));
 
-/* ===== UTIL ===== */
 
-function flattenArray(arr){
-  return arr.flatMap(item => Array.isArray(item)?item:[item]);
-}
+/* =========================================================================
+   CLASS: BeyBuilder (Logic for ONE Row)
+   ========================================================================= */
+let builderCount = 0;
 
-/* ===== STATE ===== */
-
-let selected={blade:null,assist:null,ratchet:null,bit:null};
-
-/* ===== DISPLAY ===== */
-
-
-function createPart(part){
-  if(!part) return "";
-
-  const baseStats = ["atk","def","sta"];
-  const extraStats = ["dash","burstR"];
-  
-  // Start with base stats
-  let statsToShow = baseStats.slice();
-
-  // Add extra stats if they exist
-  statsToShow = statsToShow.concat(extraStats.filter(stat => part[stat] !== undefined));
-
-  // Finally, always add weight at the end
-  statsToShow.push("weight");
-
-  return `
-  <div class="part">
-    <img src="${part.src}">
-    <div class="stats">
-      <strong>${part.name}</strong>
-      ${statsToShow.map(s=>`
-      <div class="stat-row">
-        ${s.toUpperCase()}: ${part[s] || 0}
-        <div class="bar-bg">
-          <div class="bar-fill" style="width:${Math.min(part[s] || 0,100)}%"></div>
-        </div>
-      </div>`).join("")}
-    </div>
-  </div>`;
-}
-
-/* ===== MAIN UPDATE ===== */
-
-function updateAll(){
-
-  const displayColumn = document.getElementById("displayColumn");
-  const totalWeightDiv = document.getElementById("totalWeight");
-
-  displayColumn.innerHTML="";
-
-  if(selected.blade) displayColumn.innerHTML+=createPart(selected.blade);
-  if(selected.assist) displayColumn.innerHTML+=createPart(selected.assist);
-  if(selected.ratchet) displayColumn.innerHTML+=createPart(selected.ratchet);
-  if(selected.bit) displayColumn.innerHTML+=createPart(selected.bit);
-
-  // weight handled here ONLY
-  let weightTotal = 0;
-  Object.values(selected).forEach(p=>{
-    if(p) weightTotal += p.weight || 0;
-  });
-
-  totalWeightDiv.textContent = "Total Weight: "+weightTotal.toFixed(1)+"g";
-
-  updateSpiderChart();
-  updateBeyName();
-}
-
-/* ===== NAME FUNCTION ===== */
-
-function updateBeyName(){
-
-  const nameDiv = document.getElementById("beyName");
-
-  if(!selected.blade || !selected.ratchet){
-    nameDiv.textContent="";
-    return;
-  }
-
-  let name = selected.blade.name + " ";
-
-  if(selected.assist){
-    name += selected.assist.name.charAt(0);
-  }
-
-  name += selected.ratchet.name;
-
-  if(selected.bit){
-    name += selected.bit.abbr;
-  }
-
-  nameDiv.textContent=name;
-}
-
-/* ===== RADAR CHART ===== */
-
-let spiderChart;
-
-function updateSpiderChart(){
-
-  const parts = Object.values(selected);
-
-  const stats={
-    atk:0,def:0,sta:0,dash:0,burstR:0
-  };
-
-  parts.forEach(p=>{
-    if(p){
-      stats.atk+=p.atk||0;
-      stats.def+=p.def||0;
-      stats.sta+=p.sta||0;
-      stats.dash+=p.dash||0;
-      stats.burstR+=p.burstR||0;
+class BeyBuilder {
+    constructor() {
+        this.id = ++builderCount;
+        this.selected = {chip:null, blade:null, assist:null, ratchet:null, bit:null};
+        this.chartInstance = null;
+        
+        this.initDOM();
+        this.initLogic();
     }
-  });
 
-  const labels=[
-    `ATK (${stats.atk})`,
-    `DEF (${stats.def})`,
-    `STA (${stats.sta})`,
-    `DASH (${stats.dash})`,
-    `BURST R (${stats.burstR})`
-  ];
+    // 1. CREATE HTML STRUCTURE
+    initDOM() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'build-row';
+        wrapper.innerHTML = `
+            <div class="row-header">
+                <div class="row-title">Build #${this.id}</div>
+                <button class="delete-row-btn">DELETE ROW</button>
+            </div>
+            
+            <div class="layout">
+                <div class="column">
+                    <img class="systemLogo" src="" alt="System Logo">
+                    <div class="dropdown" data-type="blade"></div>
+                    <div class="dropdown disabled" data-type="chip"></div>
+                    <div class="dropdown disabled" data-type="assist"></div>
+                    <div class="dropdown" data-type="ratchet"></div>
+                    <div class="dropdown" data-type="bit"></div>
+                    <button class="resetBtn" style="width:100%; margin-top:auto; padding:12px; background:transparent; border:1px solid #ff4444; color:#ff4444; border-radius:8px; cursor:pointer; font-weight:bold;">RESET BUILD</button>
+                </div>
 
-  const config={
-    type:'radar',
-    data:{
-      labels:labels,
-      datasets:[{
-        data:Object.values(stats),
-        fill:true,
-        backgroundColor:'rgba(102,204,255,0.35)',
-        borderColor:'#66ccff',
-        borderWidth:2,
-        pointBackgroundColor:'#66ccff'
-      }]
-    },
-    options:{
-      responsive:true,
-      plugins:{legend:{display:false}},
-      scales:{
-        r:{
-          beginAtZero:true,
-          max:150,
-          grid:{color:'rgba(255,255,255,0.4)',circular:false},
-          angleLines:{color:'rgba(255,255,255,0.7)'},
-          pointLabels:{color:'#fff'},
-          ticks:{display:false,stepSize:30}
-        }
-      }
+                <div class="column displayColumnContainer">
+                    <div class="displayColumn"></div>
+                    <button class="downloadBtn dl-parts">Download Parts List</button>
+                </div>
+
+                <div class="column">
+                    <div class="downloadArea">
+                        <div class="chart-wrapper">
+                            <canvas></canvas>
+                        </div>
+                        <div class="beyName"></div>
+                        <div class="totalWeight"></div>
+                    </div>
+                    <button class="downloadBtn dl-card">Download Graph Card</button>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('builders-list').appendChild(wrapper);
+        this.el = wrapper;
+        
+        // Element Refs scoped to this row
+        this.els = {
+            logo: wrapper.querySelector('.systemLogo'),
+            display: wrapper.querySelector('.displayColumn'),
+            weight: wrapper.querySelector('.totalWeight'),
+            name: wrapper.querySelector('.beyName'),
+            canvas: wrapper.querySelector('canvas'),
+            downloadArea: wrapper.querySelector('.downloadArea'),
+            dropdowns: {
+                blade: wrapper.querySelector('.dropdown[data-type="blade"]'),
+                chip: wrapper.querySelector('.dropdown[data-type="chip"]'),
+                assist: wrapper.querySelector('.dropdown[data-type="assist"]'),
+                ratchet: wrapper.querySelector('.dropdown[data-type="ratchet"]'),
+                bit: wrapper.querySelector('.dropdown[data-type="bit"]'),
+            }
+        };
+
+        // Bind Buttons
+        wrapper.querySelector('.delete-row-btn').onclick = () => this.destroy();
+        wrapper.querySelector('.resetBtn').onclick = () => this.reset();
+        
+        wrapper.querySelector('.dl-card').onclick = () => this.downloadImage(this.els.downloadArea);
+        wrapper.querySelector('.dl-parts').onclick = () => this.downloadImage(wrapper.querySelector('.displayColumnContainer'), true);
     }
-  };
 
-  if(spiderChart) spiderChart.destroy();
+    // 2. SETUP DROPDOWNS & CHART
+    initLogic() {
+        this.createDropdown(this.els.dropdowns.blade, "Select Main Blade", blades, "blade");
+        this.createDropdown(this.els.dropdowns.chip, "Select Lock Chip", chips, "chip");
+        this.createDropdown(this.els.dropdowns.assist, "Select Assist Blade", assist, "assist");
+        this.createDropdown(this.els.dropdowns.ratchet, "Select Ratchet", ratchets, "ratchet");
+        this.createDropdown(this.els.dropdowns.bit, "Select Bit", bits, "bit");
 
-  const ctx=document.getElementById("spiderChart").getContext("2d");
-  spiderChart=new Chart(ctx,config);
-}
+        this.updateChart();
+    }
 
-/* ===== DROPDOWN SYSTEM ===== */
+    destroy() {
+        if(this.chartInstance) this.chartInstance.destroy();
+        this.el.remove();
+    }
 
-function createDropdown(containerId, label, dataArray, type){
-    const container = document.getElementById(containerId);
+    reset() {
+        this.selected = {chip:null, blade:null, assist:null, ratchet:null, bit:null};
+        
+        this.els.logo.style.display = "none";
+        this.els.display.innerHTML = "";
+        this.els.weight.textContent = "";
+        this.els.name.textContent = "";
 
-    container.innerHTML = `
-      <button>${label}</button>
-      <div class="dropdown-content">
-        <input type="text" placeholder="Search ${label}...">
-        <div class="items"></div>
-      </div>
-    `;
+        // Reset Dropdown States
+        Object.entries(this.els.dropdowns).forEach(([key, d]) => {
+            d.classList.remove("disabled", "is-open");
+            const btn = d.querySelector("button");
+            // Set Default Text
+            const labels = {
+                blade: "Select Main Blade", chip: "Select Lock Chip",
+                assist: "Select Assist Blade", ratchet: "Select Ratchet", bit: "Select Bit"
+            };
+            btn.textContent = labels[key];
+        });
 
-    const button = container.querySelector("button"); // ✅ local scope
-    const content = container.querySelector(".dropdown-content");
-    const searchInput = container.querySelector("input");
-    const itemsDiv = container.querySelector(".items");
+        // Lock dependents
+        this.els.dropdowns.chip.classList.add("disabled");
+        this.els.dropdowns.assist.classList.add("disabled");
 
-    function populateList(filter=""){
-        itemsDiv.innerHTML = "";
-        dataArray
-            .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
-            .forEach(item => {
+        // Reset Data Source for Ratchets
+        const rDrop = this.els.dropdowns.ratchet;
+        rDrop.currentData = ratchets;
+        rDrop.updateList(ratchets);
+
+        this.updateChart();
+    }
+
+    // 3. DROPDOWN CREATION (Scoped)
+    createDropdown(container, label, dataArray, type) {
+        // Init UI
+        container.innerHTML = `
+            <button>${label}</button>
+            <div class="dropdown-content">
+                <input type="text" placeholder="Search...">
+                <div class="items-grid"></div>
+            </div>
+        `;
+        
+        const button = container.querySelector("button");
+        const content = container.querySelector(".dropdown-content");
+        const grid = container.querySelector(".items-grid");
+        const input = container.querySelector("input");
+
+        // Dynamic List Function
+        container.updateList = (newData) => {
+            grid.innerHTML = "";
+            if(!newData.length) {
+                grid.innerHTML = "<div style='grid-column:1/-1;text-align:center;padding:10px;color:#666;'>No items</div>";
+                return;
+            }
+            newData.sort((a,b)=>a.name.localeCompare(b.name)).forEach(item => {
                 const div = document.createElement("div");
-                div.textContent = item.name;
+                div.className = "grid-item";
+                if(this.selected[type] === item) div.classList.add("selected");
+                div.innerHTML = `<img src="${item.src}" loading="lazy"><span>${item.name}</span>`;
+                
                 div.onclick = () => {
-                    selected[type] = item;
+                    this.selected[type] = item;
                     button.textContent = item.name;
-                    content.classList.remove("show");
-                    button.classList.remove("active");
-
-                    handleDependencies(type);
-                    updateAll();
+                    this.closeDropdown(container);
+                    this.handleDependencies(type);
+                    this.updateAll();
                 };
-                itemsDiv.appendChild(div);
+                grid.appendChild(div);
             });
+        };
+
+        // Initial populate
+        container.updateList(dataArray);
+
+        // Toggle Logic
+        button.onclick = (e) => {
+            e.stopPropagation();
+            if(container.classList.contains("disabled")) return;
+            
+            const isOpen = container.classList.contains("is-open");
+            
+            // Close all dropdowns in THIS row first
+            Object.values(this.els.dropdowns).forEach(d => this.closeDropdown(d));
+
+            if(!isOpen) {
+                container.classList.add("is-open");
+                content.classList.add("show");
+                button.classList.add("active");
+                // Reset list if filtered
+                container.updateList(container.currentData || dataArray);
+            }
+        };
+
+        input.oninput = (e) => {
+            const filter = e.target.value.toLowerCase();
+            const source = container.currentData || dataArray;
+            const filtered = source.filter(i => i.name.toLowerCase().includes(filter));
+            container.updateList(filtered);
+        };
+        
+        // Global click to close is handled via document listener at bottom
     }
 
-    populateList();
+    closeDropdown(container) {
+        container.classList.remove("is-open");
+        container.querySelector(".dropdown-content").classList.remove("show");
+        container.querySelector("button").classList.remove("active");
+    }
 
-    // Fancy dropdown toggle must stay here
-button.onclick = () => {
-    if(container.classList.contains("disabled")) return;
+    // 4. DEPENDENCY LOGIC
+    handleDependencies(type) {
+        if(type === 'blade' && this.selected.blade) {
+            const sys = this.selected.blade.system;
+            this.els.logo.src = `images/system/${sys.toLowerCase()}.png`;
+            this.els.logo.style.display = 'block';
 
-    const isVisible = content.classList.contains("show");
-    
-    // Close other dropdowns if needed
-    document.querySelectorAll('.dropdown-content.show').forEach(dc => {
-        if(dc !== content) {
-            dc.classList.remove('show');
-            dc.previousElementSibling.classList.remove('active');
+            // CX Logic
+            if(sys === "CX") {
+                this.els.dropdowns.chip.classList.remove("disabled");
+                this.els.dropdowns.assist.classList.remove("disabled");
+            } else {
+                this.els.dropdowns.chip.classList.add("disabled");
+                this.els.dropdowns.assist.classList.add("disabled");
+                this.selected.chip = null;
+                this.selected.assist = null;
+                this.els.dropdowns.chip.querySelector("button").textContent = "Select Lock Chip";
+                this.els.dropdowns.assist.querySelector("button").textContent = "Select Assist Blade";
+            }
+
+            // Ratchet Filter (Core)
+            let validRatchets = ratchets;
+            if(this.selected.blade.core === "Round") validRatchets = ratchets.filter(r => r.core === "R");
+            
+            const rDrop = this.els.dropdowns.ratchet;
+            rDrop.currentData = validRatchets;
+            rDrop.updateList(validRatchets);
+
+            // Reset Ratchet if invalid
+            if(this.selected.ratchet && !validRatchets.includes(this.selected.ratchet)) {
+                this.selected.ratchet = null;
+                rDrop.querySelector("button").textContent = "Select Ratchet";
+                this.selected.bit = null;
+                this.els.dropdowns.bit.querySelector("button").textContent = "Select Bit";
+            }
         }
-    });
 
-    content.classList.toggle("show", !isVisible);
-    button.classList.toggle("active", !isVisible);
-};
-    searchInput.oninput = e => populateList(e.target.value);
-
-    document.addEventListener("click", e => {
-        if(!container.contains(e.target)){
-            content.classList.remove("show");
-            button.classList.remove("active");
+        if(type === 'ratchet') {
+            const bDrop = this.els.dropdowns.bit;
+            bDrop.classList.remove("disabled");
+            if(this.selected.ratchet && this.selected.ratchet.bit === "No") {
+                bDrop.classList.add("disabled");
+                this.selected.bit = null;
+                bDrop.querySelector("button").textContent = "Select Bit";
+            }
         }
-    });
+    }
+
+    // 5. UPDATE UI
+    updateAll() {
+        this.els.display.innerHTML = "";
+        
+        // Order: Chip, Blade, Assist, Ratchet, Bit
+        const order = ['chip', 'blade', 'assist', 'ratchet', 'bit'];
+        order.forEach(k => {
+            if(this.selected[k]) this.els.display.innerHTML += this.createPartHTML(this.selected[k]);
+        });
+
+        // Weight
+        let w = 0;
+        Object.values(this.selected).forEach(p => { if(p) w += p.weight || 0; });
+        this.els.weight.textContent = w > 0 ? `TOTAL WEIGHT: ${w.toFixed(1)}g (approx.)` : "";
+
+        // Name
+        let n = "";
+        if(this.selected.blade && this.selected.ratchet) {
+            if(this.selected.chip) n += this.selected.chip.name;
+            n += this.selected.blade.name + " ";
+            if(this.selected.assist) n += this.selected.assist.name.charAt(0);
+            n += this.selected.ratchet.name;
+            if(this.selected.bit) n += this.selected.bit.abbr;
+        }
+        this.els.name.textContent = n;
+
+        this.updateChart();
+    }
+
+    createPartHTML(part) {
+        const stats = ["atk","def","sta","dash","burstR"];
+        let statRows = "";
+        stats.forEach(s => {
+            if(part[s] !== undefined) {
+                statRows += `
+                <div class="stat-row">
+                    <span style="width:70px;">${s.toUpperCase()}</span>
+                    <span>${part[s]}</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(part[s],100)}%"></div></div>
+                </div>`;
+            }
+        });
+        statRows += `
+        <div class="stat-row">
+            <span style="width:70px;">WEIGHT</span>
+            <span>${part.weight}g</span>
+            <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(part.weight*2,100)}%"></div></div>
+        </div>`;
+
+        return `
+        <div class="part">
+            <img src="${part.src}">
+            <div class="stats">
+                <strong>${part.name}</strong>
+                ${statRows}
+            </div>
+        </div>`;
+    }
+
+    updateChart() {
+        const stats = {atk:0, def:0, sta:0, dash:0, burstR:0};
+        Object.values(this.selected).forEach(p => {
+            if(p) {
+                stats.atk += p.atk || 0;
+                stats.def += p.def || 0;
+                stats.sta += p.sta || 0;
+                stats.dash += p.dash || 0;
+                stats.burstR += p.burstR || 0;
+            }
+        });
+
+        let color = '#00f3ff';
+        if(this.selected.blade && this.selected.blade.system === "UX") color = '#ffaa00';
+        if(this.selected.blade && this.selected.blade.system === "CX") color = '#ff0044';
+
+        if(this.chartInstance) this.chartInstance.destroy();
+
+        this.chartInstance = new Chart(this.els.canvas, {
+            type: 'radar',
+            data: {
+                labels: [`ATK (${stats.atk})`, `DEF (${stats.def})`, `STA (${stats.sta})`, `DASH (${stats.dash})`, `BURST (${stats.burstR})`],
+                datasets: [{
+                    data: Object.values(stats),
+                    backgroundColor: color + '40',
+                    borderColor: color,
+                    borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: color
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: {display:false} },
+                scales: {
+                    r: {
+                        beginAtZero: true, max: 150,
+                        grid: { color: 'rgba(255,255,255,0.8)', circular: false },
+                        angleLines: { color: 'rgba(255,255,255,0.8)' },
+                        pointLabels: { color: '#fff', font: {size:11, weight:'bold'} },
+                        ticks: { display: false, stepSize: 30 }
+                    }
+                }
+            }
+        });
+    }
+
+    downloadImage(element, isPartList = false) {
+        let name = this.els.name.textContent.trim() || "Beyblade";
+        if(isPartList) name += "_parts";
+        name = name.replace(/\s+/g, "_");
+
+        html2canvas(element, { backgroundColor: null, scale: 2 }).then(canvas => {
+            const link = document.createElement("a");
+            link.download = name + ".png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
 }
 
-/* ===== DEPENDENCY LOGIC ===== */
+/* ================= APP INIT ================= */
+const builders = [];
 
-function handleDependencies(type){
-
-  const assistDropdown=document.getElementById("assistDropdown");
-  const bitDropdown=document.getElementById("bitDropdown");
-
-  // Assist depends on blade
-  if(type==="blade"){
-    selected.assist=null;
-    if(selected.blade && selected.blade.astBlade==="Yes"){
-      assistDropdown.classList.remove("disabled");
-    }else{
-      assistDropdown.classList.add("disabled");
-    }
-  }
-
-  // Bit depends on ratchet
-  if(type==="ratchet"){
-    selected.bit=null;
-    if(selected.ratchet && selected.ratchet.bit==="Yes"){
-      bitDropdown.classList.remove("disabled");
-    }else{
-      bitDropdown.classList.add("disabled");
-    }
-  }
+function addBuilder() {
+    const builder = new BeyBuilder();
+    builders.push(builder);
 }
 
+document.getElementById('addBuildBtn').onclick = addBuilder;
 
-/* ===== INITIALIZE ===== */
-
-createDropdown("bladeDropdown","Select Main Blade",blades,"blade");
-createDropdown("assistDropdown","Select Assist Blade",assist,"assist");
-createDropdown("ratchetDropdown","Select Ratchet",ratchets,"ratchet");
-createDropdown("bitDropdown","Select Bit",bits,"bit");
-
-updateSpiderChart();
-
-
-document.getElementById("downloadBtn").addEventListener("click", function () {
-    const target = document.getElementById("downloadArea");
-    const nameElement = document.getElementById("beyName");
-
-    // Get name text
-    let fileName = nameElement.textContent.trim() || "Beyblade";
-    fileName = fileName.replace(/\s+/g, "_");
-
-    // Calculate scale to make width exactly 450px
-    const targetWidth = 450;
-    const scale = targetWidth / target.offsetWidth;
-
-    html2canvas(target, {
-        backgroundColor: null,
-        scale: scale
-    }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = fileName + ".png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    });
+// Global listener to close dropdowns if clicking outside
+document.addEventListener('click', (e) => {
+    if(!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown.is-open').forEach(d => {
+            d.classList.remove('is-open');
+            d.querySelector('.dropdown-content').classList.remove('show');
+            d.querySelector('button').classList.remove('active');
+        });
+    }
 });
 
-
-document.getElementById("downloadPartsBtn").addEventListener("click", function() {
-    const target = document.getElementById("displayColumn"); // column 2
-    const nameElement = document.getElementById("beyName");
-
-    let fileName = nameElement.textContent.trim() || "Beyblade";
-    fileName = fileName.replace(/\s+/g, "_") + "_parts";
-
-    html2canvas(target, {
-        backgroundColor: null,
-        scale: 2,
-        useCORS: true // important for images
-    }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = fileName + ".png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }).catch(err => console.error(err));
-});
-
+// Start with 1 builder
+addBuilder();
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
