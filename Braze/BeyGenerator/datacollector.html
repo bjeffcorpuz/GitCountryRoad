@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Battle Stats Tracker v9</title>
+<title>Battle Stats Tracker v13</title>
 <style>
 :root{
   --bg: #0f1117;
@@ -17,10 +17,12 @@
   
   /* Stats Colors */
   --bar-bg: #2d333b;
-  --fill-atk: #0aff60;
-  --fill-def: #0aff60;
-  --fill-sta: #0aff60;
-  --fill-weight: #00f0ff; 
+  --fill-atk: #DC143C; 
+  --fill-def: #4ade80; 
+  --fill-sta: #60a5fa; 
+  --fill-dash: #ffb570;
+  --fill-burst: #8619ec;
+  --fill-weight: #e879f9; 
 }
 
 body{
@@ -32,7 +34,7 @@ body{
 }
 
 .app{
-  max-width:1800px;
+  max-width:1850px;
   margin:auto;
   background:var(--card);
   border-radius:12px;
@@ -69,11 +71,10 @@ button.add-btn{
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-button.add-btn:hover { box-shadow: 0 0 10px var(--neon-cyan); }
 
 /* TABLE */
 .table-wrapper{ overflow-x:auto; border:1px solid var(--border); border-radius:8px; background: #0d1117; }
-table{ width:100%; border-collapse:collapse; min-width: 1200px; }
+table{ width:100%; border-collapse:collapse; min-width: 1300px; }
 
 th{
   background:#161b22;
@@ -83,72 +84,106 @@ th{
   font-size:12px;
   text-transform:uppercase;
   border-bottom:1px solid var(--border);
-  letter-spacing: 1px;
 }
 
 td{ padding:15px; border-bottom:1px solid var(--border); vertical-align:top; }
 
-/* 1. CHART COLUMN */
-.chart-cell { width: 330px; text-align: center; background: #0b0e14; vertical-align: middle; }
-canvas.radar-chart { width: 300px; height: 300px; margin: auto; display: block; }
+/* --- COLUMN 1: BLADER --- */
+.avatar-cell {
+    width: 250px;
+    text-align: center;
+    background: #0b0e14;
+    border-right: 1px solid var(--border);
+}
+
+.avatar-img {
+    width: 200px;
+    height: auto;
+    aspect-ratio: 9/16;
+    border: 1px solid var(--border);
+    object-fit: cover;
+    background: #161b22;
+}
+
+.avatar-name {
+    color: var(--neon-cyan);
+    font-weight: 800;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 12px;
+}
+
+/* --- COLUMN 2: ANALYSIS (SYSTEM ICON TOP LEFT) --- */
+.analysis-cell {
+    background: #10131a;
+    position: relative; /* For absolute positioning of system icon */
+}
+
+.system-icon-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    display: block !important;
+    z-index: 10;
+}
+
+.chart-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+canvas.radar-chart { width: 300px; height: 300px; display: block; }
 
 .combo-name-display {
-  color: #fff; 
-  font-size: 16px; 
-  font-weight: bold; 
-  margin-top: 15px; 
-  letter-spacing: 0.5px;
-}
-.total-weight-label {
-  color: var(--muted); font-size:12px; font-weight:normal; display: block; margin-top: 4px;
+  color: #fff; font-size: 16px; font-weight: bold; margin-top: 10px; text-align: center;
 }
 
-/* 2. PARTS COLUMN (Grid 2 per row) */
-.parts-cell { min-width: 500px; padding: 15px; }
-
+/* Updated Parts List: No Backgrounds/Borders */
 .parts-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr; 
-    gap: 10px;
+    gap: 20px;
 }
 
 .part-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: #12151c;
-  border: 1px solid #2a2f3a;
-  border-left: 3px solid var(--neon-cyan);
-  padding: 10px;
-  border-radius: 6px;
-  min-width: 200px;
+  gap: 15px;
+  padding: 5px;
+  /* Removed border and background */
 }
 
 .part-img {
-  width: 45px;
-  height: 45px;
-  background: #000;
-  border-radius: 50%;
-  border: 1px solid var(--border);
+  width: 100px;
+  height: 100px;
+  background: transparent;
   object-fit: contain;
   flex-shrink: 0;
 }
 
 .part-details { flex: 1; }
 .part-name { 
-  font-weight: bold; font-size: 13px; color: var(--neon-cyan); 
-  text-transform: uppercase; margin-bottom: 4px;
+  font-weight: bold; font-size: 14px; color: var(--neon-cyan); 
+  text-transform: uppercase; margin-bottom: 8px;
 }
 
-/* Stat Rows */
-.stat-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-.stat-label { width: 35px; font-size: 9px; color: var(--muted); font-weight: bold; }
-.stat-num { width: 25px; font-size: 10px; color: #fff; text-align: right; font-family: monospace; }
-.stat-track { flex: 1; height: 3px; background: var(--bar-bg); border-radius: 2px; overflow: hidden; }
-.stat-fill { height: 100%; border-radius: 2px; }
+/* Bigger Stats UI */
+.stat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.stat-label { width: 40px; font-size: 12px; color: var(--muted); font-weight: bold; }
+.stat-num { width: 30px; font-size: 12px; color: #fff; text-align: right; font-family: monospace; }
+.stat-track { flex: 1; height: 10px; background: var(--bar-bg); border-radius: 5px; overflow: hidden; }
+.stat-fill { height: 100%; border-radius: 5px; }
 
-/* 3. RECORDS COLUMN */
-.stats-cell { width: 240px; vertical-align: middle; }
+
+/* --- COLUMN 3: RECORDS (Larger Text) --- */
+.stats-cell { width: 300px; vertical-align: top; }
 .stats-grid { display:flex; flex-direction: column; gap: 10px; }
 
 .stats-row { 
@@ -158,59 +193,67 @@ canvas.radar-chart { width: 300px; height: 300px; margin: auto; display: block; 
 }
 
 .stat-btn{
-  font-size:10px; padding:8px 4px; border-radius:6px; text-align:center;
-  cursor:pointer; user-select:none; border: 1px solid var(--border);
+  font-size: 14px; /* UPDATED: 14px text */
+  padding: 8px 4px; border-radius: 6px; text-align: center;
+  cursor: pointer; user-select: none; border: 1px solid var(--border);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: rgba(255,255,255,0.02);
-  transition: all 0.1s;
-  min-height: 50px;
+  min-height: 55px;
 }
-.stat-btn:active { transform: scale(0.98); }
-.stat-val { font-size: 14px; font-weight: bold; margin-top: 4px; color: #fff; }
+.stat-btn:active { transform: scale(0.96); }
+.stat-val { font-size: 18px; font-weight: bold; margin-top: 2px; color: #fff; }
 
-/* BUTTON COLORS */
-.selfko-win{ border-color: #7c3aed; box-shadow: inset 0 0 10px rgba(124, 58, 237, 0.2); }
-.selfko-lose{ border-color: #4c1d95; opacity: 0.7; }
-.finish-win{ border-color: #2563eb; box-shadow: inset 0 0 10px rgba(37, 99, 235, 0.2); }
-.finish-lose{ border-color: #1e3a8a; opacity: 0.7; }
-.over-win{ border-color: #f59e0b; box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.2); }
-.over-lose{ border-color: #92400e; opacity: 0.7; }
-.burst-win{ border-color: #dc2626; box-shadow: inset 0 0 10px rgba(220, 38, 38, 0.2); }
-.burst-lose{ border-color: #7f1d1d; opacity: 0.7; }
-.extreme-win{ border-color: #16a34a; box-shadow: inset 0 0 10px rgba(22, 163, 74, 0.2); }
-.extreme-lose{ border-color: #14532d; opacity: 0.7; }
+/* Colors */
+.selfko-win{ border-color: #7c3aed; color: #a78bfa; }
+.spin-win{ border-color: #2563eb; color: #60a5fa; }
+.over-win{ border-color: #f59e0b; color: #fbbf24; }
+.burst-win{ border-color: #dc2626; color: #f87171; }
+.extreme-win{ border-color: #16a34a; color: #4ade80; }
 
-/* ACTIONS */
-.action-cell { width: 90px; vertical-align: middle; }
+.action-group {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .action-btn{
-  display: block; width: 100%; margin-bottom: 8px;
-  padding: 8px; border-radius: 6px; border: 1px solid var(--border);
-  background: transparent; color: var(--text); cursor: pointer; font-size: 11px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
-.action-btn:hover { background: var(--card); border-color: var(--neon-cyan); color: var(--neon-cyan); }
-.delete-btn:hover { border-color: #ff0055; color: #ff0055; }
+.copy-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+.delete-btn:hover { border-color: #ff0055; color: #ff0055; background: rgba(255,0,85,0.05); }
 
 </style>
 </head>
 <body>
 
 <div class="app">
-  <h1>Battle Stats Tracker</h1>
+  <h1>Battle Stats Tracker v13</h1>
   
   <div class="input-section">
     <input type="text" id="jsonInput" 
-      placeholder='{"chip":"Pegasus","blade":"Might","asst":"Free","ratchet":"6-80","bit":"UN"}'>
-    <button class="add-btn" onclick="processInput()">+ Add</button>
+      placeholder='{"name":"Ruddy","src":"avatars/Ruddy.png","chip":"Pegasus","blade":"Might","ratchet":"6-80","bit":"UN"}'>
+    <button class="add-btn" onclick="processInput()">+ Add Combo</button>
   </div>
 
   <div class="table-wrapper">
     <table>
       <thead>
         <tr>
-          <th>Chart & Totals</th>
-          <th>Parts Breakdown</th>
-          <th>Battle Records</th>
-          <th>Actions</th>
+          <th>Blader</th>
+          <th>Analysis & Equipment</th>
+          <th>Battle Records & Actions</th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
@@ -219,57 +262,116 @@ canvas.radar-chart { width: 300px; height: 300px; margin: auto; display: block; 
 </div>
 
 <script>
-/* --- DATA MASTER LIST --- */
+/* --- DATA MASTER LIST (Kept same as your original) --- */
 const masterBlades = [
-  {src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Strafe',astBlade:'No',system:'BX'},
-  [{src:'images/blades/GolemRock01.png',name:'GolemRock01',weight:34,atk:30,def:60,sta:10,core:'Round',astBlade:'No',system:'UX'},
-  {src:'images/blades/GolemRock02.png',name:'GolemRock02',weight:34,atk:35,def:65,sta:15,core:'Round',astBlade:'No',system:'UX'}],
-  {src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Round',astBlade:'No',system:'UX'},
-  {src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
-  {src:'images/blades/Might.png',name:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
-  {src:'images/blades/Arc.png',name:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
+    {src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/Brave.png',name:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/HellsHammer01.png',name:'HellsHammer01',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/HellsHammer02.png',name:'HellsHammer02',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/Hunt.png',name:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/GolemRock01.png',name:'GolemRock01',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/GolemRock02.png',name:'GolemRock02',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
+    {src:'images/blades/Blast.png',name:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/EclipseUpper.png',name:'EclipseUpper',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/EclipseSmash.png',name:'EclipseSmash',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/Dark.png',name:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
+    {src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
+    {src:'images/blades/Might.png',name:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
+    {src:'images/blades/Arc.png',name:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
 ];
 
 const masterRatchets = [
-  [{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30},
-  {src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30}],
-  {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7},
-  {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7},
-  {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10},
-  {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5},
-  {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12},
-  {src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8},
-  {src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9},
-  {src:'images/ratchets/3-60.png',name:'3-60',weight:6.0,atk:14,def:7,sta:9},
-  {src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10}
+    {src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,core:'W',bit:'Yes'},
+    {src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,core:'W',bit:'Yes'},
+    {src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,core:'W',bit:'Yes'},
+    {src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,core:'W',bit:'Yes'},
+    {src:'images/ratchets/1-80.png',name:'1-80',weight:6.7,atk:17,def:4,sta:9,core:'W',bit:'Yes'},
+    {src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,core:'W',bit:'Yes'},
+    {src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
+    {src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,core:'W',bit:'Yes'},
+    {src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,core:'W',bit:'Yes'},
+    {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
+    {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
+    {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
+    {src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
+    {src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
+    {src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,core:'W',bit:'Yes'},
+    {src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,core:'W',bit:'Yes'},
+    {src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,core:'W',bit:'Yes'},
+    {src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,core:'W',bit:'Yes'},
+    {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
+    {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
+    {src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
+    {src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,core:'R',bit:'Yes'},
+    {src:"images/ratchets/Turbo.png",name:"Tr",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No",core:"W"},
+    {src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
+    {src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}
 ];
 
 const masterChips = [
-  {src:'images/chips/Hells.png',name:'Hells',weight:1.7},
-  {src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
-  {src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
-  {src:'images/chips/Dran.png',name:'Dran',weight:1.7},
-  {src:'images/blades/Sol.png',name:'Sol',weight:1.7},
+    {src:'images/chips/Hells.png',name:'Hells',weight:1.7},
+    {src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
+    {src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
+    {src:'images/chips/Dran.png',name:'Dran',weight:1.7},
+    {src:'images/chips/Sol.png',name:'Sol',weight:1.7},
+    {src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
+    {src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
+    {src:'images/chips/Wizard.png',name:'Wizard',weight:1.7}
 ];
 
 const masterAssist = [
-  {src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
-  {src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
-  {src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
-  {src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
-  {src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
-  {src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
-  {src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20}
+    {src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
+    {src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
+    {src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
+    {src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
+    {src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
+    {src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10},
+    {src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+    {src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+    {src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20}
 ];
 
 const masterBits = [
-  {src:'images/bits/UnderNeedle.png',name:'Under Needle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
-  {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
-  {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
-  {src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
-  {src:'images/bits/LowOrb.png',name:'Low Orb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
-  {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
-  {src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.3,atk:40,def:10,sta:10,dash:40,burstR:60}
+    {src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
+    {src:'images/bits/BoundSpike.png',name:'BoundSpike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
+    {src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
+    {src:'images/bits/DiscBall.png',name:'DiscBall',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
+    {src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
+    {src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
+    {src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
+    {src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
+    {src:'images/bits/GearNeedle.png',name:'GearNeedle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
+    {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
+    {src:'images/bits/HighNeedle.png',name:'HighNeedle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
+    {src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
+    {src:'images/bits/LowOrb.png',name:'LowOrb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
+    {src:'images/bits/LowRush.png',name:'LowRush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
+    {src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
+    {src:'images/bits/MetalNeedle.png',name:'MetalNeedle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
+    {src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
+    {src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
+    {src:'images/bits/RubberAccel.png',name:'RubberAccel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
+    {src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
+    {src:'images/bits/TransKick.png',name:'TransKick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
+    {src:'images/bits/UnderFlat.png',name:'UnderFlat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
+    {src:'images/bits/UnderNeedle.png',name:'UnderNeedle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
+    {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
+    {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
+    {src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
 ];
 
 const allParts = {
@@ -298,12 +400,10 @@ function getSystemColor(system){
     return '#ffffff';
 }
 
-// --- SAFE COPY FUNCTION ---
 function safeCopy(text) {
     if (navigator.clipboard && window.isSecureContext) {
         return navigator.clipboard.writeText(text);
     } else {
-        // Fallback for local files
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";
@@ -318,63 +418,111 @@ function safeCopy(text) {
     }
 }
 
+/* --- UPDATED: Process Multiple Inputs --- */
 function processInput(){
     const input = document.getElementById("jsonInput");
-    if(!input.value.trim()) return alert("Please enter JSON");
+    const rawVal = input.value.trim();
+    if(!rawVal) return alert("Please enter JSON");
     
-    let rawData;
-    try{ rawData = JSON.parse(input.value); }
-    catch(e){ return alert("Invalid JSON"); }
-
-    let data = {};
-    Object.keys(rawData).forEach(k => {
-        const lowerKey = k.toLowerCase();
-        data[lowerKey] = rawData[k];
-    });
-
-    if(data['asst']) data['assist'] = data['asst'];
-
-    const parts = [];
-    let totalStats = { atk:0, def:0, sta:0, dash:0, burstR:0, weight:0 };
-    let mainSystem = null;
-
-    ['chip','blade','assist','ratchet','bit'].forEach(type => {
-        if(data[type]){
-            const found = findPart(type, data[type]);
-            if(found){
-                parts.push({type: type, ...found});
-                if(type === 'blade' && found.system) mainSystem = found.system;
-
-                totalStats.atk += (found.atk || 0);
-                totalStats.def += (found.def || 0);
-                totalStats.sta += (found.sta || 0);
-                totalStats.dash += (found.dash || 0);
-                totalStats.burstR += (found.burstR || 0);
-                totalStats.weight += (found.weight || 0);
-            }
+    let dataArray;
+    try {
+        // Automatically wrap in brackets if user provided comma-separated objects
+        dataArray = JSON.parse("[" + rawVal + "]");
+    } catch(e) {
+        try {
+            dataArray = JSON.parse(rawVal);
+            if(!Array.isArray(dataArray)) dataArray = [dataArray];
+        } catch(e2) {
+            return alert("Invalid JSON format.");
         }
-    });
+    }
 
-    if(parts.length === 0) return alert("No parts found.");
+    dataArray.forEach(rawData => {
+        let data = {};
+        Object.keys(rawData).forEach(k => {
+            const lowerKey = k.toLowerCase();
+            data[lowerKey] = rawData[k];
+        });
+
+        if(data['asst']) data['assist'] = data['asst'];
+
+        const parts = [];
+        let totalStats = { atk:0, def:0, sta:0, dash:0, burstR:0, weight:0 };
+        let mainSystem = data['system'] || null; 
+
+        ['chip','blade','assist','ratchet','bit'].forEach(type => {
+            if(data[type]){
+                const found = findPart(type, data[type]);
+                if(found){
+                    parts.push({type: type, ...found});
+                    if(!mainSystem && type === 'blade' && found.system) mainSystem = found.system;
+
+                    totalStats.atk += (found.atk || 0);
+                    totalStats.def += (found.def || 0);
+                    totalStats.sta += (found.sta || 0);
+                    totalStats.dash += (found.dash || 0);
+                    totalStats.burstR += (found.burstR || 0);
+                    totalStats.weight += (found.weight || 0);
+                }
+            }
+        });
+
+        if(parts.length > 0) renderRow(rawData, parts, totalStats, mainSystem);
+    });
     
-    renderRow(rawData, parts, totalStats, mainSystem);
     input.value = "";
 }
 
 function renderRow(originalJson, parts, totals, system){
     const tr = document.createElement("tr");
 
-    // 1. CHART
-    const chartTd = document.createElement("td");
-    chartTd.className = "chart-cell";
+    // --- 1. BLADER COLUMN ---
+    const avatarTd = document.createElement("td");
+    avatarTd.className = "avatar-cell";
+    const avatarWrapper = document.createElement("div");
+    
+    const img = document.createElement("img");
+    img.className = "avatar-img";
+    img.src = originalJson.src || "";
+    img.onerror = function() { 
+        this.style.display='none'; 
+        const fb = document.createElement("div");
+        fb.style.cssText = "width:200px; aspect-ratio:9/16; background:#333; display:flex; align-items:center; justify-content:center; color:#555; font-weight:bold; border:1px solid #444;";
+        fb.innerText = "NO IMAGE";
+        avatarWrapper.insertBefore(fb, this.nextSibling);
+    };
+
+    const nameDiv = document.createElement("div");
+    nameDiv.className = "avatar-name";
+    nameDiv.textContent = originalJson.name || "Unknown";
+
+    avatarWrapper.appendChild(img);
+    avatarWrapper.appendChild(nameDiv);
+    avatarTd.appendChild(avatarWrapper);
+    tr.appendChild(avatarTd);
+
+
+    // --- 2. ANALYSIS COLUMN ---
+    const analysisTd = document.createElement("td");
+    analysisTd.className = "analysis-cell";
+
+    if(system){
+        const sysImg = document.createElement("img");
+        sysImg.className = "system-icon-overlay";
+        sysImg.src = `images/system/${system.toUpperCase()}.png`;
+        sysImg.onerror = () => sysImg.style.display = 'none';
+        analysisTd.appendChild(sysImg);
+    }
+
+    const chartSection = document.createElement("div");
+    chartSection.className = "chart-section";
     
     const canvas = document.createElement("canvas");
     canvas.width = 300; 
     canvas.height = 300;
     canvas.className = "radar-chart";
-    chartTd.appendChild(canvas);
-    
-    // Naming Logic
+    chartSection.appendChild(canvas);
+
     const getP = (t) => parts.find(p => p.type === t);
     const pChip = getP('chip');
     const pBlade = getP('blade');
@@ -390,45 +538,36 @@ function renderRow(originalJson, parts, totals, system){
     if(pRatchet) displayName += pRatchet.name;
     if(pBit) displayName += (pBit.abbr || pBit.name);
 
-    if(displayName.trim() === "") displayName = "Unknown Combo";
     const sysColor = getSystemColor(system);
-
     const nameDisplay = document.createElement("div");
     nameDisplay.className = "combo-name-display";
     nameDisplay.style.color = sysColor;
-    nameDisplay.innerHTML = `
-        ${displayName}
-        <span class="total-weight-label">TOTAL WEIGHT: ${totals.weight.toFixed(1)}g(Approx.)</span>
-    `;
-    chartTd.appendChild(nameDisplay);
-    tr.appendChild(chartTd);
+    nameDisplay.innerHTML = `${displayName} <br> <span style="color:#8b949e; font-size:11px;">WEIGHT: ${totals.weight.toFixed(1)}g</span>`;
+    chartSection.appendChild(nameDisplay);
+    analysisTd.appendChild(chartSection);
 
     setTimeout(() => drawRadarChart(canvas, totals, sysColor), 0);
 
-    // 2. PARTS
-    const partsTd = document.createElement("td");
-    partsTd.className = "parts-cell";
     const partsGrid = document.createElement("div");
     partsGrid.className = "parts-grid-container";
     
     parts.forEach(p => {
         const card = document.createElement("div");
         card.className = "part-card";
-        
         let statsHtml = '';
-        const maxVal = 80; 
         const makeRow = (label, val, colorVar) => `
             <div class="stat-row">
                 <span class="stat-label">${label}</span>
                 <span class="stat-num">${val}</span>
-                <div class="stat-track">
-                    <div class="stat-fill" style="width:${Math.min((val/maxVal)*100, 100)}%; background:var(${colorVar})"></div>
-                </div>
+                <div class="stat-track"><div class="stat-fill" style="width:${Math.min((val/100)*100, 100)}%; background:var(${colorVar})"></div></div>
             </div>`;
 
         if(p.atk) statsHtml += makeRow('ATK', p.atk, '--fill-atk');
         if(p.def) statsHtml += makeRow('DEF', p.def, '--fill-def');
         if(p.sta) statsHtml += makeRow('STA', p.sta, '--fill-sta');
+        /* --- UPDATED: Dash & Burst in Part Cards --- */
+        if(p.dash) statsHtml += makeRow('DSH', p.dash, '--fill-dash');
+        if(p.burstR) statsHtml += makeRow('BURST', p.burstR, '--fill-burst');
         if(p.weight) statsHtml += makeRow('WGT', p.weight, '--fill-weight');
 
         card.innerHTML = `
@@ -436,194 +575,115 @@ function renderRow(originalJson, parts, totals, system){
             <div class="part-details">
                 <div class="part-name">${p.name}</div>
                 <div>${statsHtml}</div>
-            </div>
-        `;
+            </div>`;
         partsGrid.appendChild(card);
     });
-    partsTd.appendChild(partsGrid);
-    tr.appendChild(partsTd);
+    analysisTd.appendChild(partsGrid);
+    tr.appendChild(analysisTd);
 
-    // 3. STATS (Logic + Storage)
+
+    // --- 3. RECORDS & ACTIONS ---
     const statsTd = document.createElement("td");
     statsTd.className = "stats-cell";
     const statsGrid = document.createElement("div");
     statsGrid.className = "stats-grid";
     
-    // Object to track live stats for this row
     const rowStats = {}; 
-
-    const statGroups = [
-      ["SelfKOWin","SelfKOLose","FinishWin","FinishLose"],
-      ["OverWin","OverLose","BurstWin","BurstLose"],
-      ["ExtremeWin","ExtremeLose"]
-    ];
+    const statGroups = [["SelfKOWin","SelfKOLose","SpinWin","SpinLose"], ["OverWin","OverLose","BurstWin","BurstLose"], ["ExtremeWin","ExtremeLose"]];
 
     statGroups.forEach((group) => {
         const rowDiv = document.createElement("div");
         rowDiv.className = "stats-row";
         group.forEach(key => {
-            // Initialize count
-            rowStats[key] = 0;
-
+            const savedVal = originalJson[key] || 0;
+            rowStats[key] = savedVal;
             const btn = document.createElement("div");
-            const type = key.replace("Win","").replace("Lose","").toLowerCase();
-            const res = key.includes("Win") ? "win" : "lose";
-            
-            btn.className = `stat-btn ${type}-${res}`;
-            const label = key.replace("Win"," W").replace("Lose"," L");
-            btn.innerHTML = `<span>${label}</span><span class="stat-val">0</span>`;
-            
-            const updateVal = (newVal) => {
-                rowStats[key] = newVal;
-                btn.querySelector(".stat-val").textContent = newVal;
-            };
-
-            btn.onclick = (e) => { 
-                e.preventDefault(); 
-                updateVal(rowStats[key] + 1); 
-            };
-            btn.oncontextmenu = (e) => { 
-                e.preventDefault(); 
-                if(rowStats[key] > 0) updateVal(rowStats[key] - 1); 
-            };
-            
+            btn.className = `stat-btn ${key.replace("Win","").replace("Lose","").toLowerCase()}-${key.includes("Win") ? "win" : "lose"}`;
+            btn.innerHTML = `<span>${key.replace("Win"," W").replace("Lose"," L")}</span><span class="stat-val">${savedVal}</span>`;
+            btn.onclick = () => { rowStats[key]++; btn.querySelector(".stat-val").textContent = rowStats[key]; };
+            btn.oncontextmenu = (e) => { e.preventDefault(); if(rowStats[key]>0) { rowStats[key]--; btn.querySelector(".stat-val").textContent = rowStats[key]; }};
             rowDiv.appendChild(btn);
         });
         statsGrid.appendChild(rowDiv);
     });
-    statsTd.appendChild(statsGrid);
-    tr.appendChild(statsTd);
 
-    // 4. ACTION (Copy Logic)
-    const actionTd = document.createElement("td");
-    actionTd.className = "action-cell";
+    const actionGroup = document.createElement("div");
+    actionGroup.className = "action-group";
     
     const copyBtn = document.createElement("button");
-    copyBtn.className = "action-btn";
-    copyBtn.innerHTML = "Copy JSON";
-    
-    copyBtn.onclick = () => { 
-        // Merge Original Data + Current Stats
-        const finalData = { ...originalJson, ...rowStats };
-        const jsonString = JSON.stringify(finalData);
-
-        safeCopy(jsonString)
-            .then(() => {
-                copyBtn.textContent = "Copied!";
-                copyBtn.style.borderColor = "var(--neon-green)";
-                setTimeout(()=> {
-                    copyBtn.textContent = "Copy JSON";
-                    copyBtn.style.borderColor = "var(--border)";
-                }, 1000);
-            })
-            .catch(() => alert("Copy failed. Browser restricted?"));
+    copyBtn.className = "action-btn copy-btn";
+    copyBtn.innerText = "Copy JSON";
+    copyBtn.onclick = () => {
+        safeCopy(JSON.stringify({...originalJson, ...rowStats})).then(() => {
+            copyBtn.innerText = "COPIED!";
+            setTimeout(() => copyBtn.innerText = "COPY JSON", 1000);
+        });
     };
-    
+
     const delBtn = document.createElement("button");
     delBtn.className = "action-btn delete-btn";
-    delBtn.innerHTML = "Remove";
+    delBtn.innerText = "Remove Entry";
     delBtn.onclick = () => tr.remove();
 
-    actionTd.appendChild(copyBtn);
-    actionTd.appendChild(delBtn);
-    tr.appendChild(actionTd);
+    actionGroup.appendChild(copyBtn);
+    actionGroup.appendChild(delBtn);
+    
+    statsGrid.appendChild(actionGroup);
+    statsTd.appendChild(statsGrid);
+    tr.appendChild(statsTd);
 
     document.getElementById("tableBody").appendChild(tr);
 }
 
-// Chart
+/* --- UPDATED: Show Total Stats on Chart Labels --- */
 function drawRadarChart(canvas, stats, color){
     const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
-    const cx = w/2;
-    const cy = h/2;
-    const radius = 100; 
-    
+    const w = canvas.width, h = canvas.height, cx = w/2, cy = h/2, radius = 90; 
     const axes = [
-        {label:"ATK", val: stats.atk},
-        {label:"DEF", val: stats.def},
-        {label:"STA", val: stats.sta},
-        {label:"DASH", val: stats.dash},
-        {label:"BURST", val: stats.burstR}
+        {l:"ATK",v:stats.atk}, 
+        {l:"DEF",v:stats.def}, 
+        {l:"STA",v:stats.sta}, 
+        {l:"DSH",v:stats.dash}, 
+        {l:"BURST",v:stats.burstR}
     ];
-    
-    const maxVal = 100; 
-    const angleStep = (Math.PI * 2) / 5;
-    const startAngle = -Math.PI / 2; 
+    const angleStep = (Math.PI * 2) / 5, startAngle = -Math.PI / 2; 
 
     ctx.clearRect(0,0,w,h);
-
-    // Grid
+    
+    // Grid lines
     ctx.strokeStyle = "#2a2f3a";
-    ctx.lineWidth = 1;
     for(let r=1; r<=4; r++){
         ctx.beginPath();
         for(let i=0; i<5; i++){
-            const angle = startAngle + (i * angleStep);
-            const dist = (radius / 4) * r;
-            ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
+            const a = startAngle + (i * angleStep), d = (radius / 4) * r;
+            ctx.lineTo(cx + Math.cos(a)*d, cy + Math.sin(a)*d);
         }
-        ctx.closePath();
-        ctx.stroke();
+        ctx.closePath(); ctx.stroke();
     }
 
-    // Labels
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 11px sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    
+    // Text Labels + Values
     for(let i=0; i<5; i++){
-        const angle = startAngle + (i * angleStep);
-        ctx.beginPath();
-        ctx.strokeStyle = "#333";
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + Math.cos(angle)*radius, cy + Math.sin(angle)*radius);
-        ctx.stroke();
+        const a = startAngle + (i * angleStep);
+        const x = cx + Math.cos(a)*(radius+25);
+        const y = cy + Math.sin(a)*(radius+25);
         
-        const labelDist = radius + 25;
-        const lx = cx + Math.cos(angle)*labelDist;
-        const ly = cy + Math.sin(angle)*labelDist;
-        
-        ctx.fillStyle = "#8b949e";
-        ctx.fillText(`${axes[i].label} (${axes[i].val})`, lx, ly);
+        ctx.fillStyle = "#8b949e"; ctx.font = "bold 11px monospace";
+        ctx.textAlign = "center";
+        // Show Name and Value (e.g., ATK: 85)
+        ctx.fillText(`${axes[i].l}: ${axes[i].v}`, x, y);
     }
 
     // Shape
     ctx.beginPath();
-    for(let i=0; i<5; i++){
-        const angle = startAngle + (i * angleStep);
-        const val = Math.min(axes[i].val, maxVal);
-        const dist = (val / maxVal) * radius;
-        if(i===0) ctx.moveTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
-        else ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
-    }
+    axes.forEach((ax, i) => {
+        const a = startAngle + (i * angleStep), d = (Math.min(ax.v, 100) / 100) * radius;
+        i === 0 ? ctx.moveTo(cx + Math.cos(a)*d, cy + Math.sin(a)*d) : ctx.lineTo(cx + Math.cos(a)*d, cy + Math.sin(a)*d);
+    });
     ctx.closePath();
-    
-    const hex2rgba = (hex, alpha = 1) => {
-        const [r, g, b] = hex.match(/\w\w/g).map(x => parseInt(x, 16));
-        return `rgba(${r},${g},${b},${alpha})`;
-    };
-
-    ctx.fillStyle = hex2rgba(color, 0.25);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.fill();
-    ctx.stroke();
-    
-    // Points
-    ctx.fillStyle = "#ffffff";
-    for(let i=0; i<5; i++){
-        const angle = startAngle + (i * angleStep);
-        const val = Math.min(axes[i].val, maxVal);
-        const dist = (val / maxVal) * radius;
-        ctx.beginPath();
-        ctx.arc(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist, 3, 0, Math.PI*2);
-        ctx.fill();
-    }
+    ctx.fillStyle = color + "44"; ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
 }
 </script>
+
 
 </body>
 </html>

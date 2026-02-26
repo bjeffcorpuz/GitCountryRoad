@@ -293,7 +293,7 @@ const participants = [
  {name:"Natsumi",src:"avatars/Natsumi.png",sound:["selectVoices/Natsumi_1.MP3","selectVoices/Natsumi_2.MP3"]},
  {name:"Renji",src:"avatars/Renji.png",sound:["selectVoices/Renji_1.MP3","selectVoices/Renji_2.MP3"]},
  {name:"Ronan",src:"avatars/Ronan.png",sound:["selectVoices/Ronan_2.MP3","selectVoices/Ronan_3.MP3"]},
- {name:"Rose",src:"avatars/Rose.png",sound:["selectVoices/Rose_1.MP3","selectVoices/Rose_2.MP3"]},
+ {name:"Rose",src:"avatars/Rose.png",sound:["selectVoices/Rose_1.MP3","selectVoices/Rose_2.MP3","selectVoices/Rose_3.MP3"]},
  {name:"Ruddy",src:"avatars/Ruddy.png",sound:["selectVoices/Ruddy_1.MP3","selectVoices/Ruddy_2.MP3","selectVoices/Ruddy_3.MP3"]},
  {name:"Ryomaru",src:"avatars/Ryomaru.png",sound:["selectVoices/Ryomaru_1.MP3","selectVoices/Ryomaru_2.MP3","selectVoices/Ryomaru_3.MP3","selectVoices/Ryomaru_4.MP3"]},
  {name:"Sasha",src:"avatars/Sasha.png",sound:["selectVoices/Sasha_1.MP3","selectVoices/Sasha_2.MP3","selectVoices/Sasha_3.MP3"]},
@@ -303,6 +303,23 @@ const participants = [
  {name:"Zera",src:"avatars/Zera.png",sound:["selectVoices/Zera_1.MP3","selectVoices/Zera_2.MP3","selectVoices/Zera_3.MP3"]}
 ];
 
+/* PRELOAD VOICES */
+const voicePool = {};
+
+participants.forEach(p => {
+    voicePool[p.name] = p.sound.map(path => {
+        const audio = new Audio(path);
+        audio.preload = "auto";
+        audio.load();
+        return audio;
+    });
+});
+
+/* PRELOAD SELECTION EFFECT */
+const selectionSFX = new Audio("effects/selection.MP3");
+selectionSFX.preload = "auto";
+selectionSFX.load();
+
 const grid = document.getElementById("participantGrid");
 const selectBtn = document.getElementById("selectBtn");
 const enterBtn = document.getElementById("enterBtn");
@@ -310,6 +327,14 @@ const enterBtn = document.getElementById("enterBtn");
 let selected = [];
 let rolling = false;
 let currentMatch = null;
+
+/* SHUFFLE FUNCTION */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
 /* RENDER */
 function render() {
@@ -334,6 +359,8 @@ function render() {
         grid.appendChild(d);
     });
 }
+
+shuffleArray(participants);
 render();
 
 /* SELECTION (UNCHANGED) */
@@ -345,28 +372,49 @@ selectBtn.onclick = () => {
     const cards = [...document.querySelectorAll(".participant")].filter(c => !c.classList.contains("selected"));
     let active;
 
-    const spin = setInterval(() => {
-        cards.forEach(c => c.classList.remove("active"));
-        active = cards[Math.floor(Math.random() * cards.length)];
-        active.classList.add("active");
-    }, 160);
+const spin = setInterval(() => {
+    cards.forEach(c => c.classList.remove("active"));
+
+    active = cards[Math.floor(Math.random() * cards.length)];
+    active.classList.add("active");
+
+    const tick = selectionSFX.cloneNode();
+    tick.play();
+}, 160);
 
     setTimeout(() => {
-        clearInterval(spin);
-        active.classList.remove("active");
-        active.classList.add("selected");
+clearInterval(spin);
 
-        const chosen = participants.find(p => p.name === active.dataset.name);
-        selected.push(chosen);
+/* STOP ANY RUNNING TICK */
+selectionSFX.pause();
+selectionSFX.currentTime = 0;
 
-        const sounds = chosen.sound;
-        const audio = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-        audio.onended = () => {
-            rolling = false;
-            selectBtn.disabled = false;
-            if (selected.length === 8) finalize();
-        };
-        audio.play();
+active.classList.remove("active");
+active.classList.add("selected");
+
+const chosen = participants.find(p => p.name === active.dataset.name);
+selected.push(chosen);
+
+/* PLAY FINAL SELECTION SOUND FIRST */
+selectionSFX.currentTime = 0;
+selectionSFX.play();
+
+/* WHEN SELECTION SOUND FINISHES → PLAY VOICE */
+selectionSFX.onended = () => {
+
+    const pool = voicePool[chosen.name];
+    const voice = pool[Math.floor(Math.random() * pool.length)];
+
+    voice.currentTime = 0;
+
+    voice.onended = () => {
+        rolling = false;
+        selectBtn.disabled = false;
+        if (selected.length === 8) finalize();
+    };
+
+    voice.play();
+};
 
         render();
     }, 2000);
@@ -589,6 +637,17 @@ function drawLines() {
 }
 
 window.addEventListener("resize", drawLines);
+
+document.addEventListener("click", () => {
+    Object.values(voicePool).flat().forEach(a => {
+        a.volume = 0;
+        a.play().then(() => {
+            a.pause();
+            a.currentTime = 0;
+            a.volume = 1;
+        }).catch(()=>{});
+    });
+}, { once: true });
 
 </script>
 </body>
