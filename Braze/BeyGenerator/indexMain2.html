@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyblade X Tournament Builder</title>
+<title>Beyblade Builder</title>
 <style>
 /* ================= STYLES ================= */
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -141,7 +141,8 @@ button:hover {
   border-left: 5px solid #444;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s, transform 0.5s;
+  /* UPDATED: Added transitions for the highlight effects */
+  transition: opacity 0.5s, transform 0.5s, background 0.5s, box-shadow 0.5s, border-left-color 0.5s;
 }
 
 .blader-row.visible {
@@ -263,7 +264,7 @@ button:hover {
 
 /* Specific Part Name (e.g., "SharkScale") - Below Image */
 .part-specific-name {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #00d4ff; /* Cyan/Blue style */
   margin-bottom: 10px; 
@@ -286,7 +287,7 @@ button:hover {
 .stat-row {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 12px;
   color: #ccc;
   width: 100%;
 }
@@ -322,7 +323,7 @@ button:hover {
 .bey-full-name {
   width: 100%;
   text-align: center;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: bold;
   padding: 10px 4px; 
   border-top: 1px solid #444;
@@ -355,6 +356,46 @@ button:hover {
     border-radius: 5px;
 }
 
+/* === ROWS === */
+.blader-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border-left: 5px solid #444;
+  opacity: 0;
+  transform: translateY(20px);
+  /* UPDATED: Added transitions for the highlight effects */
+  transition: opacity 0.5s, transform 0.5s, background 0.5s, box-shadow 0.5s, border-left-color 0.5s;
+}
+
+.blader-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* NEW: Highlight effect for the currently generating row */
+.blader-row.focused {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1.02);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.25);
+  border-left: 5px solid #00d4ff;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 10;
+  position: relative;
+}
+
+/* NEW: Dim effect for rows not currently generating */
+.blader-row.dimmed {
+  opacity: 0.25 !important;
+  transform: translateY(0) scale(0.98);
+  filter: grayscale(40%);
+}
+
 </style>
 </head>
 <body>
@@ -366,7 +407,7 @@ button:hover {
   </div>
 
   <div id="controls">
-    <button id="generateBtn">Generate Beyblades</button>
+    <button id="generateBtn">Generate Parts</button>
     <div id="loading">
         <div class="spinner"></div>
         <div class="loading-text">Randomizing Parts...</div>
@@ -384,35 +425,67 @@ const masterSystem = [
     {name:"BX",src:"images/system/bx.png"},
     {name:"CX",src:"images/system/cx.png"}
 ];
+
+const masterChips = [
+{src:'images/chips/Hells.png',name:'Hells',weight:1.7},
+{src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
+{src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
+{src:'images/chips/Dran.png',name:'Dran',weight:1.7},
+{src:'images/chips/Sol.png',name:'Sol',weight:1.7},
+{src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
+{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
+{src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
+{src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7},
+{src:'images/chips/Fox.png',name:'Fox',weight:1.7}
+];
+
 const masterBlades = [
-{src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Brave.png',name:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
-[{src:'images/blades/HellsHammer01.png',name:'HellsHammer01',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/HellsHammer02.png',name:'HellsHammer02',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'}],
-{src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Hunt.png',name:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
-[{src:'images/blades/GolemRock01.png',name:'GolemRock01',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/GolemRock02.png',name:'GolemRock02',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'}],
-{src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
-{src:'images/blades/Blast.png',name:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
-[{src:'images/blades/EclipseUpper.png',name:'EclipseUpper',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/EclipseSmash.png',name:'EclipseSmash',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
-{src:'images/blades/Dark.png',name:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Might.png',name:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/Arc.png',name:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
+{name:'SharkScale',src:'images/blades/SharkScale.png',displayName:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
+{name:'TyrannoRoar',src:'images/blades/TyrannoRoar.png',displayName:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
+{name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'KnightMail',src:'images/blades/KnightMail.png',displayName:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
+{name:'PteraSwing',src:'images/blades/PteraSwing.png',displayName:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'TyrannoBeat',src:'images/blades/TyrannoBeat.png',displayName:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
+[{name:'HellsHammer01',src:'images/blades/HellsHammer01.png',displayName:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
+{name:'HellsHammer02',src:'images/blades/HellsHammer02.png',displayName:'HellsHammer',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'}],
+{name:'TriceraPress',src:'images/blades/TriceraPress.png',displayName:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
+{name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
+[{name:'GolemRock01',src:'images/blades/GolemRock01.png',displayName:'GolemRock',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
+{name:'GolemRock02',src:'images/blades/GolemRock02.png',displayName:'GolemRock',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'}],
+{name:'ClockMirage',src:'images/blades/ClockMirage.png',displayName:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
+{name:'RockLeone',src:'images/blades/RockLeone.png',displayName:'RockLeone',weight:30.1,atk:30,def:55,sta:15,core:'Any',astBlade:'No',system:'HBS'},
+{name:'Blast',src:'images/blades/Blast.png',displayName:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'PhoenixRudder',src:'images/blades/PhoenixRudder.png',displayName:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
+{name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
+{name:'SamuraiCalibur',src:'images/blades/SamuraiCalibur.png',displayName:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
+[{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
+{name:'Dark',src:'images/blades/Dark.png',displayName:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'MammothTusk',src:'images/blades/MammothTusk.png',displayName:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
+{name:'ImpactDrake',src:'images/blades/ImpactDrake.png',displayName:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
+{name:'ScorpioSpear',src:'images/blades/ScorpioSpear.png',displayName:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
+{name:'SharkGill',src:'images/blades/SharkGill.png',displayName:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
+{name:'Might',src:'images/blades/Might.png',displayName:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'Arc',src:'images/blades/Arc.png',displayName:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'Brush',src:'images/blades/Brush.png',displayName:'Brush',weight:30.3,atk:40,def:15,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'ViperTail',src:'images/blades/ViperTail.png',displayName:'ViperTail',weight:34.7,atk:30,def:20,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'WeissTiger',src:'images/blades/WeissTiger.png',displayName:'WeissTiger',weight:34.6,atk:45,def:30,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'DranDagger',src:'images/blades/DranDagger.png',displayName:'DranDagger',weight:35.3,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'BX'}
+];
+
+const masterAssist = [
+{displayName:'Jaggy',src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
+{displayName:'Free',src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
+{displayName:'Assault',src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
+{displayName:'Slash',src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
+[{displayName:'Dual',src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
+{displayName:'Dual',src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10}],
+{displayName:'Bumper',src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+{displayName:'Heavy',src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+{displayName:'Round',src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
+{displayName:'Wheel',src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20}
 ];
 
 const masterRatchets = [
@@ -428,49 +501,30 @@ const masterRatchets = [
 {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
 {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
+{src:'images/ratchets/4-80.png',name:'4-80',weight:7,atk:11,def:11,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,core:'W',bit:'Yes'},
+{src:'images/ratchets/7-55.png',name:'7-55',weight:5.9,atk:6,def:14,sta:10,core:'R',bit:'Yes'},
 {src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
 {src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,core:'R',bit:'Yes'},
 {src:"images/ratchets/Turbo.png",name:"Tr",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No",core:"W"},
-[{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
-{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
+[{src:"images/ratchets/OperateATK.png",name:"Op",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
+{src:"images/ratchets/OperateDEF.png",name:"Op",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
 ];
-const masterChips = [
-{src:'images/chips/Hells.png',name:'Hells',weight:1.7},
-{src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
-{src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
-{src:'images/chips/Dran.png',name:'Dran',weight:1.7},
-{src:'images/chips/Sol.png',name:'Sol',weight:1.7},
-{src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
-{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
-{src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
-{src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7}
-];
-const masterAssist = [
-{src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
-{src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
-{src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
-{src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
-[{src:'images/assist/DualUpper.png',name:'Dual(Upper)',weight:5.9,atk:17,def:13,sta:10},
-{src:'images/assist/DualSmash.png',name:'Dual(Smash)',weight:5.9,atk:13,def:17,sta:10}],
-{src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
-{src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
-{src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
-{src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20}
-];
+
 const masterBits = [
 {src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
 {src:'images/bits/BoundSpike.png',name:'BoundSpike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
 {src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
 {src:'images/bits/DiscBall.png',name:'DiscBall',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
 {src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
+{src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80},
 {src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
 {src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
@@ -491,8 +545,7 @@ const masterBits = [
 {src:'images/bits/UnderNeedle.png',name:'UnderNeedle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
 {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
-{src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80}
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
 ];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits;
@@ -647,10 +700,10 @@ function createCardHTML(type, item, blader = null) {
             faceStyle = "justify-content: center;";
         } else if(type === "blade") {
             categoryLabel = "Main Blade";
-            specificName = item.name;
+            specificName = item.displayName;
         } else if(type === "assist") {
             categoryLabel = "Assist Blade";
-            specificName = item.name;
+            specificName = item.displayName;
         } else if(type === "ratchet") {
             categoryLabel = "Ratchet";
             specificName = item.name;
@@ -722,7 +775,7 @@ function drawMiniChart(canvasId, stats, systemName) {
     if(systemName === "BX") color = "#0066cc"; 
 
     const values = [stats.atk, stats.def, stats.sta, stats.dash, stats.burstR];
-    const labels = ["ATK", "DEF", "STA", "DASH", "BST"];
+    const labels = ["ATK", "DEF", "STA", "DASH", "BR"];
     const count = 5;
     
     ctx.clearRect(0,0,w,h);
@@ -806,8 +859,8 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     const btn = document.getElementById("generateBtn");
     const loader = document.getElementById("loading");
     
-    // 1. Hide Button
-    btn.style.display = "none";
+    // 1. Remove Button
+    btn.remove();
     
     // 2. Show Loader
     loader.style.display = "flex";
@@ -818,6 +871,27 @@ document.getElementById("generateBtn").addEventListener("click", () => {
         startGeneration(container);    // Start Process
     }, 2000); 
 });
+
+// Helper function for a controlled, slow scroll to top
+function slowScrollToTop(duration) {
+    const startPosition = window.scrollY;
+    const startTime = performance.now();
+
+    function animation(currentTime) {
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Easing function (easeOutQuart) for a nice slowdown as it reaches the top
+        const ease = 1 - Math.pow(1 - progress, 4); 
+
+        window.scrollTo(0, startPosition * (1 - ease));
+
+        if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+        }
+    }
+    requestAnimationFrame(animation);
+}
 
 function startGeneration(container) {
     let rowsData = [];
@@ -854,9 +928,9 @@ function startGeneration(container) {
         // Construct Name: [Chip][Blade] [AssistInitial][Ratchet][BitAbbr]
         let fullName = "";
         if(bey.chip) fullName += bey.chip.name;
-        fullName += bey.blade.name;
+        fullName += bey.blade.displayName;
         fullName += " ";
-        if(bey.assist) fullName += bey.assist.name.charAt(0);
+        if(bey.assist) fullName += bey.assist.displayName.charAt(0);
         if(bey.ratchet) fullName += bey.ratchet.name;
         if(bey.bit) fullName += bey.bit.abbr; 
 
@@ -901,13 +975,25 @@ function startGeneration(container) {
     // Animate
     let globalDelay = 0;
     const CARD_DELAY = 250; 
-    const ROW_DELAY = 1000; 
+    const ROW_DELAY = 3500;
 
-    rowsData.forEach((data) => {
+rowsData.forEach((data) => {
         const row = document.getElementById(data.id);
         
         setTimeout(() => {
+            // Dim all OTHER rows and remove their focus
+            document.querySelectorAll('.blader-row').forEach(r => {
+                if (r.id !== data.id) {
+                    r.classList.add('dimmed');
+                    r.classList.remove('focused');
+                }
+            });
+
+            // Highlight the current row
+            row.classList.remove("dimmed");
             row.classList.add("visible");
+            row.classList.add("focused");
+            
             // AUTO SCROLL TO CENTER
             row.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, globalDelay);
@@ -923,8 +1009,27 @@ function startGeneration(container) {
             }, globalDelay + (i * CARD_DELAY));
         });
 
+        // Calculate delay for the next row
         globalDelay += (cards.length * CARD_DELAY) + ROW_DELAY;
     });
+
+    // FINAL RESET: Triggers exactly when all animations have finished
+    setTimeout(() => {
+        document.querySelectorAll('.blader-row').forEach(r => {
+            r.classList.remove('dimmed');
+            r.classList.remove('focused');
+            r.classList.add('visible'); 
+        });
+
+// NEW: Wait 1 second (1000ms), then trigger the slow scroll to top
+        setTimeout(() => {
+            // The '2500' is the duration of the scroll in milliseconds (2.5 seconds)
+            // You can increase this number to make the scroll even slower!
+            slowScrollToTop(16000);
+        }, 1000);
+
+    }, globalDelay);
+
 }
 </script>
 </body>

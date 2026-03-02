@@ -234,6 +234,152 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
 .copy-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
 .delete-btn:hover { border-color: #ff0055; color: #ff0055; background: rgba(255,0,85,0.05); }
 
+/* --- LOGGER STYLES --- */
+#battleLogger {
+    position: fixed;
+    bottom: 0px;
+    left: 20px;
+    width: 250px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: height 0.3s ease;
+}
+
+.logger-header {
+    background: #1f242c;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--neon-cyan);
+}
+
+.logger-body {
+    height: 200px; /* Fixed height */
+    overflow-y: auto;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    background: #0d1117;
+    display: flex;
+    flex-direction: column-reverse; /* Keeps latest logs at bottom/view */
+}
+
+.logger-minimized { height: 40px !important; overflow: hidden; }
+.logger-minimized .logger-body { display: none; }
+
+.log-entry {
+    padding: 4px 0;
+    border-bottom: 1px solid #21262d;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Style for the Clear Button in the header */
+.clear-log-btn {
+    font-size: 10px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it stays above the header toggle click area */
+}
+
+.clear-log-btn:hover {
+    color: #ff0055;
+    border-color: #ff0055;
+    background: rgba(255, 0, 85, 0.1);
+}
+
+/* Ensure the header layout handles the two separate click areas */
+.logger-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1f242c;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* --- SCORING SYSTEM STYLES --- */
+.score-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.score-display {
+    width: 60px;
+    background: #0d1117;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.score-controls {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+.score-btn {
+    flex: 1;
+    cursor: pointer;
+    background: #1f242c;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.score-btn:hover { background: #2d333b; border-color: var(--muted); }
+
+.reset-all-btn {
+    width: 100%;
+    margin-top: 5px;
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid #f87171;
+    color: #f87171;
+    font-size: 10px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.reset-all-btn:hover { background: #f87171; color: white; }
+
+
+
 </style>
 </head>
 <body>
@@ -261,37 +407,82 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
   </div>
 </div>
 
+<div id="battleLogger" class="logger-minimized">
+    <div class="logger-header">
+        <div style="cursor: pointer; flex: 1;" onclick="toggleLogger()">
+            <span>Battle Log</span>
+            <span id="loggerToggleBtn">+</span>
+        </div>
+        <span class="clear-log-btn" onclick="clearLog()">CLEAR</span>
+    </div>
+    <div id="loggerBody" class="logger-body">
+        <div id="logContent"></div>
+    </div>
+</div>
+
 <script>
 /* --- DATA MASTER LIST (Kept same as your original) --- */
+const masterChips = [
+{src:'images/chips/Hells.png',name:'Hells',weight:1.7},
+{src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
+{src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
+{src:'images/chips/Dran.png',name:'Dran',weight:1.7},
+{src:'images/chips/Sol.png',name:'Sol',weight:1.7},
+{src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
+{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
+{src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
+{src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7},
+{src:'images/chips/Fox.png',name:'Fox',weight:1.7}
+];
+
+
 const masterBlades = [
-{src:'images/blades/SharkScale.png',name:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/TyrannoRoar.png',name:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Brave.png',name:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/KnightMail.png',name:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/PteraSwing.png',name:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/TyrannoBeat.png',name:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/HellsHammer01.png',name:'HellsHammer01',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/HellsHammer02.png',name:'HellsHammer02',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/TriceraPress.png',name:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Hunt.png',name:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/GolemRock01.png',name:'GolemRock01',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/GolemRock02.png',name:'GolemRock02',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/ClockMirage.png',name:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
-{src:'images/blades/Blast.png',name:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/CobaltDragoon.png',name:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/PhoenixRudder.png',name:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/WyvernGale.png',name:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/SphinxCowl.png',name:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/SamuraiCalibur.png',name:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/EclipseUpper.png',name:'EclipseUpper',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/EclipseSmash.png',name:'EclipseSmash',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/Dark.png',name:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/MammothTusk.png',name:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/ImpactDrake.png',name:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/ScorpioSpear.png',name:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{src:'images/blades/SharkGill.png',name:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
-{src:'images/blades/Might.png',name:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
-{src:'images/blades/Arc.png',name:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
+{name:'SharkScale',src:'images/blades/SharkScale.png',displayName:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
+{name:'TyrannoRoar',src:'images/blades/TyrannoRoar.png',displayName:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
+{name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'KnightMail',src:'images/blades/KnightMail.png',displayName:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
+{name:'PteraSwing',src:'images/blades/PteraSwing.png',displayName:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'TyrannoBeat',src:'images/blades/TyrannoBeat.png',displayName:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
+[{name:'HellsHammer01',src:'images/blades/HellsHammer01.png',displayName:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
+{name:'HellsHammer02',src:'images/blades/HellsHammer02.png',displayName:'HellsHammer',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'}],
+{name:'TriceraPress',src:'images/blades/TriceraPress.png',displayName:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
+{name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
+[{name:'GolemRock01',src:'images/blades/GolemRock01.png',displayName:'GolemRock',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
+{name:'GolemRock02',src:'images/blades/GolemRock02.png',displayName:'GolemRock',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'}],
+{name:'ClockMirage',src:'images/blades/ClockMirage.png',displayName:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
+{name:'RockLeone',src:'images/blades/RockLeone.png',displayName:'RockLeone',weight:30.1,atk:30,def:55,sta:15,core:'Any',astBlade:'No',system:'HBS'},
+{name:'Blast',src:'images/blades/Blast.png',displayName:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'PhoenixRudder',src:'images/blades/PhoenixRudder.png',displayName:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
+{name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
+{name:'SamuraiCalibur',src:'images/blades/SamuraiCalibur.png',displayName:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
+[{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
+{name:'Dark',src:'images/blades/Dark.png',displayName:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'MammothTusk',src:'images/blades/MammothTusk.png',displayName:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
+{name:'ImpactDrake',src:'images/blades/ImpactDrake.png',displayName:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
+{name:'ScorpioSpear',src:'images/blades/ScorpioSpear.png',displayName:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
+{name:'SharkGill',src:'images/blades/SharkGill.png',displayName:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
+{name:'Might',src:'images/blades/Might.png',displayName:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'Arc',src:'images/blades/Arc.png',displayName:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'Brush',src:'images/blades/Brush.png',displayName:'Brush',weight:30.3,atk:40,def:15,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'ViperTail',src:'images/blades/ViperTail.png',displayName:'ViperTail',weight:34.7,atk:30,def:20,sta:50,core:'Any',astBlade:'No',system:'BX'},
+{name:'WeissTiger',src:'images/blades/WeissTiger.png',displayName:'WeissTiger',weight:34.6,atk:45,def:30,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'DranDagger',src:'images/blades/DranDagger.png',displayName:'DranDagger',weight:35.3,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'BX'}
+];
+
+const masterAssist = [
+{displayName:'Jaggy',src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
+{displayName:'Free',src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
+{displayName:'Assault',src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
+{displayName:'Slash',src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
+[{displayName:'Dual',src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
+{displayName:'Dual',src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10}],
+{displayName:'Bumper',src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+{displayName:'Heavy',src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+{displayName:'Round',src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
+{displayName:'Wheel',src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20}
 ];
 
 const masterRatchets = [
@@ -307,44 +498,21 @@ const masterRatchets = [
 {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
 {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
+{src:'images/ratchets/4-80.png',name:'4-80',weight:7,atk:11,def:11,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,core:'W',bit:'Yes'},
+{src:'images/ratchets/7-55.png',name:'7-55',weight:5.9,atk:6,def:14,sta:10,core:'R',bit:'Yes'},
 {src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
 {src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,core:'R',bit:'Yes'},
 {src:"images/ratchets/Turbo.png",name:"Tr",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No",core:"W"},
-{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
-{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}
-];
-
-const masterChips = [
-{src:'images/chips/Hells.png',name:'Hells',weight:1.7},
-{src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
-{src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
-{src:'images/chips/Dran.png',name:'Dran',weight:1.7},
-{src:'images/chips/Sol.png',name:'Sol',weight:1.7},
-{src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
-{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
-{src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
-{src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7}
-];
-
-const masterAssist = [
-{src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
-{src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
-{src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
-{src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
-{src:'images/assist/DualUpper.png',name:'Dual(Upper)',weight:5.9,atk:17,def:13,sta:10},
-{src:'images/assist/DualSmash.png',name:'Dual(Smash)',weight:5.9,atk:13,def:17,sta:10},
-{src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
-{src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
-{src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
-{src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20}
+[{src:"images/ratchets/OperateATK.png",name:"Op",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
+{src:"images/ratchets/OperateDEF.png",name:"Op",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
 ];
 
 const masterBits = [
@@ -353,6 +521,7 @@ const masterBits = [
 {src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
 {src:'images/bits/DiscBall.png',name:'DiscBall',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
 {src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
+{src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80},
 {src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
 {src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
@@ -373,8 +542,7 @@ const masterBits = [
 {src:'images/bits/UnderNeedle.png',name:'UnderNeedle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
 {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
-{src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80}
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
 ];
 
 const allParts = {
@@ -499,16 +667,34 @@ function renderRow(originalJson, parts, totals, system){
     nameDiv.className = "avatar-name";
     nameDiv.textContent = originalJson.name || "Unknown";
 
+    // --- SCORING FEATURE (Quantity Input + Global Reset) ---
+    const scoreContainer = document.createElement("div");
+    scoreContainer.className = "score-container";
+
+    const scoreInput = document.createElement("input");
+    scoreInput.type = "text";
+    scoreInput.className = "score-display";
+    scoreInput.value = 0;
+    scoreInput.disabled = true;
+
+    const resetBtn = document.createElement("button");
+    resetBtn.className = "reset-all-btn";
+    resetBtn.textContent = "Reset All Scores";
+    resetBtn.onclick = resetAllScores;
+
+    scoreContainer.appendChild(scoreInput);
+    scoreContainer.appendChild(resetBtn);
+
     avatarWrapper.appendChild(img);
     avatarWrapper.appendChild(nameDiv);
+    avatarWrapper.appendChild(scoreContainer); 
     avatarTd.appendChild(avatarWrapper);
     tr.appendChild(avatarTd);
-
 
     // --- 2. ANALYSIS COLUMN ---
     const analysisTd = document.createElement("td");
     analysisTd.className = "analysis-cell";
-
+    // ... (rest of analysis logic remains the same)
     if(system){
         const sysImg = document.createElement("img");
         sysImg.className = "system-icon-overlay";
@@ -516,28 +702,22 @@ function renderRow(originalJson, parts, totals, system){
         sysImg.onerror = () => sysImg.style.display = 'none';
         analysisTd.appendChild(sysImg);
     }
-
     const chartSection = document.createElement("div");
     chartSection.className = "chart-section";
-    
     const canvas = document.createElement("canvas");
-    canvas.width = 300; 
-    canvas.height = 300;
+    canvas.width = 300; canvas.height = 300;
     canvas.className = "radar-chart";
     chartSection.appendChild(canvas);
 
     const getP = (t) => parts.find(p => p.type === t);
-    const pChip = getP('chip');
-    const pBlade = getP('blade');
-    const pAssist = getP('assist');
-    const pRatchet = getP('ratchet');
-    const pBit = getP('bit');
+    const pChip = getP('chip'); const pBlade = getP('blade');
+    const pAssist = getP('assist'); const pRatchet = getP('ratchet'); const pBit = getP('bit');
 
     let displayName = "";
     if(pChip) displayName += pChip.name;
-    if(pBlade) displayName += pBlade.name;
+    if(pBlade) displayName += pBlade.displayName;
     displayName += " ";
-    if(pAssist) displayName += pAssist.name.charAt(0);
+    if(pAssist) displayName += pAssist.displayName.charAt(0);
     if(pRatchet) displayName += pRatchet.name;
     if(pBit) displayName += (pBit.abbr || pBit.name);
 
@@ -548,44 +728,29 @@ function renderRow(originalJson, parts, totals, system){
     nameDisplay.innerHTML = `${displayName} <br> <span style="color:#8b949e; font-size:11px;">WEIGHT: ${totals.weight.toFixed(1)}g</span>`;
     chartSection.appendChild(nameDisplay);
     analysisTd.appendChild(chartSection);
-
     setTimeout(() => drawRadarChart(canvas, totals, sysColor), 0);
 
     const partsGrid = document.createElement("div");
     partsGrid.className = "parts-grid-container";
-    
     parts.forEach(p => {
         const card = document.createElement("div");
         card.className = "part-card";
         let statsHtml = '';
-        const makeRow = (label, val, colorVar) => `
-            <div class="stat-row">
-                <span class="stat-label">${label}</span>
-                <span class="stat-num">${val}</span>
-                <div class="stat-track"><div class="stat-fill" style="width:${Math.min((val/100)*100, 100)}%; background:var(${colorVar})"></div></div>
-            </div>`;
-
+        let namef = p.displayName ? p.displayName : p.name
+        const makeRow = (label, val, colorVar) => `<div class="stat-row"><span class="stat-label">${label}</span><span class="stat-num">${val}</span><div class="stat-track"><div class="stat-fill" style="width:${Math.min((val/100)*100, 100)}%; background:var(${colorVar})"></div></div></div>`;
         if(p.atk) statsHtml += makeRow('ATK', p.atk, '--fill-atk');
         if(p.def) statsHtml += makeRow('DEF', p.def, '--fill-def');
         if(p.sta) statsHtml += makeRow('STA', p.sta, '--fill-sta');
-        /* --- UPDATED: Dash & Burst in Part Cards --- */
         if(p.dash) statsHtml += makeRow('DSH', p.dash, '--fill-dash');
         if(p.burstR) statsHtml += makeRow('BURST', p.burstR, '--fill-burst');
         if(p.weight) statsHtml += makeRow('WGT', p.weight, '--fill-weight');
-
-        card.innerHTML = `
-            <img src="${p.src}" class="part-img" onerror="this.style.background='#333'">
-            <div class="part-details">
-                <div class="part-name">${p.name}</div>
-                <div>${statsHtml}</div>
-            </div>`;
+        card.innerHTML = `<img src="${p.src}" class="part-img" onerror="this.style.background='#333'"><div class="part-details"><div class="part-name">${namef}</div><div>${statsHtml}</div></div>`;
         partsGrid.appendChild(card);
     });
     analysisTd.appendChild(partsGrid);
     tr.appendChild(analysisTd);
 
-
-    // --- 3. RECORDS & ACTIONS ---
+    // --- 3. RECORDS & ACTIONS (THE UPDATED LOGIC) ---
     const statsTd = document.createElement("td");
     statsTd.className = "stats-cell";
     const statsGrid = document.createElement("div");
@@ -593,6 +758,15 @@ function renderRow(originalJson, parts, totals, system){
     
     const rowStats = {}; 
     const statGroups = [["SelfKOWin","SelfKOLose","SpinWin","SpinLose"], ["OverWin","OverLose","BurstWin","BurstLose"], ["ExtremeWin","ExtremeLose"]];
+
+    // Point Weight Mapping
+    const pointWeights = {
+        "SpinWin": 1,
+        "SelfKOWin": 2,
+        "OverWin": 2,
+        "BurstWin": 2,
+        "ExtremeWin": 3
+    };
 
     statGroups.forEach((group) => {
         const rowDiv = document.createElement("div");
@@ -603,8 +777,40 @@ function renderRow(originalJson, parts, totals, system){
             const btn = document.createElement("div");
             btn.className = `stat-btn ${key.replace("Win","").replace("Lose","").toLowerCase()}-${key.includes("Win") ? "win" : "lose"}`;
             btn.innerHTML = `<span>${key.replace("Win"," W").replace("Lose"," L")}</span><span class="stat-val">${savedVal}</span>`;
-            btn.onclick = () => { rowStats[key]++; btn.querySelector(".stat-val").textContent = rowStats[key]; };
-            btn.oncontextmenu = (e) => { e.preventDefault(); if(rowStats[key]>0) { rowStats[key]--; btn.querySelector(".stat-val").textContent = rowStats[key]; }};
+            
+            // --- LEFT CLICK: ADD POINT & UPDATE SCORE ---
+            btn.onclick = () => { 
+                rowStats[key]++; 
+                btn.querySelector(".stat-val").textContent = rowStats[key]; 
+                
+                let logMsg = key.replace("Win"," W").replace("Lose"," L");
+                addLog(originalJson.name || "Unknown", logMsg, "+1");
+
+                // Check if this button has a score weight
+                if(pointWeights[key]) {
+                    let currentScore = parseInt(scoreInput.value);
+                    scoreInput.value = currentScore + pointWeights[key];
+                    addLog(originalJson.name || "Unknown", "Scoring", `+${pointWeights[key]}`);
+                }
+            };
+
+            // --- RIGHT CLICK: REDUCE POINT & UPDATE SCORE ---
+            btn.oncontextmenu = (e) => { 
+                e.preventDefault(); 
+                if(rowStats[key] > 0) { 
+                    rowStats[key]--; 
+                    btn.querySelector(".stat-val").textContent = rowStats[key]; 
+                    
+                    let logMsg = key.replace("Win"," W").replace("Lose"," L");
+                    addLog(originalJson.name || "Unknown", logMsg, "-1");
+
+                    // Deduct from score if applicable
+                    if(pointWeights[key]) {
+                        let currentScore = parseInt(scoreInput.value);
+                        scoreInput.value = Math.max(0, currentScore - pointWeights[key]);
+                    }
+                }
+            };
             rowDiv.appendChild(btn);
         });
         statsGrid.appendChild(rowDiv);
@@ -612,7 +818,6 @@ function renderRow(originalJson, parts, totals, system){
 
     const actionGroup = document.createElement("div");
     actionGroup.className = "action-group";
-    
     const copyBtn = document.createElement("button");
     copyBtn.className = "action-btn copy-btn";
     copyBtn.innerText = "Copy JSON";
@@ -622,7 +827,6 @@ function renderRow(originalJson, parts, totals, system){
             setTimeout(() => copyBtn.innerText = "COPY JSON", 1000);
         });
     };
-
     const delBtn = document.createElement("button");
     delBtn.className = "action-btn delete-btn";
     delBtn.innerText = "Remove Entry";
@@ -630,7 +834,6 @@ function renderRow(originalJson, parts, totals, system){
 
     actionGroup.appendChild(copyBtn);
     actionGroup.appendChild(delBtn);
-    
     statsGrid.appendChild(actionGroup);
     statsTd.appendChild(statsGrid);
     tr.appendChild(statsTd);
@@ -684,6 +887,53 @@ function drawRadarChart(canvas, stats, color){
     });
     ctx.closePath();
     ctx.fillStyle = color + "44"; ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+}
+
+function toggleLogger() {
+    const logger = document.getElementById('battleLogger');
+    const btn = document.getElementById('loggerToggleBtn');
+    logger.classList.toggle('logger-minimized');
+    btn.innerText = logger.classList.contains('logger-minimized') ? "+" : "−";
+}
+
+function addLog(bladerName, action, value) {
+    const content = document.getElementById('logContent');
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    // Logic: If value is +1, show green, if -1 show red
+    const color = value.includes('+') ? '#4ade80' : '#f87171';
+    entry.innerHTML = `${bladerName} <span style="color:var(--neon-cyan)">${action}</span> <span style="color:${color}">${value}</span>`;
+    content.appendChild(entry);
+    
+    // Auto-scroll to bottom
+    const body = document.getElementById('loggerBody');
+    body.scrollTop = body.scrollHeight;
+}
+
+function clearLog() {
+    const logContent = document.getElementById('logContent');
+    // Clear the inner HTML
+    logContent.innerHTML = '';
+    
+    // Optional: Add a subtle confirmation log
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.style.color = 'var(--muted)';
+    entry.style.fontStyle = 'italic';
+    entry.innerText = '-- Log Cleared --';
+    logContent.appendChild(entry);
+}
+
+function resetAllScores() {
+    if(confirm("Reset all blader points to 0?")) {
+        const scoreInputs = document.querySelectorAll('.score-display');
+        scoreInputs.forEach(input => {
+            input.value = 0;
+        });
+        if(typeof addLog === "function") {
+            addLog("SYSTEM", "All Scores Reset", "0");
+        }
+    }
 }
 </script>
 
