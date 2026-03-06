@@ -23,7 +23,6 @@
         min-height: 100vh;
     }
 
-    /* --- AUDIO OVERLAY --- */
     #audioUnlock {
         position: fixed; inset: 0; background: rgba(0,0,0,0.95);
         z-index: 9999; display: flex; flex-direction: column;
@@ -33,12 +32,10 @@
     h1 {
         text-align: center; text-transform: uppercase; letter-spacing: 4px;
         color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); margin: 20px 0;
-        /* Ensure it looks like text, not a link */
         cursor: default; 
         user-select: none;
     }
 
-    /* --- TOAST NOTIFICATION --- */
     #copyToast {
         visibility: hidden;
         min-width: 250px;
@@ -65,19 +62,19 @@
     @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
     @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-    /* --- BUTTONS --- */
     .action-btn {
-        display: block; margin: 20px auto; padding: 12px 30px;
-        font-size: 16px; border-radius: 50px; border: 2px solid var(--primary);
+        display: block; margin: 10px auto; padding: 12px 30px;
+        font-size: 14px; border-radius: 50px; border: 2px solid var(--primary);
         background: transparent; color: var(--primary); cursor: pointer;
         transition: all 0.3s ease; font-weight: bold; text-transform: uppercase;
+        width: 80%;
     }
     .action-btn:hover:not(:disabled) { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
     .action-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: #555; color: #555; }
-    .enter-btn { border-color: #ff4444; color: #ff4444; }
-    .enter-btn:hover { background: #ff4444; color: #fff; box-shadow: 0 0 20px rgba(255, 68, 68, 0.4); }
+    
+    .swap-btn { border-color: #888; color: #888; font-size: 12px; padding: 8px 20px; }
+    .swap-btn:hover { border-color: #fff; color: #fff; }
 
-    /* --- GRID --- */
     .participant-grid {
         display: grid; grid-template-columns: repeat(10, 110px); gap: 10px;
         justify-content: center; padding: 20px; margin: 0 auto; max-width: 1600px;
@@ -106,29 +103,16 @@
         padding: 6px 0 2px; font-size: 10px; font-weight: bold; text-align: center;
     }
 
-    /* --- BRACKET LAYOUT --- */
     #tournamentSection { display: none; opacity: 0; transition: opacity 1s; width: 100%; }
     
     .bracket-container {
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        width: 100%;
-        min-height: 90vh;
-        position: relative;
-        z-index: 2;
+        display: flex; justify-content: center; align-items: center; 
+        width: 100%; min-height: 90vh; position: relative; z-index: 2;
         transition: transform 0.5s;
     }
 
-    /* --- DYNAMIC STYLES --- */
     .bracket-container { --match-width: 220px; --match-gap: 80px; --round-height: 600px; }
-    
-    .bracket-container.compact { 
-        --match-width: 180px; 
-        --match-gap: 30px; 
-        --round-height: 750px; 
-        transform: scale(0.9); 
-    }
+    .bracket-container.compact { --match-width: 180px; --match-gap: 30px; --round-height: 750px; transform: scale(0.9); }
 
     .side-bracket { display: flex; gap: var(--match-gap); }
     #rightBracket { flex-direction: row-reverse; }
@@ -140,40 +124,24 @@
 
     .round { display: flex; flex-direction: column; justify-content: space-around; height: var(--round-height); }
 
-    /* --- MATCH BOX STYLING --- */
     .match {
-        background: rgba(255, 255, 255, 0.05); 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(5px); 
-        border-radius: 10px; 
-        padding: 10px;
-        width: var(--match-width);
-        cursor: pointer; 
-        transition: transform 0.2s, border-color 0.2s; 
+        background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px); border-radius: 10px; padding: 10px;
+        width: var(--match-width); cursor: pointer; transition: transform 0.2s, border-color 0.2s; 
         position: relative; z-index: 5;
     }
     .match:hover { border-color: var(--primary); transform: scale(1.05); }
 
     .player {
-        display: flex; align-items: center; 
-        gap: 15px; 
-        padding: 6px; border-radius: 6px;
-        margin: 6px 0; background: rgba(0,0,0,0.4); 
+        display: flex; align-items: center; gap: 15px; 
+        padding: 6px; border-radius: 6px; margin: 6px 0; background: rgba(0,0,0,0.4); 
     }
     
-    .player img { 
-        width: 45px; height: 75px; 
-        border-radius: 4px; object-fit: cover; 
-        border: 1px solid rgba(255,255,255,0.1);
-        flex-shrink: 0;
-    }
-    
+    .player img { width: 45px; height: 75px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
     .player span { font-size: 14px; font-weight: bold; }
-
     .player.win { background: var(--win-green); color: #fff; }
     .player.lose { opacity: 0.4; filter: grayscale(1); background: var(--lose-red); }
 
-    /* CHAMPION BOX */
     #championBox {
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         padding: 15px; border-radius: 16px; border: 3px solid var(--primary);
@@ -182,25 +150,28 @@
     }
     #championBox.active { opacity: 1; transform: scale(1.05); animation: selectedGlow 3s infinite; }
     #championBox h3 { margin: 0 0 5px; color: var(--primary); font-size: 12px; letter-spacing: 3px; }
-    #championBox img { 
-        width: 140px; height: 250px; border-radius: 8px; object-fit: cover; 
-        border: 2px solid rgba(255,255,255,0.2); 
-    }
+    #championBox img { width: 140px; height: 250px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); }
     #championBox h2 { margin: 15px 0 0; font-size: 22px; text-shadow: 0 2px 4px #000; }
 
     svg#lines { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 1; }
 
-    /* MODAL */
     #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; }
     #modalBox {
-        background: #1e1e1e; width: 320px; margin: 10vh auto; padding: 30px; border-radius: 16px;
-        border: 1px solid var(--primary); text-align: center;
+        background: #1e1e1e; width: 350px; margin: 5vh auto; padding: 25px; border-radius: 16px;
+        border: 1px solid var(--primary); text-align: center; max-height: 85vh; overflow-y: auto;
     }
-    #choices button {
-        width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 8px;
-        background: #333; color: white; font-size: 16px; font-weight: bold; cursor: pointer;
+    
+    .bench-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        margin-top: 15px; padding: 5px;
     }
-    #choices button:hover { background: var(--primary); color: #000; }
+    .bench-item {
+        background: #2a2a2a; border-radius: 8px; padding: 5px; cursor: pointer;
+        border: 1px solid transparent; transition: 0.2s;
+    }
+    .bench-item:hover { border-color: var(--primary); background: #333; }
+    .bench-item img { width: 100%; height: 80px; object-fit: cover; border-radius: 4px; }
+    .bench-item span { font-size: 10px; display: block; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -217,32 +188,28 @@
     <h1 id="selectHeader">Summon Bladers</h1>
     <div class="participant-grid" id="participantGrid"></div>
     <div style="display:flex; justify-content:center; gap:20px;">
-        <button class="action-btn" id="selectBtn">Random Summon</button>
-        <button class="action-btn enter-btn" id="enterBtn" style="display:none;">Battle</button>
+        <button class="action-btn" id="selectBtn" style="width: auto;">Random Summon</button>
+        <button class="action-btn enter-btn" id="enterBtn" style="display:none; width: auto; border-color: #ff4444; color: #ff4444;">Battle</button>
     </div>
 </div>
 
 <div id="tournamentSection">
-    <h1>Tournament Arena</h1>
+    <h1>Golden Crown Cup <br> -01- </h1>
     <div style="position: relative; width: 100%;">
         <svg id="lines"></svg>
-        
         <div id="bracketRoot" class="bracket-container">
             <div id="leftBracket" class="side-bracket"></div>
-
             <div id="centerBracket" class="center-bracket">
                 <div id="championBox">
                     <h3>CHAMPION</h3>
                     <img src="shadow.png">
                     <h2 id="champName">?</h2>
                 </div>
-                
                 <div id="finalMatch" class="match" onclick="openWinnerModal(this)" style="width: 220px; border-color: #fff; margin-top:30px;">
                     <div class="player"><img><span>Finalist 1</span></div>
                     <div class="player"><img><span>Finalist 2</span></div>
                 </div>
             </div>
-
             <div id="rightBracket" class="side-bracket"></div>
         </div>
     </div>
@@ -250,68 +217,60 @@
 
 <div id="modal">
     <div id="modalBox">
-        <h2 style="color: var(--primary); margin-top:0;">Who Won?</h2>
-        <div id="choices"></div>
-        <button onclick="closeModal()" style="background:transparent; color:#888; border:none; margin-top:15px; cursor:pointer;">Cancel</button>
+        <div id="modalStep1">
+            <h2 style="color: var(--primary); margin-top:0;">Match Action</h2>
+            <p style="color: #888; margin-bottom: 20px;">Choose a winner or replace a player.</p>
+            <div id="matchControls"></div>
+        </div>
+        <div id="modalStep2" style="display: none;">
+            <h2 style="color: var(--primary); margin-top:0;">Select Replacement</h2>
+            <p style="color: #888;">Available Benched Bladers:</p>
+            <div id="benchGrid" class="bench-grid"></div>
+        </div>
+        <button onclick="closeModal()" style="background:transparent; color:#888; border:none; margin-top:20px; cursor:pointer; font-weight: bold;">CLOSE</button>
     </div>
 </div>
 
 <script>
-/* =========================================
-   CONFIGURATION VARIABLE
-   Change to 8 or 16
-   ========================================= */
 const PLAYER_COUNT = 8; 
-/* ========================================= */
 
-// DATA
 const participants = [
-    {name:"Aiko",src:"avatars/Aiko.png",sound:["selectVoices/Aiko_1.MP3"]},
-    {name:"Darian",src:"avatars/Darian.png",sound:["selectVoices/Darian_1.MP3"]},
-    {name:"Darius",src:"avatars/Darius.png",sound:["selectVoices/Darius_1.MP3"]},
-    {name:"Haruka",src:"avatars/Haruka.png",sound:["selectVoices/Haruka_1.MP3"]},
-    {name:"Jaren",src:"avatars/Jaren.png",sound:["selectVoices/Jaren_1.MP3"]},
-    {name:"Kael",src:"avatars/Kael.png",sound:["selectVoices/Kael_1.MP3"]},
-    {name:"Kaito",src:"avatars/Kaito.png",sound:["selectVoices/Kaito_1.MP3"]},
-    {name:"Lucian",src:"avatars/Lucian.png",sound:["selectVoices/Lucian_1.MP3"]},
-    {name:"Mei",src:"avatars/Mei.png",sound:["selectVoices/Mei_1.MP3"]},
-    {name:"Natsumi",src:"avatars/Natsumi.png",sound:["selectVoices/Natsumi_1.MP3"]},
-    {name:"Renji",src:"avatars/Renji.png",sound:["selectVoices/Renji_1.MP3"]},
-    {name:"Ronan",src:"avatars/Ronan.png",sound:["selectVoices/Ronan_2.MP3"]},
-    {name:"Rose",src:"avatars/Rose.png",sound:["selectVoices/Rose_1.MP3"]},
-    {name:"Ruddy",src:"avatars/Ruddy.png",sound:["selectVoices/Ruddy_1.MP3"]},
-    {name:"Ryomaru",src:"avatars/Ryomaru.png",sound:["selectVoices/Ryomaru_1.MP3"]},
-    {name:"Sasha",src:"avatars/Sasha.png",sound:["selectVoices/Sasha_1.MP3"]},
-    {name:"Stephanie",src:"avatars/Stephanie.png",sound:["selectVoices/Stephanie_1.MP3"]},
-    {name:"Victor",src:"avatars/Victor.png",sound:["selectVoices/Victor_1.MP3"]},
-    {name:"Wolf",src:"avatars/Wolf.png",sound:["selectVoices/Wolf_1.MP3"]},
-    {name:"Zera",src:"avatars/Zera.png",sound:["selectVoices/Zera_1.MP3"]}
+ {name:"Aiko",src:"avatars/Aiko.png",sound:["selectVoices/Aiko_1.MP3","selectVoices/Aiko_2.MP3"]},
+ {name:"Darian",src:"avatars/Darian.png",sound:["selectVoices/Darian_1.MP3","selectVoices/Darian_2.MP3","selectVoices/Darian_3.MP3"]},
+ {name:"Darius",src:"avatars/Darius.png",sound:["selectVoices/Darius_1.MP3","selectVoices/Darius_2.MP3"]},
+ {name:"Haruka",src:"avatars/Haruka.png",sound:["selectVoices/Haruka_1.MP3","selectVoices/Haruka_2.MP3","selectVoices/Haruka_3.MP3"]},
+ {name:"Jaren",src:"avatars/Jaren.png",sound:["selectVoices/Jaren_1.MP3","selectVoices/Jaren_2.MP3","selectVoices/Jaren_3.MP3"]},
+ {name:"Kael",src:"avatars/Kael.png",sound:["selectVoices/Kael_1.MP3","selectVoices/Kael_2.MP3","selectVoices/Kael_3.MP3"]},
+ {name:"Kaito",src:"avatars/Kaito.png",sound:["selectVoices/Kaito_1.MP3","selectVoices/Kaito_2.MP3","selectVoices/Kaito_3.MP3"]},
+ {name:"Lucian",src:"avatars/Lucian.png",sound:["selectVoices/Lucian_1.MP3","selectVoices/Lucian_2.MP3"]},
+ {name:"Mei",src:"avatars/Mei.png",sound:["selectVoices/Mei_1.MP3","selectVoices/Mei_2.MP3","selectVoices/Mei_3.MP3"]},
+ {name:"Natsumi",src:"avatars/Natsumi.png",sound:["selectVoices/Natsumi_1.MP3","selectVoices/Natsumi_2.MP3"]},
+ {name:"Renji",src:"avatars/Renji.png",sound:["selectVoices/Renji_1.MP3","selectVoices/Renji_2.MP3"]},
+ {name:"Ronan",src:"avatars/Ronan.png",sound:["selectVoices/Ronan_2.MP3","selectVoices/Ronan_3.MP3"]},
+ {name:"Rose",src:"avatars/Rose.png",sound:["selectVoices/Rose_1.MP3","selectVoices/Rose_2.MP3"]},
+ {name:"Ruddy",src:"avatars/Ruddy.png",sound:["selectVoices/Ruddy_1.MP3","selectVoices/Ruddy_2.MP3","selectVoices/Ruddy_3.MP3"]},
+ {name:"Ryomaru",src:"avatars/Ryomaru.png",sound:["selectVoices/Ryomaru_1.MP3","selectVoices/Ryomaru_2.MP3","selectVoices/Ryomaru_3.MP3","selectVoices/Ryomaru_4.MP3"]},
+ {name:"Sasha",src:"avatars/Sasha.png",sound:["selectVoices/Sasha_1.MP3","selectVoices/Sasha_2.MP3","selectVoices/Sasha_3.MP3"]},
+ {name:"Stephanie",src:"avatars/Stephanie.png",sound:["selectVoices/Stephanie_1.MP3","selectVoices/Stephanie_2.MP3","selectVoices/Stephanie_3.MP3"]},
+ {name:"Victor",src:"avatars/Victor.png",sound:["selectVoices/Victor_1.MP3","selectVoices/Victor_2.MP3","selectVoices/Victor_3.MP3"]},
+ {name:"Wolf",src:"avatars/Wolf.png",sound:["selectVoices/Wolf_1.MP3","selectVoices/Wolf_2.MP3"]},
+ {name:"Zera",src:"avatars/Zera.png",sound:["selectVoices/Zera_1.MP3","selectVoices/Zera_2.MP3","selectVoices/Zera_3.MP3"]}
 ];
 
 const voicePool = {};
 const selectionSFX = new Audio("effects/selection.MP3");
 let selected = [];
 let rolling = false;
+let currentMatchEl = null;
+let swapTargetIdx = null;
 
-// Update Header
 const headerTitle = document.getElementById("selectHeader");
 headerTitle.textContent = `Summon ${PLAYER_COUNT} Participants`;
 
-/* --- COPY DATA FEATURE --- */
 headerTitle.onclick = () => {
-    // Only work if fully selected
     if (selected.length !== PLAYER_COUNT) return;
-
-    // Filter data to only include name and src
-    const dataToCopy = selected.map(p => ({
-        name: p.name,
-        src: p.src
-    }));
-
-    // Copy to clipboard
-    navigator.clipboard.writeText(JSON.stringify(dataToCopy)).then(() => {
-        showToast();
-    });
+    const dataToCopy = selected.map(p => ({ name: p.name, src: p.src }));
+    navigator.clipboard.writeText(JSON.stringify(dataToCopy)).then(() => { showToast(); });
 };
 
 function showToast() {
@@ -320,7 +279,6 @@ function showToast() {
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
 }
 
-/* --- SETUP --- */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -352,7 +310,6 @@ function renderGrid() {
     });
 }
 
-/* --- SLOW SELECTION (2 Seconds) --- */
 document.getElementById("selectBtn").onclick = () => {
     if (rolling || selected.length >= PLAYER_COUNT) return;
     rolling = true;
@@ -361,18 +318,15 @@ document.getElementById("selectBtn").onclick = () => {
     const cards = Array.from(document.querySelectorAll(".participant:not(.selected)"));
     let activeCard;
     
-    // Slow tick (150ms)
     const spin = setInterval(() => {
         cards.forEach(c => c.classList.remove("active"));
         activeCard = cards[Math.floor(Math.random() * cards.length)];
         activeCard.classList.add("active");
-        
         const tick = selectionSFX.cloneNode();
         tick.volume = 0.3;
         tick.play().catch(()=>{});
     }, 150);
 
-    // Long duration (2000ms)
     setTimeout(() => {
         clearInterval(spin);
         activeCard.classList.remove("active");
@@ -395,47 +349,39 @@ document.getElementById("selectBtn").onclick = () => {
     }, 2000);
 };
 
-/* --- BRACKET BUILDER --- */
 document.getElementById("enterBtn").onclick = () => {
     document.getElementById("selectionSection").style.display = "none";
     const ts = document.getElementById("tournamentSection");
     ts.style.display = "block";
     setTimeout(() => ts.style.opacity = 1, 100);
     
-    // Check Config
     if(PLAYER_COUNT === 16) {
         document.getElementById("bracketRoot").classList.add("compact");
-        buildSplitBracket(3); // 3 Rounds per side
+        buildSplitBracket(3);
     } else {
         document.getElementById("bracketRoot").classList.remove("compact");
-        buildSplitBracket(2); // 2 Rounds per side
+        buildSplitBracket(2);
     }
 };
 
 function buildSplitBracket(rounds) {
     createSideRounds("leftBracket", rounds);
     createSideRounds("rightBracket", rounds);
-    
     const shuffled = [...selected].sort(() => 0.5 - Math.random());
     const half = PLAYER_COUNT / 2;
-    
     fillSideRoundOne("leftBracket", shuffled.slice(0, half));
     fillSideRoundOne("rightBracket", shuffled.slice(half, PLAYER_COUNT));
-    
     setTimeout(drawLines, 500);
 }
 
 function createSideRounds(containerId, rounds) {
     const container = document.getElementById(containerId);
     container.innerHTML = "";
-    
     for(let r=0; r<rounds; r++) {
         const roundDiv = document.createElement("div");
         roundDiv.className = "round";
         roundDiv.dataset.roundId = r; 
-        
         const matchCount = Math.pow(2, rounds - 1 - r);
-        
         for(let m=0; m<matchCount; m++) {
             const div = document.createElement("div");
             div.className = "match";
@@ -463,22 +409,67 @@ function updatePlayer(slot, data) {
     slot.dataset.name = data.name;
 }
 
-/* --- GAME LOGIC --- */
-let currentMatchEl = null;
-
 function openWinnerModal(match) {
     const players = match.querySelectorAll(".player");
-    if(!players[0].dataset.name) return;
+    if(!players[0].dataset.name || players[0].dataset.name === "-") return;
     currentMatchEl = match;
-    const choices = document.getElementById("choices");
-    choices.innerHTML = "";
+
+    document.getElementById("modalStep1").style.display = "block";
+    document.getElementById("modalStep2").style.display = "none";
+    
+    const controls = document.getElementById("matchControls");
+    controls.innerHTML = "";
+
     players.forEach((p, idx) => {
-        const btn = document.createElement("button");
-        btn.textContent = p.dataset.name;
-        btn.onclick = () => selectWinner(idx);
-        choices.appendChild(btn);
+        const group = document.createElement("div");
+        group.style.marginBottom = "15px";
+
+        const winBtn = document.createElement("button");
+        winBtn.className = "action-btn";
+        winBtn.textContent = `Win: ${p.dataset.name}`;
+        winBtn.onclick = () => selectWinner(idx);
+
+        const swapBtn = document.createElement("button");
+        swapBtn.className = "action-btn swap-btn";
+        swapBtn.textContent = `Replace ${p.dataset.name}`;
+        swapBtn.onclick = () => openBench(idx);
+
+        group.appendChild(winBtn);
+        group.appendChild(swapBtn);
+        controls.appendChild(group);
     });
+
     document.getElementById("modal").style.display = "block";
+}
+
+function openBench(idx) {
+    swapTargetIdx = idx;
+    document.getElementById("modalStep1").style.display = "none";
+    document.getElementById("modalStep2").style.display = "block";
+
+    const grid = document.getElementById("benchGrid");
+    grid.innerHTML = "";
+
+    const benched = participants.filter(p => !selected.some(s => s.name === p.name));
+
+    benched.forEach(p => {
+        const item = document.createElement("div");
+        item.className = "bench-item";
+        item.innerHTML = `<img src="${p.src}"><span>${p.name}</span>`;
+        item.onclick = () => performSwap(p);
+        grid.appendChild(item);
+    });
+}
+
+function performSwap(newPlayerData) {
+    const players = currentMatchEl.querySelectorAll(".player");
+    const oldName = players[swapTargetIdx].dataset.name;
+
+    selected = selected.map(p => p.name === oldName ? newPlayerData : p);
+    updatePlayer(players[swapTargetIdx], newPlayerData);
+    
+    drawLines();
+    closeModal();
 }
 
 function closeModal() { document.getElementById("modal").style.display = "none"; }
@@ -489,19 +480,13 @@ function selectWinner(idx) {
         p.classList.remove("win", "lose");
         p.classList.add(i === idx ? "win" : "lose");
     });
-    
-    const winnerData = {
-        name: players[idx].dataset.name,
-        src: players[idx].querySelector("img").src
-    };
-    
+    const winnerData = { name: players[idx].dataset.name, src: players[idx].querySelector("img").src };
     advance(winnerData);
     closeModal();
 }
 
 function advance(data) {
     const currentRound = currentMatchEl.parentElement;
-    
     if(currentMatchEl.id === "finalMatch") {
         const champBox = document.getElementById("championBox");
         champBox.classList.add("active");
@@ -509,10 +494,8 @@ function advance(data) {
         champBox.querySelector("#champName").textContent = data.name;
         return;
     }
-
     const roundIndex = parseInt(currentRound.dataset.roundId);
     const totalSideRounds = Math.log2(PLAYER_COUNT / 2);
-
     if (roundIndex < totalSideRounds - 1) {
         const nextRound = currentRound.nextElementSibling;
         const matches = Array.from(currentRound.querySelectorAll(".match"));
@@ -528,30 +511,23 @@ function advance(data) {
     }
 }
 
-/* --- SVG LINES (STRAIGHT) --- */
 function drawLines() {
     const svg = document.getElementById("lines");
     const container = document.querySelector("#tournamentSection > div"); 
     svg.setAttribute("width", container.offsetWidth);
     svg.setAttribute("height", container.offsetHeight);
     svg.innerHTML = "";
-    
     const containerRect = container.getBoundingClientRect();
 
     function getRelativePos(el, side) {
         const r = el.getBoundingClientRect();
-        return {
-            x: (side === 'right' ? r.right : r.left) - containerRect.left,
-            y: r.top - containerRect.top + r.height/2
-        };
+        return { x: (side === 'right' ? r.right : r.left) - containerRect.left, y: r.top - containerRect.top + r.height/2 };
     }
 
-    // STRAIGHT ELBOW LINES
     function drawPath(start, end) {
         const midX = start.x + (end.x - start.x) / 2;
         const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
         const d = `M ${start.x} ${start.y} L ${midX} ${start.y} L ${midX} ${end.y} L ${end.x} ${end.y}`;
-        
         p.setAttribute("d", d);
         p.setAttribute("stroke", "rgba(255, 152, 0, 0.3)");
         p.setAttribute("fill", "none");
@@ -566,11 +542,8 @@ function drawLines() {
             const next = rounds[i+1].querySelectorAll(".match");
             curr.forEach((m, idx) => {
                 const target = next[Math.floor(idx/2)];
-                if (id === "leftBracket") {
-                    drawPath(getRelativePos(m, 'right'), getRelativePos(target, 'left'));
-                } else {
-                    drawPath(getRelativePos(m, 'left'), getRelativePos(target, 'right'));
-                }
+                if (id === "leftBracket") drawPath(getRelativePos(m, 'right'), getRelativePos(target, 'left'));
+                else drawPath(getRelativePos(m, 'left'), getRelativePos(target, 'right'));
             });
         }
     });
@@ -578,7 +551,6 @@ function drawLines() {
     const finalMatch = document.getElementById("finalMatch");
     const leftLast = document.querySelector("#leftBracket .round:last-child .match");
     const rightLast = document.querySelector("#rightBracket .round:last-child .match");
-    
     if(leftLast && finalMatch) drawPath(getRelativePos(leftLast, 'right'), getRelativePos(finalMatch, 'left'));
     if(rightLast && finalMatch) drawPath(getRelativePos(rightLast, 'left'), getRelativePos(finalMatch, 'right'));
 }
