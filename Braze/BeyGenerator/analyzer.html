@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyblade Builder & Analyzer</title>
+    <script src="data.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f0f13;
+            --panel-bg: #1a1a24;
+            --panel-border: #2a2a36;
+            --text-main: #e2e2e2;
+            --text-muted: #8b8b9e;
+            --accent: #00ffcc;
+            --danger: #ff4d4d;
+            --table-header: #21212d;
+            --table-border: #2a2a36;
+            --table-hover: #232332;
+            --win-color: #20c997;
+            
+            /* Stat Colors */
+            --atk-color: #ff4d4d;
+            --def-color: #4dabf7;
+            --sta-color: #fab005;
+            --dash-color: #b197fc;
+            --burst-color: #fd7e14;
+            --bal-color: #20c997;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #3a3a4c; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #55556d; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 30px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header-title h1 { margin: 0; color: var(--text-main); font-size: 28px; display: flex; align-items: center; gap: 10px; }
+        .header-title span { color: var(--accent); }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* KPI Cards (Top Row) */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .kpi-card.arch-atk { border-top-color: var(--atk-color); }
+        .kpi-card.arch-def { border-top-color: var(--def-color); }
+        .kpi-card.arch-sta { border-top-color: var(--sta-color); }
+        .kpi-card.arch-bal { border-top-color: var(--bal-color); }
+        .kpi-card h3 { margin: 0 0 5px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;}
+        .kpi-card .value { font-size: 28px; font-weight: bold; margin: 0; }
+        .kpi-card .sub-value { font-size: 13px; color: var(--text-muted); margin-top: 5px; }
+
+        /* Main Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        .full-width { grid-column: span 2; }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 10px;
+        }
+        .panel-header h2 { margin: 0; font-size: 18px; color: var(--text-main); }
+        .panel-header .subtitle { font-size: 12px; color: var(--text-muted); font-weight: normal; }
+
+        /* Table Architecture */
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--table-border);
+            border-radius: 8px;
+            flex-grow: 1; /* Pushes pagination to bottom if needed */
+        }
+        table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--table-border); font-size: 14px; }
+        th { 
+            background-color: var(--table-header); 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            letter-spacing: 0.5px;
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        
+        .clickable-row { cursor: pointer; transition: all 0.2s ease; }
+        .clickable-row:hover { background-color: var(--table-hover); }
+        
+        .win-rate-high { color: var(--win-color); font-weight: bold; }
+        .win-rate-low { color: var(--danger); font-weight: bold; }
+
+        /* Controls */
+        .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 10px; }
+        .pagination span { color: var(--text-muted); font-size: 13px; }
+        .pagination-btns { display: flex; gap: 10px; }
+        .pagination button { 
+            background-color: var(--table-header); color: var(--text-main); border: 1px solid var(--panel-border); 
+            padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.2s; 
+        }
+        .pagination button:hover:not(:disabled) { background-color: #313144; border-color: #4a4a60; }
+        .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .custom-select { 
+            padding: 8px 12px; font-size: 13px; background-color: var(--table-header); color: var(--text-main); 
+            border: 1px solid var(--panel-border); border-radius: 6px; cursor: pointer; outline: none; 
+        }
+
+        .table-avatar { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; margin-right: 12px; border: 2px solid #333; }
+
+        /* Layout specific tweaks */
+        .archetype-tables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 10px;}
+
+        /* Modal Styles */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--panel-bg); padding: 30px; border-radius: 12px; width: 90%; max-width: 650px; border: 1px solid var(--panel-border); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: var(--text-muted); font-size: 28px; cursor: pointer; border: none; background: none; transition: 0.2s; }
+        .close-btn:hover { color: var(--danger); }
+        
+        .modal-header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--panel-border); }
+        .modal-header h2 { margin: 0; color: var(--text-main); font-size: 24px; }
+        
+        .modal-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; }
+        .avatar-container { text-align: center; }
+        .avatar-img { width: 100%; max-width: 160px; border-radius: 12px; border: 3px solid var(--panel-border); background-color: var(--table-header); margin-bottom: 15px; }
+        
+        .details-section h3 { margin-top: 0; color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;}
+        .part-badge { background: var(--table-header); padding: 6px 10px; border-radius: 6px; font-size: 13px; border: 1px solid var(--table-border); display: inline-block; margin: 0 5px 5px 0;}
+        
+        .stat-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
+        .stat-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);}
+        .bg-wt { background: #495057; }
+        .bg-atk { background: var(--atk-color); }
+        .bg-def { background: var(--def-color); }
+        .bg-sta { background: var(--sta-color); color: #000; text-shadow: none;}
+        .bg-dash { background: var(--dash-color); }
+        .bg-burst { background: var(--burst-color); }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat-row { display: flex; justify-content: space-between; background: var(--table-header); padding: 10px 15px; border-radius: 6px; font-size: 13px; border: 1px solid var(--table-border);}
+        .stat-win { color: var(--win-color); font-weight: bold; }
+        .stat-lose { color: var(--danger); font-weight: bold; }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .archetype-tables-grid { grid-template-columns: 1fr; }
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .modal-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">
+        <h1><span>🌀</span> Beyblade Analytics Dashboard</h1>
+    </div>
+
+    <div class="kpi-row" id="archetypeSummary">
+        </div>
+    
+    <div class="dashboard-grid">
+
+        <div class="panel full-width">
+            <div class="panel-header">
+                <h2>Top Beyblade Builds</h2>
+                <span class="subtitle">Complete performance leaderboard of all active builds</span>
+            </div>
+            <div class="table-container">
+                <table id="combosTable">
+                    <thead>
+                        <tr>
+                            <th>Blader</th>
+                            <th>Combo (Chip | Blade | Assist | Ratchet | Bit)</th>
+                            <th>Matches</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Points</th>
+                            <th>Win Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <span id="pageInfo">Showing Page 1 of 1</span>
+                <div class="pagination-btns">
+                    <button id="prevBtn" onclick="prevPage()">Previous</button>
+                    <button id="nextBtn" onclick="nextPage()">Next</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel full-width">
+            <div class="panel-header">
+                <h2>Top Builds by Archetype</h2>
+                <span class="subtitle">The 5 most successful combinations for each strategic playstyle</span>
+            </div>
+            <div class="archetype-tables-grid">
+                <div class="table-container">
+                    <table id="topAtkTable">
+                        <thead>
+                            <tr>
+                                <th style="color:var(--atk-color)">⚔️ Top Attack Builds</th>
+                                <th>Win Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table id="topDefTable">
+                        <thead>
+                            <tr>
+                                <th style="color:var(--def-color)">🛡️ Top Defense Builds</th>
+                                <th>Win Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table id="topStaTable">
+                        <thead>
+                            <tr>
+                                <th style="color:var(--sta-color)">🌪️ Top Stamina Builds</th>
+                                <th>Win Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table id="topBalTable">
+                        <thead>
+                            <tr>
+                                <th style="color:var(--bal-color)">⚖️ Top Balance Builds</th>
+                                <th>Win Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Finish Analysis</h2>
+                <select id="finishTypeSelector" class="custom-select" onchange="changeFinishType()">
+                    <option value="spin">Spin Finish (+1 pt)</option>
+                    <option value="over">Over Finish (+2 pts)</option>
+                    <option value="burst" selected>Burst Finish (+2 pts)</option>
+                    <option value="extreme">Extreme Finish (+3 pts)</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table id="finishAnalysisTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Blader & Build</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Win %</th>
+                            <th>Pwr Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <span id="finishPageInfo">Page 1 of 1</span>
+                <div class="pagination-btns">
+                    <button id="prevFinishBtn" onclick="prevFinishPage()">Previous</button>
+                    <button id="nextFinishBtn" onclick="nextFinishPage()">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Top Efficient Builds</h2>
+                <span class="subtitle">Highest points-per-match relative to base stats</span>
+            </div>
+            <div class="table-container" style="height: 100%;">
+                <table id="efficiencyTable">
+                    <thead>
+                        <tr>
+                            <th>Blader & Build</th>
+                            <th>Archetype</th>
+                            <th>Weight</th>
+                            <th>Win Rate</th>
+                            <th>Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel full-width">
+            <div class="panel-header">
+                <h2>Top Repeating Combinations</h2>
+                <span class="subtitle">Identifies multi-part synergies used across different builds</span>
+            </div>
+            <div class="table-container">
+                <table id="topCombosTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Combo Size</th>
+                            <th>Parts Included</th>
+                            <th style="width: 15%">Times Used</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-overlay" id="infoModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <div class="modal-header">
+            <h2 id="modalBladerName">Blader Name</h2>
+            <p style="margin: 5px 0 0 0; color: var(--text-muted);" id="modalComboTitle">Combo Name</p>
+        </div>
+        <div class="modal-grid">
+            <div class="avatar-container">
+                <img id="modalAvatar" class="avatar-img" src="">
+                <div style="font-size: 14px; margin-top: 10px; background: var(--table-header); padding: 10px; border-radius: 8px; border: 1px solid var(--table-border);">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <span style="color:var(--text-muted)">Total Points:</span> 
+                        <strong id="modalPoints" style="color:var(--accent)">0</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--text-muted)">Overall Win Rate:</span> 
+                        <strong id="modalWinRate">0%</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="details-section">
+                <h3>System & Parts Configuration</h3>
+                <div id="modalPartsList" style="margin-bottom: 20px;"></div>
+                
+                <h3>Calculated Stat Pool</h3>
+                <div class="stat-badges" id="modalStatBadges"></div>
+
+                <h3>Battle History Breakdown</h3>
+                <div class="stats-grid">
+                    <div class="stat-row"><span>Self KO</span> <div><span class="stat-win" id="m-self-w">0</span> / <span class="stat-lose" id="m-self-l">0</span></div></div>
+                    <div class="stat-row"><span>Spin Finish</span> <div><span class="stat-win" id="m-spin-w">0</span> / <span class="stat-lose" id="m-spin-l">0</span></div></div>
+                    <div class="stat-row"><span>Over Finish</span> <div><span class="stat-win" id="m-over-w">0</span> / <span class="stat-lose" id="m-over-l">0</span></div></div>
+                    <div class="stat-row"><span>Burst Finish</span> <div><span class="stat-win" id="m-burst-w">0</span> / <span class="stat-lose" id="m-burst-l">0</span></div></div>
+                    <div class="stat-row" style="grid-column: span 2;"><span>Extreme Finish</span> <div><span class="stat-win" id="m-extreme-w">0</span> / <span class="stat-lose" id="m-extreme-l">0</span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="usageModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <button class="close-btn" onclick="closeUsageModal()">&times;</button>
+        <div class="modal-header">
+            <h2 id="usageModalTitle">Builds Using This Combination</h2>
+            <p style="margin: 5px 0 0 0; color: var(--text-muted);" id="usageModalSubtitle">Parts</p>
+        </div>
+        <div class="table-container">
+            <table id="usageTable">
+                <thead>
+                    <tr>
+                        <th>Blader</th>
+                        <th>Full Combo Build</th>
+                        <th>Matches</th>
+                        <th>Win Rate</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    if (typeof masterChips === 'undefined') {
+        window.masterChips = []; window.masterBlades = []; window.masterAssist = []; 
+        window.masterRatchets = []; window.masterBits = [];
+    }
+
+    // Your battle results data
+    const results = [
+        {"name":"Natsumi","src":"avatars/Natsumi.png","system":"UX","chip":"","blade":"SharkScale","asst":"","ratchet":"Op(Atk)","bit":"","SelfKOWin":1,"SelfKOLose":0,"SpinWin":0,"SpinLose":2,"OverWin":2,"OverLose":0,"BurstWin":3,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Rose","src":"avatars/Rose.png","system":"UX","chip":"","blade":"KnightMail","asst":"","ratchet":"3-60","bit":"V","SelfKOWin":0,"SelfKOLose":0,"SpinWin":3,"SpinLose":2,"OverWin":1,"OverLose":1,"BurstWin":4,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"UX","chip":"","blade":"ScorpioSpear","asst":"","ratchet":"3-85","bit":"Z","SelfKOWin":0,"SelfKOLose":0,"SpinWin":5,"SpinLose":0,"OverWin":3,"OverLose":1,"BurstWin":1,"BurstLose":1,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Natsumi","src":"avatars/Natsumi.png","system":"BX","chip":"","blade":"SphinxCowl","asst":"","ratchet":"9-60","bit":"LR","SelfKOWin":2,"SelfKOLose":0,"SpinWin":0,"SpinLose":4,"OverWin":0,"OverLose":0,"BurstWin":4,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"BX","chip":"","blade":"SamuraiCalibur","asst":"","ratchet":"7-70","bit":"C","SelfKOWin":0,"SelfKOLose":0,"SpinWin":4,"SpinLose":3,"OverWin":2,"OverLose":1,"BurstWin":2,"BurstLose":0,"ExtremeWin":1,"ExtremeLose":1},
+        {"name":"Lucian","src":"avatars/Lucian.png","system":"CX","chip":"Wolf","blade":"EclipseUpper","asst":"Heavy","ratchet":"6-80","bit":"MN","SelfKOWin":0,"SelfKOLose":0,"SpinWin":4,"SpinLose":0,"OverWin":2,"OverLose":0,"BurstWin":1,"BurstLose":2,"ExtremeWin":1,"ExtremeLose":0},
+        {"name":"Ruddy","src":"avatars/Ruddy.png","system":"UX","chip":"","blade":"ClockMirage","asst":"","ratchet":"3-85","bit":"F","SelfKOWin":1,"SelfKOLose":0,"SpinWin":10,"SpinLose":0,"OverWin":0,"OverLose":0,"BurstWin":0,"BurstLose":1,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Victor","src":"avatars/Victor.png","system":"UX","chip":"","blade":"SharkScale","asst":"","ratchet":"3-70","bit":"R","SelfKOWin":0,"SelfKOLose":0,"SpinWin":3,"SpinLose":3,"OverWin":2,"OverLose":0,"BurstWin":3,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Natsumi","src":"avatars/Natsumi.png","system":"CX","chip":"Pegasus","blade":"Blast","asst":"Dual(Upper)","ratchet":"0-60","bit":"P","SelfKOWin":1,"SelfKOLose":0,"SpinWin":6,"SpinLose":4,"OverWin":0,"OverLose":0,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Haruka","src":"avatars/Haruka.png","system":"UX","chip":"","blade":"KnightMail","asst":"","ratchet":"3-85","bit":"FB","SelfKOWin":0,"SelfKOLose":0,"SpinWin":9,"SpinLose":0,"OverWin":1,"OverLose":2,"BurstWin":0,"BurstLose":0,"ExtremeWin":1,"ExtremeLose":1},
+        {"name":"Kaito","src":"avatars/Kaito.png","system":"CX","chip":"Hells","blade":"Hunt","asst":"Wheel","ratchet":"0-70","bit":"S","SelfKOWin":0,"SelfKOLose":0,"SpinWin":12,"SpinLose":1,"OverWin":0,"OverLose":1,"BurstWin":0,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Rose","src":"avatars/Rose.png","system":"UX","chip":"","blade":"SharkScale","asst":"","ratchet":"9-60","bit":"Z","SelfKOWin":0,"SelfKOLose":0,"SpinWin":10,"SpinLose":4,"OverWin":0,"OverLose":0,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"UX","chip":"","blade":"GolemRock01","asst":"","ratchet":"6-70","bit":"LR","SelfKOWin":0,"SelfKOLose":0,"SpinWin":7,"SpinLose":3,"OverWin":0,"OverLose":0,"BurstWin":0,"BurstLose":1,"ExtremeWin":2,"ExtremeLose":0},
+        {"name":"Rose","src":"avatars/Rose.png","system":"BX","chip":"","blade":"SamuraiCalibur","asst":"","ratchet":"9-70","bit":"LO","SelfKOWin":0,"SelfKOLose":0,"SpinWin":10,"SpinLose":0,"OverWin":0,"OverLose":0,"BurstWin":1,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Haruka","src":"avatars/Haruka.png","system":"UX","chip":"","blade":"SharkScale","asst":"","ratchet":"9-65","bit":"TK","SelfKOWin":0,"SelfKOLose":0,"SpinWin":7,"SpinLose":0,"OverWin":2,"OverLose":1,"BurstWin":1,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Kaito","src":"avatars/Kaito.png","system":"CX","chip":"Wizard","blade":"EclipseSmash","asst":"Bumper","ratchet":"7-70","bit":"H","SelfKOWin":0,"SelfKOLose":1,"SpinWin":8,"SpinLose":2,"OverWin":1,"OverLose":1,"BurstWin":0,"BurstLose":0,"ExtremeWin":1,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"UX","chip":"","blade":"PhoenixRudder","asst":"","ratchet":"M-85","bit":"P","SelfKOWin":0,"SelfKOLose":0,"SpinWin":3,"SpinLose":1,"OverWin":1,"OverLose":0,"BurstWin":2,"BurstLose":1,"ExtremeWin":1,"ExtremeLose":0},
+        {"name":"Haruka","src":"avatars/Haruka.png","system":"CX","chip":"Wolf","blade":"Might","asst":"Heavy","ratchet":"4-55","bit":"GN","SelfKOWin":0,"SelfKOLose":0,"SpinWin":7,"SpinLose":3,"OverWin":1,"OverLose":0,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"UX","chip":"","blade":"ScorpioSpear","asst":"","ratchet":"1-70","bit":"WW","SelfKOWin":0,"SelfKOLose":0,"SpinWin":10,"SpinLose":1,"OverWin":1,"OverLose":0,"BurstWin":0,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":1},
+        {"name":"Kaito","src":"avatars/Kaito.png","system":"UX","chip":"","blade":"KnightMail","asst":"","ratchet":"5-70","bit":"GF","SelfKOWin":0,"SelfKOLose":0,"SpinWin":4,"SpinLose":2,"OverWin":2,"OverLose":1,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Victor","src":"avatars/Victor.png","system":"CX","chip":"Wolf","blade":"Arc","asst":"DualUpper","ratchet":"9-70","bit":"GN","SelfKOWin":0,"SelfKOLose":0,"SpinWin":12,"SpinLose":2,"OverWin":0,"OverLose":1,"BurstWin":0,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Natsumi","src":"avatars/Natsumi.png","system":"BX","chip":"","blade":"ViperTail","asst":"","ratchet":"1-70","bit":"BS","SelfKOWin":0,"SelfKOLose":0,"SpinWin":1,"SpinLose":3,"OverWin":1,"OverLose":0,"BurstWin":5,"BurstLose":1,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"BX","chip":"","blade":"TyrannoBeat","asst":"","ratchet":"9-80","bit":"BS","SelfKOWin":1,"SelfKOLose":1,"SpinWin":4,"SpinLose":4,"OverWin":2,"OverLose":0,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"CX","chip":"Sol","blade":"Flare","asst":"Free","ratchet":"9-80","bit":"BS","SelfKOWin":0,"SelfKOLose":0,"SpinWin":8,"SpinLose":2,"OverWin":0,"OverLose":0,"BurstWin":2,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0},
+        {"name":"Ronan","src":"avatars/Ronan.png","system":"CX","chip":"Pegasus","blade":"Might","asst":"Wheel","ratchet":"1-70","bit":"H","SelfKOWin":1,"SelfKOLose":0,"SpinWin":7,"SpinLose":1,"OverWin":0,"OverLose":0,"BurstWin":1,"BurstLose":0,"ExtremeWin":0,"ExtremeLose":0}
+    ];
+
+    // ----- STAT CALCULATION ENGINE -----
+    function findPart(arr, name) {
+        if (!name || name.trim() === "") return null;
+        const flat = arr.flat(Infinity);
+        return flat.find(p => 
+            p.name === name || p.abbr === name || p.displayName === name ||
+            (name === "Op(Atk)" && p.src && p.src.includes("OperateATK")) ||
+            (name === "Op(Def)" && p.src && p.src.includes("OperateDEF")) ||
+            (name === "Dual(Upper)" && p.src && p.src.includes("DualUpper"))
+        );
+    }
+
+    let processedData = results.map((r, index) => {
+        const wins = r.SelfKOWin + r.SpinWin + r.OverWin + r.BurstWin + r.ExtremeWin;
+        const losses = r.SelfKOLose + r.SpinLose + r.OverLose + r.BurstLose + r.ExtremeLose;
+        const totalMatches = wins + losses;
+        const points = (r.SelfKOWin * 2) + (r.SpinWin * 1) + (r.OverWin * 2) + (r.BurstWin * 2) + (r.ExtremeWin * 3);
+        const rawWinRate = totalMatches === 0 ? 0 : (wins / totalMatches) * 100;
+        
+        // VOLATILITY LOGIC (Still kept for the modal badges)
+        let volScore = 0;
+        if (totalMatches > 0) {
+            let totalVolatility = 
+                ((r.SpinWin + r.SpinLose) * 1) +
+                ((r.OverWin + r.OverLose) * 2) +
+                ((r.BurstWin + r.BurstLose) * 3) +
+                ((r.ExtremeWin + r.ExtremeLose) * 4) +
+                ((r.SelfKOWin + r.SelfKOLose) * 4);
+            volScore = totalVolatility / totalMatches;
+        }
+
+        let playstyle = "Balanced";
+        let playstyleColor = "var(--sta-color)";
+        if (volScore <= 1.8) { playstyle = "Consistent"; playstyleColor = "var(--win-color)"; }
+        else if (volScore >= 2.6) { playstyle = "Wildcard"; playstyleColor = "var(--danger)"; }
+
+        // Calculate theoretical stats
+        let wt = 0, atk = 0, def = 0, sta = 0, dash = 0, burstR = 0;
+        [
+            findPart(masterChips, r.chip),
+            findPart(masterBlades, r.blade),
+            findPart(masterAssist, r.asst),
+            findPart(masterRatchets, r.ratchet),
+            findPart(masterBits, r.bit)
+        ].forEach(p => {
+            if (p) {
+                wt += p.weight || 0; atk += p.atk || 0; def += p.def || 0; 
+                sta += p.sta || 0; dash += p.dash || 0; burstR += p.burstR || p.burst || 0;
+            }
+        });
+
+        // BALANCE ARCHETYPE LOGIC
+        const balanceThreshold = 15; 
+        let statsArray = [ { name: "Attack", val: atk }, { name: "Defense", val: def }, { name: "Stamina", val: sta } ];
+        statsArray.sort((a, b) => b.val - a.val);
+        
+        let archetype;
+        if ((statsArray[0].val - statsArray[1].val) <= balanceThreshold) { archetype = "Balance"; } 
+        else { archetype = statsArray[0].name; }
+
+        const totalBaseStats = atk + def + sta + dash + burstR;
+        const efficiency = (totalMatches > 0 && totalBaseStats > 0) ? ((points / totalMatches) / totalBaseStats) * 1000 : 0;
+
+        return { 
+            ...r, wins, losses, totalMatches, points, rawWinRate, displayWinRate: rawWinRate.toFixed(1), 
+            originalIndex: index, stats: { wt: wt.toFixed(1), atk, def, sta, dash, burstR }, archetype, efficiency,
+            volScore, playstyle, playstyleColor
+        };
+    });
+
+    processedData.sort((a, b) => b.rawWinRate - a.rawWinRate);
+
+    // ----- ADVANCED STAT RENDER -----
+    function renderAdvancedAnalysis() {
+        // 1. KPI Archetype Cards
+        const archStats = { Attack: {w:0, l:0}, Defense: {w:0, l:0}, Stamina: {w:0, l:0}, Balance: {w:0, l:0} };
+        processedData.forEach(r => {
+            if(archStats[r.archetype]) { archStats[r.archetype].w += r.wins; archStats[r.archetype].l += r.losses; }
+        });
+
+        const sumHtml = Object.keys(archStats).map(arch => {
+            const d = archStats[arch];
+            const t = d.w + d.l;
+            const rate = t === 0 ? 0 : ((d.w / t) * 100).toFixed(1);
+            let colorCls = arch === "Attack" ? "arch-atk" : (arch === "Defense" ? "arch-def" : (arch === "Balance" ? "arch-bal" : "arch-sta"));
+            let cHex = arch === "Attack" ? "var(--atk-color)" : (arch === "Defense" ? "var(--def-color)" : (arch === "Balance" ? "var(--bal-color)" : "var(--sta-color)"));
+            return `
+                <div class="kpi-card ${colorCls}">
+                    <h3 style="color:${cHex}">${arch} Types</h3>
+                    <p class="value">${rate}%</p>
+                    <p class="sub-value">${d.w} Wins / ${d.l} Losses</p>
+                </div>`;
+        }).join('');
+        document.getElementById("archetypeSummary").innerHTML = sumHtml;
+
+        // 2. Top Efficient Builds
+        const effData = [...processedData].filter(r => r.totalMatches > 0).sort((a, b) => b.efficiency - a.efficiency).slice(0, 10);
+        const effBody = document.querySelector("#efficiencyTable tbody");
+        effBody.innerHTML = effData.map(r => {
+            let comboArr = [r.chip, r.blade, r.asst, r.ratchet, r.bit].filter(p => p && p.trim() !== "");
+            let cName = comboArr.length > 0 ? comboArr.join(" | ") : "N/A";
+            let cColor = r.archetype === "Attack" ? "var(--atk-color)" : (r.archetype === "Defense" ? "var(--def-color)" : (r.archetype === "Balance" ? "var(--bal-color)" : "var(--sta-color)"));
+            return `<tr class="clickable-row" onclick="openModal(${processedData.indexOf(r)})">
+                        <td>
+                            <div style="display:flex; align-items:center;">
+                                <img src="${r.src}" class="table-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' style=\'background:%23333;border-radius:50%\'></svg>'">
+                                <div>
+                                    <strong>${r.name}</strong><br>
+                                    <small style="color:var(--text-muted)">${cName}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="color:${cColor}; font-weight:600;">${r.archetype}</span></td>
+                        <td>${r.stats.wt}g</td>
+                        <td>${r.displayWinRate}%</td>
+                        <td><strong style="color:var(--accent); font-size:15px;">${r.efficiency.toFixed(2)}</strong></td>
+                    </tr>`;
+        }).join('');
+
+        // 3. Top Builds by Archetype (Filtered and Sorted by Win Rate)
+        const validData = [...processedData].filter(r => r.totalMatches > 0);
+        
+        const archetypesToRender = [
+            { id: '#topAtkTable tbody', name: 'Attack', color: 'var(--atk-color)' },
+            { id: '#topDefTable tbody', name: 'Defense', color: 'var(--def-color)' },
+            { id: '#topStaTable tbody', name: 'Stamina', color: 'var(--sta-color)' },
+            { id: '#topBalTable tbody', name: 'Balance', color: 'var(--bal-color)' }
+        ];
+
+        archetypesToRender.forEach(arch => {
+            const archData = validData.filter(r => r.archetype === arch.name)
+                                      .sort((a, b) => b.rawWinRate - a.rawWinRate)
+                                      .slice(0, 5); // Grab top 5
+            
+            const tableBody = document.querySelector(arch.id);
+            if(archData.length === 0) {
+                 tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:var(--text-muted); padding:20px;">No builds found for this archetype.</td></tr>`;
+            } else {
+                tableBody.innerHTML = archData.map(r => {
+                    let cName = [r.chip, r.blade, r.asst, r.ratchet, r.bit].filter(p => p && p.trim() !== "").join(" | ") || "N/A";
+                    let rateClass = r.rawWinRate >= 60 ? 'win-rate-high' : (r.rawWinRate < 40 ? 'win-rate-low' : '');
+                    
+                    return `<tr class="clickable-row" onclick="openModal(${processedData.indexOf(r)})">
+                                <td>
+                                    <strong>${r.name}</strong><br>
+                                    <small style="color:var(--text-muted)">${cName}</small>
+                                </td>
+                                <td><span class="${rateClass}" style="font-size:15px;">${r.displayWinRate}%</span></td>
+                            </tr>`;
+                }).join('');
+            }
+        });
+    }
+    renderAdvancedAnalysis();
+
+    // ----- PAGINATION LOGIC: MAIN TABLE -----
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    function renderCombosTable() {
+        const combosBody = document.querySelector("#combosTable tbody");
+        combosBody.innerHTML = "";
+        const totalPages = Math.ceil(processedData.length / rowsPerPage);
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        const pageData = processedData.slice((currentPage - 1) * rowsPerPage, ((currentPage - 1) * rowsPerPage) + rowsPerPage);
+        
+        pageData.forEach((r) => {
+            const rateClass = r.rawWinRate >= 60 ? 'win-rate-high' : (r.rawWinRate < 40 ? 'win-rate-low' : '');
+            let comboName = [r.chip, r.blade, r.asst, r.ratchet, r.bit].filter(p => p && p.trim() !== "").join(" | ") || "N/A";
+            combosBody.innerHTML += `
+                <tr class="clickable-row" onclick="openModal(${processedData.indexOf(r)})">
+                    <td>
+                        <div style="display:flex; align-items:center;">
+                            <img src="${r.src}" class="table-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' style=\'background:%23333;border-radius:50%\'></svg>'">
+                            <strong>${r.name}</strong>
+                        </div>
+                    </td>
+                    <td><span style="color:var(--text-muted)">${comboName}</span></td>
+                    <td>${r.totalMatches}</td>
+                    <td>${r.wins}</td>
+                    <td>${r.losses}</td>
+                    <td><strong>${r.points}</strong></td>
+                    <td class="${rateClass}">${r.displayWinRate}%</td>
+                </tr>`;
+        });
+        document.getElementById("pageInfo").innerText = `Showing Page ${currentPage} of ${totalPages || 1}`;
+        document.getElementById("prevBtn").disabled = currentPage === 1;
+        document.getElementById("nextBtn").disabled = currentPage === totalPages || totalPages === 0;
+    }
+    function prevPage() { if (currentPage > 1) { currentPage--; renderCombosTable(); } }
+    function nextPage() { if (currentPage < Math.ceil(processedData.length / rowsPerPage)) { currentPage++; renderCombosTable(); } }
+    renderCombosTable();
+
+    // ----- TOP COMBO LOGIC -----
+    const comboMap = {};
+    processedData.forEach(r => {
+        const parts = [];
+        if (r.blade && r.blade.trim() !== "") parts.push(`Blade: ${r.blade}`);
+        if (r.asst && r.asst.trim() !== "") parts.push(`Assist: ${r.asst}`);
+        if (r.ratchet && r.ratchet.trim() !== "") parts.push(`Ratchet: ${r.ratchet}`);
+        if (r.bit && r.bit.trim() !== "") parts.push(`Bit: ${r.bit}`);
+
+        const n = parts.length;
+        for (let i = 1; i < (1 << n); i++) {
+            const subset = [];
+            for (let j = 0; j < n; j++) { if (i & (1 << j)) subset.push(parts[j]); }
+            if (subset.length >= 2) {
+                const key = subset.join(' + ');
+                if (!comboMap[key]) { comboMap[key] = { count: 0, matches: [] }; }
+                comboMap[key].count++; comboMap[key].matches.push(r); 
+            }
+        }
+    });
+
+    const frequentCombos = Object.keys(comboMap).map(key => ({ combo: key, count: comboMap[key].count, matches: comboMap[key].matches, size: key.split(' + ').length })).filter(x => x.count >= 2).sort((a, b) => b.count - a.count || b.size - a.size);
+    const topCombosBody = document.querySelector("#topCombosTable tbody");
+    if (frequentCombos.length === 0) {
+        topCombosBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding: 20px;">No overlapping combinations found used 2 or more times.</td></tr>`;
+    } else {
+        frequentCombos.forEach((c, index) => {
+            topCombosBody.innerHTML += `
+                <tr class="clickable-row" onclick="openUsageModal(${index})">
+                    <td><span class="part-badge" style="margin:0">${c.size}-Part</span></td>
+                    <td>
+                        <strong style="color:var(--accent); font-size:15px;">${c.combo.replace(/(Blade: |Assist: |Ratchet: |Bit: )/g, '')}</strong><br>
+                        <small style="color:var(--text-muted);">${c.combo}</small>
+                    </td>
+                    <td><strong style="font-size:16px;">${c.count}</strong></td>
+                </tr>`;
+        });
+    }
+
+    // ----- FINISH ANALYSIS LOGIC (WITH PAGINATION) -----
+    let currentFinishPage = 1;
+    const finishRowsPerPage = 10;
+    function changeFinishType() { currentFinishPage = 1; renderFinishAnalysis(); }
+
+    function renderFinishAnalysis() {
+        const type = document.getElementById('finishTypeSelector').value;
+        let pVal = 0, wProp = '', lProp = '';
+        if (type === 'spin') { pVal = 1; wProp = 'SpinWin'; lProp = 'SpinLose'; }
+        else if (type === 'over') { pVal = 2; wProp = 'OverWin'; lProp = 'OverLose'; }
+        else if (type === 'burst') { pVal = 2; wProp = 'BurstWin'; lProp = 'BurstLose'; }
+        else if (type === 'extreme') { pVal = 3; wProp = 'ExtremeWin'; lProp = 'ExtremeLose'; }
+
+        const analysisData = processedData.map(r => {
+            const w = r[wProp], l = r[lProp];
+            return { ...r, w, l, netPoints: (w * pVal) - (l * pVal), winRate: (w + l) === 0 ? 0 : (w / (w + l)), rating: ((w * pVal) - (l * pVal)) + ((w + l) === 0 ? 0 : (w / (w + l))), comboName: [r.chip, r.blade, r.asst, r.ratchet, r.bit].filter(p => p && p.trim() !== "").join(" | ") || "N/A", targetIndex: processedData.indexOf(r) };
+        });
+
+        const filteredData = analysisData.filter(b => b.w > 0 || b.l > 0).sort((a, b) => b.rating - a.rating);
+        const totalPages = Math.ceil(filteredData.length / finishRowsPerPage);
+        if (currentFinishPage < 1) currentFinishPage = 1;
+        if (totalPages > 0 && currentFinishPage > totalPages) currentFinishPage = totalPages;
+
+        const startIndex = (currentFinishPage - 1) * finishRowsPerPage;
+        const pageData = filteredData.slice(startIndex, startIndex + finishRowsPerPage);
+        const tbody = document.querySelector("#finishAnalysisTable tbody");
+        tbody.innerHTML = '';
+        let rank = startIndex + 1;
+        
+        pageData.forEach((b) => {
+            const rateClass = (b.winRate >= 0.6) ? 'win-rate-high' : ((b.winRate < 0.4) ? 'win-rate-low' : '');
+            tbody.innerHTML += `
+                <tr class="clickable-row" onclick="openModal(${b.targetIndex})">
+                    <td style="color:var(--text-muted)">#${rank++}</td>
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <img src="${b.src}" class="table-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' style=\'background:%23333;border-radius:50%\'></svg>'">
+                            <div>
+                                <strong>${b.name}</strong><br>
+                                <small style="color: var(--text-muted);">${b.comboName}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="color:var(--win-color); font-weight:bold">${b.w}</td>
+                    <td style="color:var(--danger); font-weight:bold">${b.l}</td>
+                    <td class="${rateClass}">${(b.winRate * 100).toFixed(1)}%</td>
+                    <td><strong style="color:var(--accent); font-size:15px;">${b.rating.toFixed(2)}</strong></td>
+                </tr>`;
+        });
+        document.getElementById("finishPageInfo").innerText = `Page ${currentFinishPage} of ${totalPages || 1}`;
+        document.getElementById("prevFinishBtn").disabled = currentFinishPage === 1;
+        document.getElementById("nextFinishBtn").disabled = currentFinishPage === totalPages || totalPages === 0;
+    }
+    function prevFinishPage() { if (currentFinishPage > 1) { currentFinishPage--; renderFinishAnalysis(); } }
+    function nextFinishPage() { currentFinishPage++; renderFinishAnalysis(); }
+    renderFinishAnalysis();
+
+    // ----- MODAL FUNCTIONS -----
+    const modal = document.getElementById('infoModal');
+    function openModal(index) {
+        const data = processedData[index];
+        document.getElementById('modalBladerName').innerText = data.name;
+        document.getElementById('modalComboTitle').innerText = [data.chip, data.blade, data.asst, data.ratchet, data.bit].filter(p => p && p.trim() !== "").join(" | ") || 'No Parts Configured';
+        document.getElementById('modalAvatar').src = data.src;
+        document.getElementById('modalPoints').innerText = data.points;
+        const rateElem = document.getElementById('modalWinRate');
+        rateElem.innerText = data.displayWinRate + '%';
+        rateElem.style.color = data.rawWinRate >= 60 ? 'var(--accent)' : (data.rawWinRate < 40 ? 'var(--danger)' : 'white');
+        
+        const partsContainer = document.getElementById('modalPartsList');
+        partsContainer.innerHTML = '';
+        [{label:'System',val:data.system},{label:'Chip',val:data.chip},{label:'Blade',val:data.blade},{label:'Assist',val:data.asst},{label:'Ratchet',val:data.ratchet},{label:'Bit',val:data.bit}].forEach(p => {
+            if (p.val && p.val.trim() !== "") partsContainer.innerHTML += `<div class="part-badge"><span style="color:var(--text-muted); margin-right:5px;">${p.label}:</span> ${p.val}</div>`;
+        });
+
+        document.getElementById('modalStatBadges').innerHTML = `
+            <div class="stat-badge bg-wt">Weight: ${data.stats.wt}g</div>
+            <div class="stat-badge bg-atk">Attack: ${data.stats.atk}</div>
+            <div class="stat-badge bg-def">Defense: ${data.stats.def}</div>
+            <div class="stat-badge bg-sta">Stamina: ${data.stats.sta}</div>
+            <div class="stat-badge bg-dash">Dash: ${data.stats.dash}</div>
+            <div class="stat-badge bg-burst">Burst Res: ${data.stats.burstR}</div>
+            <div class="stat-badge" style="background:var(--accent); color:black; margin-left:10px;">Archetype: ${data.archetype}</div>
+            <div class="stat-badge" style="background:${data.playstyleColor}; color:black;">Playstyle: ${data.playstyle} (${data.volScore.toFixed(2)})</div>
+        `;
+
+        document.getElementById('m-self-w').innerText = data.SelfKOWin; document.getElementById('m-self-l').innerText = data.SelfKOLose;
+        document.getElementById('m-spin-w').innerText = data.SpinWin; document.getElementById('m-spin-l').innerText = data.SpinLose;
+        document.getElementById('m-over-w').innerText = data.OverWin; document.getElementById('m-over-l').innerText = data.OverLose;
+        document.getElementById('m-burst-w').innerText = data.BurstWin; document.getElementById('m-burst-l').innerText = data.BurstLose;
+        document.getElementById('m-extreme-w').innerText = data.ExtremeWin; document.getElementById('m-extreme-l').innerText = data.ExtremeLose;
+        modal.style.display = 'flex';
+    }
+    function closeModal() { modal.style.display = 'none'; }
+
+    const usageModal = document.getElementById('usageModal');
+    function openUsageModal(index) {
+        const c = frequentCombos[index];
+        document.getElementById('usageModalTitle').innerText = "Builds Using This Combination";
+        document.getElementById('usageModalSubtitle').innerText = c.combo;
+        const tbody = document.querySelector('#usageTable tbody');
+        tbody.innerHTML = '';
+        [...c.matches].sort((a,b) => b.rawWinRate - a.rawWinRate).forEach(m => {
+            let rateClass = m.rawWinRate >= 60 ? 'win-rate-high' : (m.rawWinRate < 40 ? 'win-rate-low' : '');
+            tbody.innerHTML += `<tr>
+                <td>
+                    <div style="display:flex; align-items:center;">
+                        <img src="${m.src}" class="table-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' style=\'background:%23333;border-radius:50%\'></svg>'">
+                        <strong>${m.name}</strong>
+                    </div>
+                </td>
+                <td><span style="color:var(--text-muted)">${[m.chip, m.blade, m.asst, m.ratchet, m.bit].filter(p => p && p.trim() !== "").join(" | ") || "N/A"}</span></td>
+                <td>${m.totalMatches}</td>
+                <td class="${rateClass}">${m.displayWinRate}%</td>
+            </tr>`;
+        });
+        usageModal.style.display = 'flex';
+    }
+    function closeUsageModal() { usageModal.style.display = 'none'; }
+
+    window.onclick = function(event) { if (event.target === modal) closeModal(); if (event.target === usageModal) closeUsageModal(); }
+</script>
+
+</body>
+</html>
