@@ -5,17 +5,17 @@ const masterSystem = [
 ];
 
 const masterChips = [
+{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
 {src:'images/chips/Hells.png',name:'Hells',weight:1.7},
 {src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
 {src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
 {src:'images/chips/Dran.png',name:'Dran',weight:1.7},
 {src:'images/chips/Sol.png',name:'Sol',weight:1.7},
 {src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
-{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
 {src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
 {src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7},
 {src:'images/chips/Fox.png',name:'Fox',weight:1.7},
-{src:'images/chips/Phoenix.png',name:'Phoenix',weight:1.7}
+{src:'images/chips/Phoenix.png',name:'Phoenix',weight:1.7},
 ];
 
 const masterBlades = [
@@ -52,7 +52,9 @@ const masterBlades = [
 {name:'WeissTiger',src:'images/blades/WeissTiger.png',displayName:'WeissTiger',weight:34.6,atk:45,def:30,sta:25,core:'Any',astBlade:'No',system:'BX'},
 {name:'DranDagger',src:'images/blades/DranDagger.png',displayName:'DranDagger',weight:35.3,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'BX'},
 {name:'Flare',src:'images/blades/Flare.png',displayName:'Flare',weight:31.1,atk:25,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'DranBuster01',src:'images/blades/DranBuster01.png',displayName:'DranBuster',weight:36.5,atk:70,def:20,sta:10,core:'Any',astBlade:'No',system:'UX'}
+{name:'DranBuster01',src:'images/blades/DranBuster01.png',displayName:'DranBuster',weight:36.5,atk:70,def:20,sta:10,core:'Any',astBlade:'No',system:'UX'},
+{name:'HellsScythe',src:'images/blades/HellsScythe.png',displayName:'HellsScythe',weight:33.7,atk:30,def:35,sta:35,core:'Any',astBlade:'No',system:'BX'},
+{name:'KnightShield',src:'images/blades/KnightShield.png',displayName:'KnightShield',weight:34.8,atk:20,def:55,sta:25,core:'Any',astBlade:'No',system:'BX'}
 ];
 
 const masterAssist = [
@@ -79,9 +81,11 @@ const masterRatchets = [
 {src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,core:'W',bit:'Yes'},
+{src:'images/ratchets/3-80.png',name:'3-80',weight:7.1,atk:15,def:7,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
 {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
+{src:'images/ratchets/4-60.png',name:'4-60',weight:6.3,atk:11,def:13,sta:6,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-80.png',name:'4-80',weight:7,atk:11,def:11,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
@@ -93,12 +97,12 @@ const masterRatchets = [
 {src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
-{src:'images/ratchets/9-80.png',name:'9-80',weight:6.9,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
+{src:'images/ratchets/9-80.png',name:'9-80',weight:6.9,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,core:'R',bit:'Yes'},
 {src:"images/ratchets/Turbo.png",name:"Tr",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No",core:"W"},
-[{src:"images/ratchets/OperateATK.png",name:"Op",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
-{src:"images/ratchets/OperateDEF.png",name:"Op",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
+[{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
+{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
 ];
 
 const masterBits = [
@@ -109,9 +113,9 @@ const masterBits = [
 {src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
 {src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80},
 {src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
-{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
 {src:'images/bits/GearNeedle.png',name:'GearNeedle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
+{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
 {src:'images/bits/HighNeedle.png',name:'HighNeedle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
 {src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
@@ -119,10 +123,12 @@ const masterBits = [
 {src:'images/bits/LowRush.png',name:'LowRush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
 {src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
 {src:'images/bits/MetalNeedle.png',name:'MetalNeedle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
+{src:'images/bits/Needle.png',name:'Needle',abbr:'N',weight:2,atk:10,def:50,sta:30,dash:10,burstR:30},
 {src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
-{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
 {src:'images/bits/RubberAccel.png',name:'RubberAccel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
+{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
 {src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
+{src:'images/bits/Taper.png',name:'Taper',abbr:'T',weight:2.2,atk:35,def:20,sta:20,dash:25,burstR:80},
 {src:'images/bits/TransKick.png',name:'TransKick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
 {src:'images/bits/UnderFlat.png',name:'UnderFlat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
 {src:'images/bits/UnderNeedle.png',name:'UnderNeedle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
