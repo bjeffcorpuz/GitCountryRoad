@@ -91,6 +91,18 @@
         0%, 100% { box-shadow: 0 0 15px var(--primary-glow); border-color: var(--primary); }
         50% { box-shadow: 0 0 30px var(--primary); border-color: #ffb74d; }
     }
+
+    #selectionSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
     
     .participant.selected .card { transform: rotateY(180deg); animation: selectedGlow 2s ease-in-out infinite; }
     .participant.active .card { border-color: #fff; box-shadow: 0 0 25px #fff; transform: scale(1.1); z-index: 10; }
@@ -188,7 +200,7 @@
     <h1 id="selectHeader">Summon Bladers</h1>
     <div class="participant-grid" id="participantGrid"></div>
     <div style="display:flex; justify-content:center; gap:20px;">
-        <button class="action-btn" id="selectBtn" style="width: auto;">Random Summon</button>
+        <button class="action-btn" id="selectBtn" style="width: auto;">Summon</button>
         <button class="action-btn enter-btn" id="enterBtn" style="display:none; width: auto; border-color: #ff4444; color: #ff4444;">Battle</button>
     </div>
 </div>
@@ -265,7 +277,7 @@ let currentMatchEl = null;
 let swapTargetIdx = null;
 
 const headerTitle = document.getElementById("selectHeader");
-headerTitle.textContent = `Summon ${PLAYER_COUNT} Participants`;
+headerTitle.textContent = `Summon ${PLAYER_COUNT} Bladers`;
 
 headerTitle.onclick = () => {
     if (selected.length !== PLAYER_COUNT) return;

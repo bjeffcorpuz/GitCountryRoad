@@ -200,7 +200,7 @@
     <h1 id="selectHeader">Summon Bladers</h1>
     <div class="participant-grid" id="participantGrid"></div>
     <div style="display:flex; justify-content:center; gap:20px;">
-        <button class="action-btn" id="selectBtn" style="width: auto;">Random Summon</button>
+        <button class="action-btn" id="selectBtn" style="width: auto;">Summon</button>
         <button class="action-btn enter-btn" id="enterBtn" style="display:none; width: auto; border-color: #ff4444; color: #ff4444;">Battle</button>
     </div>
 </div>
@@ -281,7 +281,22 @@ headerTitle.textContent = `Summon ${PLAYER_COUNT} Bladers`;
 
 headerTitle.onclick = () => {
     if (selected.length !== PLAYER_COUNT) return;
-    const dataToCopy = selected.map(p => ({ name: p.name, src: p.src }));
+    
+    // The new array of types
+    const types = ["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"];
+    
+    const dataToCopy = selected.map(p => {
+        // Pick a random index based on the length of the types array
+        const randomType = types[Math.floor(Math.random() * types.length)];
+        
+        // Return the object with the new "type" property included
+        return { 
+            name: p.name, 
+            src: p.src, 
+            type: randomType 
+        };
+    });
+
     navigator.clipboard.writeText(JSON.stringify(dataToCopy)).then(() => { showToast(); });
 };
 
