@@ -59,7 +59,10 @@ const masterBlades = [
 [{name:'KnightShield',src:'images/blades/KnightShield.png',displayName:'KnightShield',weight:34.8,atk:20,def:55,sta:25,core:'Any',astBlade:'No',system:'BX'},
 {name:'KnightShield01',src:'images/blades/KnightShield01.png',displayName:'KnightShield',weight:34.8,atk:20,def:55,sta:25,core:'Any',astBlade:'No',system:'BX'}],
 {name:'WizardArrow',src:'images/blades/WizardArrow.png',displayName:'WizardArrow',weight:31.8,atk:15,def:30,sta:55,core:'Any',astBlade:'No',system:'BX'},
-{name:'SharkEdge',src:'images/blades/SharkEdge.png',displayName:'SharkEdge',weight:34.5,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'}
+{name:'SharkEdge',src:'images/blades/SharkEdge.png',displayName:'SharkEdge',weight:34.5,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
+{name:'WizardRod',src:'images/blades/WizardRod.png',displayName:'WizardRod',weight:35.3,atk:15,def:25,sta:60,core:'Any',astBlade:'No',system:'UX'},
+{name:'PhoenixWing',src:'images/blades/PhoenixWing.png',displayName:'PhoenixWing',weight:38,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
+{name:'MeteorDragoon',src:'images/blades/MeteorDragoon.png',displayName:'MeteorDragoon',weight:39,atk:75,def:15,sta:35,core:'Any',astBlade:'No',system:'UX'}
 ];
 
 const masterAssist = [
@@ -123,6 +126,7 @@ const masterBits = [
 {src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
 {src:'images/bits/HighNeedle.png',name:'HighNeedle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
+{src:'images/bits/Jolt.png',name:'Jolt',abbr:'J',weight:2.6,atk:35,def:10,sta:15,dash:40,burstR:80},
 {src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
 {src:'images/bits/LowOrb.png',name:'LowOrb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
 {src:'images/bits/LowRush.png',name:'LowRush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
@@ -140,7 +144,7 @@ const masterBits = [
 {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
 {src:'images/bits/WallWedge.png',name:'WallWedge',abbr:'WW',weight:2.6,atk:5,def:60,sta:25,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
 ];
 
 
