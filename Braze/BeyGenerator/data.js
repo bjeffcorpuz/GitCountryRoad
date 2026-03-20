@@ -22,7 +22,8 @@ const masterBlades = [
 {name:'KnightMail',src:'images/blades/KnightMail.png',displayName:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
 {name:'ScorpioSpear',src:'images/blades/ScorpioSpear.png',displayName:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
 {name:'ImpactDrake',src:'images/blades/ImpactDrake.png',displayName:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+[{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'CobaltDragoon01',src:'images/blades/CobaltDragoon01.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'}],
 {name:'ClockMirage',src:'images/blades/ClockMirage.png',displayName:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
 {name:'SharkScale',src:'images/blades/SharkScale.png',displayName:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
 {name:'TyrannoBeat',src:'images/blades/TyrannoBeat.png',displayName:'TyrannoBeat',weight:37,atk:70,def:35,sta:10,core:'Any',astBlade:'No',system:'BX'},
@@ -42,14 +43,13 @@ const masterBlades = [
 {name:'MammothTusk',src:'images/blades/MammothTusk.png',displayName:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
 {name:'Blast',src:'images/blades/Blast.png',displayName:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
-{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+[{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
 {name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
 {name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Dark',src:'images/blades/Dark.png',displayName:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Brush',src:'images/blades/Brush.png',displayName:'Brush',weight:30.3,atk:40,def:15,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'RockLeone',src:'images/blades/RockLeone.png',displayName:'RockLeone',weight:30.1,atk:30,def:55,sta:15,core:'Any',astBlade:'No',system:'BX'},
 {name:'SharkGill',src:'images/blades/SharkGill.png',displayName:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
 {name:'Arc',src:'images/blades/Arc.png',displayName:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Flare',src:'images/blades/Flare.png',displayName:'Flare',weight:31.1,atk:25,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
@@ -62,19 +62,22 @@ const masterBlades = [
 {name:'SharkEdge',src:'images/blades/SharkEdge.png',displayName:'SharkEdge',weight:34.5,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
 {name:'WizardRod',src:'images/blades/WizardRod.png',displayName:'WizardRod',weight:35.3,atk:15,def:25,sta:60,core:'Any',astBlade:'No',system:'UX'},
 {name:'PhoenixWing',src:'images/blades/PhoenixWing.png',displayName:'PhoenixWing',weight:38,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
-{name:'MeteorDragoon',src:'images/blades/MeteorDragoon.png',displayName:'MeteorDragoon',weight:39,atk:75,def:15,sta:35,core:'Any',astBlade:'No',system:'UX'}
+{name:'MeteorDragoon',src:'images/blades/MeteorDragoon.png',displayName:'MeteorDragoon',weight:39,atk:75,def:15,sta:35,core:'Any',astBlade:'No',system:'UX'},
+{name:'BlackShell',src:'images/blades/BlackShell.png',displayName:'BlackShell',weight:32.4,atk:10,def:65,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'SamuraiSaber',src:'images/blades/SamuraiSaber.png',displayName:'SamuraiSaber',weight:36.5,atk:65,def:20,sta:25,core:'Any',astBlade:'No',system:'UX'},
+{name:'MummyCurse',src:'images/blades/MummyCurse.png',displayName:'MummyCurse',weight:37.5,atk:30,def:60,sta:20,core:'Any',astBlade:'No',system:'UX'}
 ];
 
 const masterAssist = [
-{displayName:'Jaggy',src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
-{displayName:'Free',src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
 {displayName:'Assault',src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
-{displayName:'Slash',src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
-[{displayName:'Dual',src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
-{displayName:'Dual',src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10}],
 {displayName:'Bumper',src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
+{displayName:'Dual',src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
+{displayName:'Dual',src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10},
+{displayName:'Free',src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
 {displayName:'Heavy',src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
+{displayName:'Jaggy',src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
 {displayName:'Round',src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
+{displayName:'Slash',src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:20,def:10,sta:10},
 {displayName:'Wheel',src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20},
 {displayName:'Zillion',src:'images/assist/Zillion.png',name:'Zillion',weight:6.7,atk:22,def:15,sta:3}
 ]
@@ -82,10 +85,12 @@ const masterAssist = [
 const masterRatchets = [
 {src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,core:'W',bit:'Yes'},
 {src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,core:'W',bit:'Yes'},
+{src:'images/ratchets/0-80.png',name:'0-80',weight:7.6,atk:3,def:12,sta:15,core:'W',bit:'Yes'},
 {src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,core:'W',bit:'Yes'},
 {src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/1-80.png',name:'1-80',weight:6.7,atk:17,def:4,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,core:'W',bit:'Yes'},
+{src:'images/ratchets/2-70.png',name:'2-70',weight:6.4,atk:10,def:12,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,core:'W',bit:'Yes'},
@@ -94,6 +99,7 @@ const masterRatchets = [
 {src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
 {src:'images/ratchets/4-60.png',name:'4-60',weight:6.3,atk:11,def:13,sta:6,core:'W',bit:'Yes'},
+{src:'images/ratchets/4-70.png',name:'4-70',weight:6.4,atk:11,def:12,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/4-80.png',name:'4-80',weight:7,atk:11,def:11,sta:8,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
@@ -144,7 +150,7 @@ const masterBits = [
 {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
 {src:'images/bits/WallWedge.png',name:'WallWedge',abbr:'WW',weight:2.6,atk:5,def:60,sta:25,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
 ];
 
 
