@@ -513,7 +513,10 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
     <div class="modal-content">
         <div class="modal-header">
             <h2>Matchup Arena</h2>
-            <button class="close-modal-btn" onclick="closeMatchupModal()">SAVE & CLOSE</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-btn" style="background: var(--neon-green); color: black; font-weight: bold;" onclick="saveAndDeclare()">SAVE & DECLARE</button>
+                <button class="close-modal-btn" onclick="closeMatchupModal()">CLOSE</button>
+            </div>
         </div>
         
         <div class="matchup-selectors">
@@ -1289,6 +1292,49 @@ function restoreEntry(index) {
     if (archivedEntries.length === 0) {
         closeRestoreModal();
     }
+}
+
+function saveAndDeclare() {
+    const p1Score = matchupState.p1Score;
+    const p2Score = matchupState.p2Score;
+
+    // 1. Check for a tie or 0-0 game
+    if (p1Score === p2Score) {
+        alert("The match is tied! Both players will retain their current stats. Break the tie before declaring a winner.");
+        return; // Stops the function, nothing happens
+    }
+
+    // 2. Save the current stats to the main table
+    saveMatchupStats();
+
+    // 3. Determine who won and who lost
+    let winnerNum = p1Score > p2Score ? 1 : 2;
+    let loserNum = p1Score > p2Score ? 2 : 1;
+    
+    // Keep a reference to the winner's HTML row before we delete the loser
+    const winnerRow = matchupState[`p${winnerNum}`].originalRow;
+
+    // 4. Send the loser to the Archive
+    const loserData = matchupState[`p${loserNum}`];
+    if (loserData && loserData.originalRow) {
+        const deleteBtn = loserData.originalRow.querySelector('.delete-btn');
+        if (deleteBtn) deleteBtn.click(); // This seamlessly triggers the archiveEntry() function!
+    }
+
+    // 5. Update the Arena Dropdowns
+    populateMatchupDropdowns(); // Rebuild the list without the loser
+    
+    // Find the winner's new index in the list (in case deleting the loser shifted their spot)
+    let newWinnerIndex = loadedPlayers.findIndex(p => p.originalRow === winnerRow);
+    
+    // Keep winner selected, empty the loser's slot
+    document.getElementById(`p${winnerNum}Select`).value = newWinnerIndex !== -1 ? newWinnerIndex : "";
+    document.getElementById(`p${loserNum}Select`).value = "";
+    
+    // 6. Reload the arena slots
+    // This perfectly resets the sandbox stats and Round Counter back to 0/1 for the winner's next match!
+    loadMatchupPlayer(1);
+    loadMatchupPlayer(2);
 }
 
 </script>

@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Battle Stats Tracker v13</title>
+<script src="data.js"></script>
 <style>
 :root{
   --bg: #0f1117;
@@ -378,19 +379,107 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
 
 .reset-all-btn:hover { background: #f87171; color: white; }
 
+/* --- MATCHUP MODAL STYLES --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+    display: none; justify-content: center; align-items: center; z-index: 2000;
+}
+.modal-content {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; width: 95%; max-width: 1400px; max-height: 95vh;
+    overflow-y: auto; padding: 20px; position: relative;
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px;
+}
+.modal-header h2 { margin: 0; color: var(--neon-cyan); text-transform: uppercase; }
+.close-modal-btn {
+    background: #ff0055; color: white; border: none; padding: 8px 16px;
+    border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px;
+}
+.matchup-selectors {
+    display: flex; justify-content: space-between; gap: 20px; margin-bottom: 20px;
+}
+.matchup-selectors select {
+    flex: 1; padding: 12px; background: #0d1117; color: var(--neon-cyan);
+    border: 1px solid var(--border); border-radius: 6px; font-size: 16px;
+    font-weight: bold; outline: none; text-transform: uppercase;
+}
+.matchup-arena {
+    display: flex; gap: 20px; justify-content: space-between;
+}
+.matchup-player {
+    flex: 1; background: #0b0e14; border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center;
+}
+.matchup-avatar { width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); background: #161b22; }
+.matchup-score-display {
+    font-size: 48px; font-weight: 900; color: var(--neon-green);
+    margin: 10px 0; font-family: monospace; text-shadow: 0 0 10px rgba(10, 255, 96, 0.3);
+}
+.matchup-controls-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; margin-top: 15px;
+}
+.matchup-btn {
+    padding: 10px; font-weight: bold; font-size: 14px; text-align: center;
+    cursor: pointer; border-radius: 6px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border); color: white; transition: 0.1s;
+}
+.matchup-btn:active { transform: scale(0.95); }
+.matchup-btn.win-row { border-bottom-width: 3px; }
+.matchup-btn.loss-row { border-top-width: 3px; opacity: 0.8; }
+.win-spin { border-color: #2563eb; color: #60a5fa; }
+.win-over { border-color: #f59e0b; color: #fbbf24; }
+.win-burst { border-color: #dc2626; color: #f87171; }
+.win-extreme { border-color: #16a34a; color: #4ade80; }
 
+/* --- MATCHUP SCORE ALERT ANIMATION --- */
+@keyframes matchPointAlert {
+    0% { color: #ff0055; text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055; transform: scale(1); }
+    50% { color: #ffeb3b; text-shadow: 0 0 20px #ffeb3b, 0 0 40px #ffeb3b; transform: scale(1.15); }
+    100% { color: #ff0055; text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055; transform: scale(1); }
+}
+
+.score-alert-anim {
+    animation: matchPointAlert 0.8s infinite alternate !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* --- MATCHUP ROUND COUNTER --- */
+.matchup-round-counter {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffb570; /* Using your dash fill color for a nice orange accent */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255, 181, 112, 0.4);
+}
+
+/* --- RESTORE MODAL STYLES --- */
+.restore-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #0d1117; padding: 12px 15px; border: 1px solid var(--border);
+    border-radius: 6px;
+}
+.restore-item div { display: flex; flex-direction: column; gap: 4px; }
 
 </style>
 </head>
 <body>
 
 <div class="app">
-  <h1>Battle Stats Tracker v13</h1>
+  <h1>Battle Stats Tracker v14</h1>
   
   <div class="input-section">
     <input type="text" id="jsonInput" 
       placeholder='{"name":"Ruddy","src":"avatars/Ruddy.png","chip":"Pegasus","blade":"Might","ratchet":"6-80","bit":"UN"}'>
     <button class="add-btn" onclick="processInput()">+ Add Combo</button>
+    <button class="add-btn" style="background: var(--neon-green);" onclick="openMatchupModal()">Matchup</button>
+    <button class="add-btn" style="background: #e879f9; color: black;" onclick="openRestoreModal()">Restore Player</button>
   </div>
 
   <div class="table-wrapper">
@@ -420,140 +509,39 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
     </div>
 </div>
 
+<div id="matchupModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Matchup Arena</h2>
+            <button class="close-modal-btn" onclick="closeMatchupModal()">SAVE & CLOSE</button>
+        </div>
+        
+        <div class="matchup-selectors">
+            <select id="p1Select" onchange="loadMatchupPlayer(1)"><option value="">-- Select Player 1 --</option></select>
+            <select id="p2Select" onchange="loadMatchupPlayer(2)"><option value="">-- Select Player 2 --</option></select>
+        </div>
+
+        <div id="matchupRoundCounter" class="matchup-round-counter" style="display:none;">ROUND 1</div>
+
+        <div class="matchup-arena" id="matchupArena" style="display:none;">
+            <div class="matchup-player" id="matchupP1"></div>
+            <div style="display:flex; align-items:center; font-size: 40px; font-weight:900; color:var(--muted); font-style:italic;">VS</div>
+            <div class="matchup-player" id="matchupP2"></div>
+        </div>
+    </div>
+</div>
+
+<div id="restoreModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+            <h2>Archive / Restore</h2>
+            <button class="close-modal-btn" onclick="closeRestoreModal()">CLOSE</button>
+        </div>
+        <div id="restoreListContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            </div>
+    </div>
+</div>
 <script>
-/* --- DATA MASTER LIST (Kept same as your original) --- */
-const masterChips = [
-{src:'images/chips/Emperor.png',name:'Emperor',weight:4.7},
-{src:'images/chips/Hells.png',name:'Hells',weight:1.7},
-{src:'images/chips/Wolf.png',name:'Wolf',weight:1.7},
-{src:'images/chips/Pegasus.png',name:'Pegasus',weight:1.7},
-{src:'images/chips/Dran.png',name:'Dran',weight:1.7},
-{src:'images/chips/Sol.png',name:'Sol',weight:1.7},
-{src:'images/chips/Perseus.png',name:'Perseus',weight:1.7},
-{src:'images/chips/Wizard.png',name:'Wizard',weight:1.7},
-{src:'images/chips/Cerberus.png',name:'Cerberus',weight:1.7},
-{src:'images/chips/Fox.png',name:'Fox',weight:1.7},
-{src:'images/chips/Phoenix.png',name:'Phoenix',weight:1.7},
-];
-
-
-const masterBlades = [
-{name:'SharkScale',src:'images/blades/SharkScale.png',displayName:'SharkScale',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
-{name:'TyrannoRoar',src:'images/blades/TyrannoRoar.png',displayName:'TyrannoRoar',weight:36,atk:60,def:28,sta:12,core:'Any',astBlade:'No',system:'BX'},
-{name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'KnightMail',src:'images/blades/KnightMail.png',displayName:'KnightMail',weight:43.4,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
-{name:'PteraSwing',src:'images/blades/PteraSwing.png',displayName:'PteraSwing',weight:34.3,atk:27,def:23,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{name:'TyrannoBeat',src:'images/blades/TyrannoBeat.png',displayName:'TyrannoBeat',weight:37,atk:65,def:30,sta:5,core:'Any',astBlade:'No',system:'BX'},
-[{name:'HellsHammer01',src:'images/blades/HellsHammer01.png',displayName:'HellsHammer',weight:33.9,atk:55,def:30,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{name:'HellsHammer02',src:'images/blades/HellsHammer02.png',displayName:'HellsHammer',weight:33,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'UX'}],
-{name:'TriceraPress',src:'images/blades/TriceraPress.png',displayName:'TriceraPress',weight:36.5,atk:20,def:65,sta:15,core:'Any',astBlade:'No',system:'BX'},
-{name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
-[{name:'GolemRock01',src:'images/blades/GolemRock01.png',displayName:'GolemRock',weight:34,atk:30,def:60,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{name:'GolemRock02',src:'images/blades/GolemRock02.png',displayName:'GolemRock',weight:34,atk:35,def:65,sta:15,core:'Any',astBlade:'No',system:'UX'}],
-{name:'ClockMirage',src:'images/blades/ClockMirage.png',displayName:'ClockMirage',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
-{name:'Blast',src:'images/blades/Blast.png',displayName:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
-{name:'PhoenixRudder',src:'images/blades/PhoenixRudder.png',displayName:'PhoenixRudder',weight:34.5,atk:15,def:40,sta:60,core:'Any',astBlade:'No',system:'UX'},
-{name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
-{name:'SamuraiCalibur',src:'images/blades/SamuraiCalibur.png',displayName:'SamuraiCalibur',weight:36,atk:40,def:30,sta:30,core:'Any',astBlade:'No',system:'BX'},
-[{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
-{name:'Dark',src:'images/blades/Dark.png',displayName:'Dark',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'MammothTusk',src:'images/blades/MammothTusk.png',displayName:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
-{name:'ImpactDrake',src:'images/blades/ImpactDrake.png',displayName:'ImpactDrake',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{name:'ScorpioSpear',src:'images/blades/ScorpioSpear.png',displayName:'ScorpioSpear',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
-{name:'SharkGill',src:'images/blades/SharkGill.png',displayName:'SharkGill',weight:29.6,atk:20,def:25,sta:55,core:'Any',astBlade:'No',system:'BX'},
-{name:'Might',src:'images/blades/Might.png',displayName:'Might',weight:33.1,atk:25,def:25,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'Arc',src:'images/blades/Arc.png',displayName:'Arc',weight:29.2,atk:10,def:10,sta:40,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'Brush',src:'images/blades/Brush.png',displayName:'Brush',weight:30.3,atk:40,def:15,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'ViperTail',src:'images/blades/ViperTail.png',displayName:'ViperTail',weight:34.7,atk:30,def:20,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{name:'WeissTiger',src:'images/blades/WeissTiger.png',displayName:'WeissTiger',weight:34.6,atk:45,def:30,sta:25,core:'Any',astBlade:'No',system:'BX'},
-{name:'DranDagger',src:'images/blades/DranDagger.png',displayName:'DranDagger',weight:35.3,atk:50,def:25,sta:25,core:'Any',astBlade:'No',system:'BX'},
-{name:'Flare',src:'images/blades/Flare.png',displayName:'Flare',weight:31.1,atk:25,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'DranBuster01',src:'images/blades/DranBuster01.png',displayName:'DranBuster',weight:36.5,atk:70,def:20,sta:10,core:'Any',astBlade:'No',system:'UX'},
-{name:'HellsScythe',src:'images/blades/HellsScythe.png',displayName:'HellsScythe',weight:33.7,atk:30,def:35,sta:35,core:'Any',astBlade:'No',system:'BX'},
-{name:'KnightShield',src:'images/blades/KnightShield.png',displayName:'KnightShield',weight:34.8,atk:20,def:55,sta:25,core:'Any',astBlade:'No',system:'BX'}
-];
-
-const masterAssist = [
-{displayName:'Jaggy',src:'images/assist/Jaggy.png',name:'Jaggy',weight:4.9,atk:20,def:15,sta:5},
-{displayName:'Free',src:'images/assist/Free.png',name:'Free',weight:5.8,atk:5,def:20,sta:25},
-{displayName:'Assault',src:'images/assist/Assault.png',name:'Assault',weight:5,atk:25,def:10,sta:5},
-{displayName:'Slash',src:'images/assist/Slash.png',name:'Slash',weight:4.7,atk:10,def:20,sta:10},
-[{displayName:'Dual',src:'images/assist/DualUpper.png',name:'DualUpper',weight:5.9,atk:17,def:13,sta:10},
-{displayName:'Dual',src:'images/assist/DualSmash.png',name:'DualSmash',weight:5.9,atk:13,def:17,sta:10}],
-{displayName:'Bumper',src:'images/assist/Bumper.png',name:'Bumper',weight:5.3,atk:10,def:20,sta:10},
-{displayName:'Heavy',src:'images/assist/Heavy.png',name:'Heavy',weight:8.1,atk:17,def:17,sta:11},
-{displayName:'Round',src:'images/assist/Round.png',name:'Round',weight:4.7,atk:10,def:10,sta:20},
-{displayName:'Wheel',src:'images/assist/Wheel.png',name:'Wheel',weight:7.2,atk:5,def:15,sta:20},
-{displayName:'Zillion',src:'images/assist/Zillion.png',name:'Zillion',weight:6.7,atk:22,def:15,sta:3}
-];
-
-const masterRatchets = [
-{src:'images/ratchets/0-60.png',name:'0-60',weight:6.8,atk:3,def:14,sta:13,core:'W',bit:'Yes'},
-{src:'images/ratchets/0-70.png',name:'0-70',weight:7,atk:3,def:13,sta:14,core:'W',bit:'Yes'},
-{src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,core:'W',bit:'Yes'},
-{src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,core:'W',bit:'Yes'},
-{src:'images/ratchets/1-80.png',name:'1-80',weight:6.7,atk:17,def:4,sta:9,core:'W',bit:'Yes'},
-{src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,core:'W',bit:'Yes'},
-{src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
-{src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,core:'W',bit:'Yes'},
-{src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,core:'W',bit:'Yes'},
-{src:'images/ratchets/3-80.png',name:'3-80',weight:7.1,atk:15,def:7,sta:8,core:'W',bit:'Yes'},
-{src:'images/ratchets/3-85.png',name:'3-85',weight:4.7,atk:5,def:15,sta:10,core:'R',bit:'Yes'},
-{src:'images/ratchets/4-50.png',name:'4-50',weight:5.9,atk:12,def:13,sta:5,core:'W',bit:'Yes'},
-{src:'images/ratchets/4-55.png',name:'4-55',weight:4.8,atk:7,def:11,sta:12,core:'R',bit:'Yes'},
-{src:'images/ratchets/4-60.png',name:'4-60',weight:6.3,atk:11,def:13,sta:6,core:'W',bit:'Yes'},
-{src:'images/ratchets/4-80.png',name:'4-80',weight:7,atk:11,def:11,sta:8,core:'W',bit:'Yes'},
-{src:'images/ratchets/5-60.png',name:'5-60',weight:6.6,atk:12,def:9,sta:9,core:'W',bit:'Yes'},
-{src:'images/ratchets/5-70.png',name:'5-70',weight:6.7,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
-{src:'images/ratchets/5-80.png',name:'5-80',weight:7.3,atk:12,def:8,sta:10,core:'W',bit:'Yes'},
-{src:'images/ratchets/6-60.png',name:'6-60',weight:6.1,atk:14,def:8,sta:8,core:'W',bit:'Yes'},
-{src:'images/ratchets/6-70.png',name:'6-70',weight:6.3,atk:14,def:7,sta:9,core:'W',bit:'Yes'},
-{src:'images/ratchets/6-80.png',name:'6-80',weight:6.9,atk:14,def:6,sta:10,core:'W',bit:'Yes'},
-{src:'images/ratchets/7-55.png',name:'7-55',weight:5.9,atk:6,def:14,sta:10,core:'R',bit:'Yes'},
-{src:'images/ratchets/7-70.png',name:'7-70',weight:7.3,atk:8,def:12,sta:10,core:'W',bit:'Yes'},
-{src:'images/ratchets/9-60.png',name:'9-60',weight:6.2,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
-{src:'images/ratchets/9-65.png',name:'9-65',weight:4.4,atk:13,def:10,sta:7,core:'R',bit:'Yes'},
-{src:'images/ratchets/9-70.png',name:'9-70',weight:6.3,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
-{src:'images/ratchets/9-80.png',name:'9-80',weight:6.9,atk:13,def:10,sta:7,core:'W',bit:'Yes'},
-{src:'images/ratchets/M-85.png',name:'M-85',weight:10.6,atk:8,def:19,sta:13,core:'R',bit:'Yes'},
-{src:"images/ratchets/Turbo.png",name:"Tr",weight:12.7,atk:30,def:30,sta:60,dash:10,burstR:30,bit:"No",core:"W"},
-[{src:"images/ratchets/OperateATK.png",name:"Op(Atk)",weight:14.1,atk:50,def:35,sta:10,dash:35,burstR:30,bit:"No",core:"W"},
-{src:"images/ratchets/OperateDEF.png",name:"Op(Def)",weight:14.1,atk:20,def:50,sta:50,dash:10,burstR:30,bit:"No",core:"W"}]
-];
-
-const masterBits = [
-{src:'images/bits/Ball.png',name:'Ball',abbr:'B',weight:2.1,atk:15,def:25,sta:50,dash:10,burstR:30},
-{src:'images/bits/BoundSpike.png',name:'BoundSpike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
-{src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
-{src:'images/bits/DiscBall.png',name:'DiscBall',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
-{src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
-{src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80},
-{src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
-{src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
-{src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
-{src:'images/bits/GearNeedle.png',name:'GearNeedle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
-{src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
-{src:'images/bits/HighNeedle.png',name:'HighNeedle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
-{src:'images/bits/Level.png',name:'Level',abbr:'L',weight:2.7,atk:40,def:5,sta:15,dash:40,burstR:80},
-{src:'images/bits/LowOrb.png',name:'LowOrb',abbr:'LO',weight:2.1,atk:5,def:25,sta:55,dash:15,burstR:30},
-{src:'images/bits/LowRush.png',name:'LowRush',abbr:'LR',weight:1.9,atk:45,def:5,sta:15,dash:35,burstR:80},
-{src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
-{src:'images/bits/MetalNeedle.png',name:'MetalNeedle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
-{src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
-{src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
-{src:'images/bits/RubberAccel.png',name:'RubberAccel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
-{src:'images/bits/Spike.png',name:'Spike',abbr:'S',weight:2,atk:10,def:45,sta:35,dash:10,burstR:30},
-{src:'images/bits/TransKick.png',name:'TransKick',abbr:'TK',weight:2.3,atk:35,def:30,sta:20,dash:15,burstR:80},
-{src:'images/bits/UnderFlat.png',name:'UnderFlat',abbr:'UF',weight:2,atk:55,def:5,sta:5,dash:35,burstR:80},
-{src:'images/bits/UnderNeedle.png',name:'UnderNeedle',abbr:'UN',weight:1.9,atk:10,def:60,sta:20,dash:10,burstR:30},
-{src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
-{src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
-{src:'images/bits/WallWedge.png',name:'WallWedge',abbr:'WW',weight:2.6,atk:5,def:60,sta:25,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
-];
 
 const allParts = {
     blade: masterBlades.flat(),
@@ -840,7 +828,7 @@ function renderRow(originalJson, parts, totals, system){
     const delBtn = document.createElement("button");
     delBtn.className = "action-btn delete-btn";
     delBtn.innerText = "Remove Entry";
-    delBtn.onclick = () => tr.remove();
+    delBtn.onclick = function() { archiveEntry(this); }; // <--- SENDS IT TO ARCHIVE
 
     actionGroup.appendChild(copyBtn);
     actionGroup.appendChild(delBtn);
@@ -945,6 +933,364 @@ function resetAllScores() {
         }
     }
 }
+
+/* --- MATCHUP LOGIC --- */
+let loadedPlayers = []; 
+let matchupState = { 
+    p1: null, p2: null, 
+    p1Score: 0, p2Score: 0,
+    currentRound: 1, // <--- NEW ROUND STATE
+    p1Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 },
+    p2Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 }
+};
+
+function openMatchupModal() {
+    document.getElementById('matchupModal').style.display = 'flex';
+    populateMatchupDropdowns();
+    // Reset everything upon opening
+    document.getElementById('p1Select').value = "";
+    document.getElementById('p2Select').value = "";
+    document.getElementById('matchupArena').style.display = 'none';
+    document.getElementById('matchupRoundCounter').style.display = 'none'; // Hide counter
+    
+    matchupState = { 
+        p1: null, p2: null, p1Score: 0, p2Score: 0, currentRound: 1,
+        p1Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 },
+        p2Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 }
+    };
+    updateDropdownExclusions();
+}
+
+function closeMatchupModal() {
+    // Save ONLY the currently loaded matchup players to the main table
+    saveMatchupStats();
+    document.getElementById('matchupModal').style.display = 'none';
+}
+
+function saveMatchupStats() {
+    [1, 2].forEach(pNum => {
+        const stats = matchupState[`p${pNum}Stats`];
+        const pData = matchupState[`p${pNum}`];
+        if (!pData || !pData.originalRow) return;
+
+        // Map the internal stat keys to the main table's button text
+        const statMapping = [
+            { key: 'spinW', text: 'SPIN W' },
+            { key: 'spinL', text: 'SPIN L' },
+            { key: 'overW', text: 'OVER W' },
+            { key: 'overL', text: 'OVER L' },
+            { key: 'burstW', text: 'BURST W' },
+            { key: 'burstL', text: 'BURST L' },
+            { key: 'extremeW', text: 'XTREME W' },
+            { key: 'extremeL', text: 'XTREME L' }
+        ];
+
+        // Trigger clicks on the main table invisibly to update scores and logger
+        statMapping.forEach(map => {
+            const count = stats[map.key];
+            for (let i = 0; i < count; i++) {
+                triggerMainTableClick(pNum, map.text);
+            }
+        });
+    });
+}
+
+function populateMatchupDropdowns() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    loadedPlayers = [];
+    let optionsHtml = '<option value="">-- Select Player --</option>';
+    
+    rows.forEach((row, index) => {
+        const name = row.querySelector('.avatar-name').innerText;
+        const img = row.querySelector('.avatar-img').src;
+        const comboName = row.querySelector('.combo-name-display').innerText;
+        const canvas = row.querySelector('canvas');
+        
+        loadedPlayers.push({ id: index, name, img, comboName, originalRow: row, canvas });
+        optionsHtml += `<option value="${index}">${name} (${comboName})</option>`;
+    });
+
+    // Preserve current selections if populating after a deletion
+    const p1Val = document.getElementById('p1Select') ? document.getElementById('p1Select').value : "";
+    const p2Val = document.getElementById('p2Select') ? document.getElementById('p2Select').value : "";
+
+    document.getElementById('p1Select').innerHTML = optionsHtml;
+    document.getElementById('p2Select').innerHTML = optionsHtml;
+
+    document.getElementById('p1Select').value = p1Val;
+    document.getElementById('p2Select').value = p2Val;
+    
+    updateDropdownExclusions();
+}
+
+function updateDropdownExclusions() {
+    const p1Val = document.getElementById('p1Select').value;
+    const p2Val = document.getElementById('p2Select').value;
+
+    // Disable Player 2's selection in Player 1's dropdown
+    Array.from(document.getElementById('p1Select').options).forEach(opt => {
+        if (opt.value === "") return;
+        opt.disabled = (opt.value === p2Val);
+    });
+
+    // Disable Player 1's selection in Player 2's dropdown
+    Array.from(document.getElementById('p2Select').options).forEach(opt => {
+        if (opt.value === "") return;
+        opt.disabled = (opt.value === p1Val);
+    });
+}
+
+function loadMatchupPlayer(playerNum) {
+    const selectId = playerNum === 1 ? 'p1Select' : 'p2Select';
+    const selectedId = document.getElementById(selectId).value;
+    
+    // Reset stats & rounds for the side when ANY player is selected or changed
+    matchupState[`p${playerNum}Score`] = 0;
+    matchupState[`p${playerNum}Stats`] = { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 };
+    matchupState.currentRound = 1; // Reset round on player change
+
+    if (selectedId === "") {
+        matchupState[`p${playerNum}`] = null;
+        updateDropdownExclusions();
+        checkMatchupReady();
+        return;
+    }
+
+    matchupState[`p${playerNum}`] = loadedPlayers[selectedId];
+    updateDropdownExclusions();
+    checkMatchupReady();
+}
+
+function checkMatchupReady() {
+    if (matchupState.p1 && matchupState.p2) {
+        document.getElementById('matchupArena').style.display = 'flex';
+        document.getElementById('matchupRoundCounter').style.display = 'block'; // Show counter
+        renderMatchupPlayer(1);
+        renderMatchupPlayer(2);
+        updateMatchupUI();
+    } else {
+        document.getElementById('matchupArena').style.display = 'none';
+        document.getElementById('matchupRoundCounter').style.display = 'none'; // Hide counter
+    }
+}
+
+function renderMatchupPlayer(pNum) {
+    const pData = matchupState[`p${pNum}`];
+    const container = document.getElementById(`matchupP${pNum}`);
+    
+    // Notice the onmousedown and oncontextmenu added to the buttons for Right/Left click support
+    container.innerHTML = `
+        <img src="${pData.img}" class="matchup-avatar" onerror="this.src='avatars/default.png'">
+        <h3 style="color:var(--neon-cyan); margin:10px 0;">${pData.name}</h3>
+        <div class="matchup-score-display" id="matchupScore${pNum}">0</div>
+        
+        <div style="margin:15px 0;">
+           <canvas id="matchupCanvas${pNum}" width="200" height="200" style="background:#161b22; border-radius:50%; border:2px solid var(--border);"></canvas>
+        </div>
+        <div class="combo-name-display">${pData.comboName}</div>
+        
+        <div class="matchup-controls-grid">
+            <div class="matchup-btn win-row win-spin" onmousedown="handleMatchupAction(event, ${pNum}, 'Spin', true)" oncontextmenu="return false;">SPIN W<br><span id="m-spinW-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn win-row win-over" onmousedown="handleMatchupAction(event, ${pNum}, 'Over', true)" oncontextmenu="return false;">OVER W<br><span id="m-overW-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn win-row win-burst" onmousedown="handleMatchupAction(event, ${pNum}, 'Burst', true)" oncontextmenu="return false;">BURST W<br><span id="m-burstW-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn win-row win-extreme" onmousedown="handleMatchupAction(event, ${pNum}, 'Extreme', true)" oncontextmenu="return false;">XTREME W<br><span id="m-extremeW-${pNum}" class="stat-val">0</span></div>
+            
+            <div class="matchup-btn loss-row win-spin" onmousedown="handleMatchupAction(event, ${pNum}, 'Spin', false)" oncontextmenu="return false;">SPIN L<br><span id="m-spinL-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn loss-row win-over" onmousedown="handleMatchupAction(event, ${pNum}, 'Over', false)" oncontextmenu="return false;">OVER L<br><span id="m-overL-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn loss-row win-burst" onmousedown="handleMatchupAction(event, ${pNum}, 'Burst', false)" oncontextmenu="return false;">BURST L<br><span id="m-burstL-${pNum}" class="stat-val">0</span></div>
+            <div class="matchup-btn loss-row win-extreme" onmousedown="handleMatchupAction(event, ${pNum}, 'Extreme', false)" oncontextmenu="return false;">XTREME L<br><span id="m-extremeL-${pNum}" class="stat-val">0</span></div>
+        </div>
+        
+        <div class="action-group" style="width:100%;">
+            <button class="action-btn copy-btn" onclick="copyMatchupJson(${pNum})">Copy JSON</button>
+            <!--<button class="action-btn delete-btn" onclick="removeMatchupEntry(${pNum})">Remove Entry</button>-->
+        </div>
+    `;
+
+    setTimeout(() => {
+        const destCanvas = document.getElementById(`matchupCanvas${pNum}`);
+        if(destCanvas) {
+            const ctx = destCanvas.getContext('2d');
+            ctx.drawImage(pData.canvas, 0, 0, 300, 300, 0, 0, 200, 200);
+        }
+    }, 50);
+}
+
+function handleMatchupAction(event, actingPlayerNum, type, isWin) {
+    if (event && event.button !== 0 && event.button !== 2) return;
+    const isRightClick = event && event.button === 2;
+    const oppNum = actingPlayerNum === 1 ? 2 : 1;
+    
+    let points = 0;
+    if (type === 'Spin') points = 1;
+    if (type === 'Over' || type === 'Burst') points = 2;
+    if (type === 'Extreme') points = 3;
+
+    const actingStatKey = type.toLowerCase() + (isWin ? 'W' : 'L');
+    
+    if (isWin) {
+        const oppStatKey = type.toLowerCase() + 'L';
+        if (isRightClick) {
+            // Undo logic
+            if (matchupState[`p${actingPlayerNum}Stats`][actingStatKey] > 0) {
+                matchupState[`p${actingPlayerNum}Stats`][actingStatKey]--;
+                matchupState[`p${actingPlayerNum}Score`] -= points;
+                matchupState[`p${oppNum}Stats`][oppStatKey]--;
+                // Revert round counter, minimum of 1
+                matchupState.currentRound = Math.max(1, matchupState.currentRound - 1);
+            }
+        } else {
+            // Add point logic
+            matchupState[`p${actingPlayerNum}Stats`][actingStatKey]++;
+            matchupState[`p${actingPlayerNum}Score`] += points;
+            matchupState[`p${oppNum}Stats`][oppStatKey]++;
+            // Increment round counter
+            matchupState.currentRound++;
+        }
+    } else {
+        // If they click a Loss button, route it to the opponent's Win logic
+        handleMatchupAction(event, oppNum, type, true); 
+        return; // Prevent double-updating UI since the re-routed call will do it
+    }
+    
+    updateMatchupUI();
+}
+
+function updateMatchupUI() {
+    // Update Round Counter Display
+    document.getElementById('matchupRoundCounter').innerText = `ROUND ${matchupState.currentRound}`;
+
+    [1, 2].forEach(pNum => {
+        if (matchupState[`p${pNum}`]) {
+            // Update Score
+            const scoreElement = document.getElementById(`matchupScore${pNum}`);
+            const currentScore = matchupState[`p${pNum}Score`];
+            scoreElement.innerText = currentScore;
+            
+            // Alert Animation
+            if (currentScore >= 4) {
+                scoreElement.classList.add('score-alert-anim');
+            } else {
+                scoreElement.classList.remove('score-alert-anim');
+            }
+            
+            // Update Buttons
+            const stats = matchupState[`p${pNum}Stats`];
+            document.getElementById(`m-spinW-${pNum}`).innerText = stats.spinW;
+            document.getElementById(`m-spinL-${pNum}`).innerText = stats.spinL;
+            document.getElementById(`m-overW-${pNum}`).innerText = stats.overW;
+            document.getElementById(`m-overL-${pNum}`).innerText = stats.overL;
+            document.getElementById(`m-burstW-${pNum}`).innerText = stats.burstW;
+            document.getElementById(`m-burstL-${pNum}`).innerText = stats.burstL;
+            document.getElementById(`m-extremeW-${pNum}`).innerText = stats.extremeW;
+            document.getElementById(`m-extremeL-${pNum}`).innerText = stats.extremeL;
+        }
+    });
+}
+
+function triggerMainTableClick(pNum, buttonTextMatch) {
+    const pData = matchupState[`p${pNum}`];
+    if (!pData || !pData.originalRow) return;
+    
+    const buttons = pData.originalRow.querySelectorAll('.stat-btn');
+    buttons.forEach(btn => {
+        if (btn.innerText.toUpperCase().includes(buttonTextMatch.toUpperCase())) {
+            btn.click(); 
+        }
+    });
+}
+
+function copyMatchupJson(pNum) {
+    const pData = matchupState[`p${pNum}`];
+    if(pData && pData.originalRow) {
+        const copyBtn = pData.originalRow.querySelector('.copy-btn');
+        if(copyBtn) copyBtn.click();
+    }
+}
+
+function removeMatchupEntry(pNum) {
+    const pData = matchupState[`p${pNum}`];
+    if (pData && pData.originalRow) {
+        const deleteBtn = pData.originalRow.querySelector('.delete-btn');
+        if (deleteBtn) deleteBtn.click(); // Uses the main table's delete function
+        
+        // Remove from matchup UI
+        document.getElementById(`p${pNum}Select`).value = "";
+        loadMatchupPlayer(pNum);
+        
+        // Re-populate dropdowns to reflect the deleted blader without resetting the active side
+        populateMatchupDropdowns();
+    }
+}
+
+/* --- ARCHIVE & RESTORE LOGIC --- */
+let archivedEntries = [];
+
+function archiveEntry(btn) {
+    const row = btn.closest('tr');
+    const name = row.querySelector('.avatar-name').innerText;
+    const comboName = row.querySelector('.combo-name-display').innerText;
+    
+    // Store the exact DOM element in our array so no data/scores are lost
+    archivedEntries.push({
+        name: name,
+        comboName: comboName,
+        rowElement: row
+    });
+    
+    // Remove it from the live table UI
+    row.remove();
+}
+
+function openRestoreModal() {
+    if (archivedEntries.length === 0) {
+        alert("No deleted entries to restore!");
+        return;
+    }
+    document.getElementById('restoreModal').style.display = 'flex';
+    populateRestoreList();
+}
+
+function closeRestoreModal() {
+    document.getElementById('restoreModal').style.display = 'none';
+}
+
+function populateRestoreList() {
+    const container = document.getElementById('restoreListContainer');
+    container.innerHTML = '';
+    
+    archivedEntries.forEach((entry, index) => {
+        const div = document.createElement('div');
+        div.className = 'restore-item';
+        div.innerHTML = `
+            <div>
+                <strong style="color:var(--neon-cyan)">${entry.name}</strong>
+                <span style="color:var(--muted); font-size:12px;">${entry.comboName}</span>
+            </div>
+            <button class="add-btn" style="padding: 8px 15px; font-size:12px; background: #e879f9;" onclick="restoreEntry(${index})">RESTORE</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function restoreEntry(index) {
+    const entry = archivedEntries[index];
+    
+    // Append the exact HTML row back to the main table body
+    document.getElementById('tableBody').appendChild(entry.rowElement);
+    
+    // Remove it from the archive array
+    archivedEntries.splice(index, 1);
+    
+    // Refresh the list UI
+    populateRestoreList();
+    
+    // If the archive is empty, close the modal automatically
+    if (archivedEntries.length === 0) {
+        closeRestoreModal();
+    }
+}
+
 </script>
 
 
