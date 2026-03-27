@@ -43,8 +43,8 @@ const masterBlades = [
 {name:'MammothTusk',src:'images/blades/MammothTusk.png',displayName:'MammothTusk',weight:33,atk:38,def:40,sta:37,core:'Any',astBlade:'No',system:'BX'},
 {name:'Blast',src:'images/blades/Blast.png',displayName:'Blast',weight:32.8,atk:50,def:10,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
-[{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
+{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
 {name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
@@ -65,7 +65,9 @@ const masterBlades = [
 {name:'MeteorDragoon',src:'images/blades/MeteorDragoon.png',displayName:'MeteorDragoon',weight:39,atk:75,def:15,sta:35,core:'Any',astBlade:'No',system:'UX'},
 {name:'BlackShell',src:'images/blades/BlackShell.png',displayName:'BlackShell',weight:32.4,atk:10,def:65,sta:25,core:'Any',astBlade:'No',system:'BX'},
 {name:'SamuraiSaber',src:'images/blades/SamuraiSaber.png',displayName:'SamuraiSaber',weight:36.5,atk:65,def:20,sta:25,core:'Any',astBlade:'No',system:'UX'},
-{name:'MummyCurse',src:'images/blades/MummyCurse.png',displayName:'MummyCurse',weight:37.5,atk:30,def:60,sta:20,core:'Any',astBlade:'No',system:'UX'}
+{name:'MummyCurse',src:'images/blades/MummyCurse.png',displayName:'MummyCurse',weight:37.5,atk:30,def:60,sta:20,core:'Any',astBlade:'No',system:'UX'},
+[{name:'ShelterDrake',src:'images/blades/ShelterDrake.png',displayName:'ShelterDrake',weight:32.6,atk:25,def:40,sta:35,core:'Any',astBlade:'No',system:'BX'},
+{name:'ShelterDrake01',src:'images/blades/ShelterDrake01.png',displayName:'ShelterDrake',weight:32.6,atk:25,def:40,sta:35,core:'Any',astBlade:'No',system:'BX'}]
 ];
 
 const masterAssist = [
@@ -124,6 +126,7 @@ const masterBits = [
 {src:'images/bits/BoundSpike.png',name:'BoundSpike',abbr:'BS',weight:2,atk:5,def:60,sta:30,dash:5,burstR:30},
 {src:'images/bits/Cyclone.png',name:'Cyclone',abbr:'C',weight:2.1,atk:40,def:5,sta:10,dash:45,burstR:80},
 {src:'images/bits/DiscBall.png',name:'DiscBall',abbr:'DB',weight:3.2,atk:15,def:20,sta:55,dash:10,burstR:30},
+{src:'images/bits/Dot.png',name:'Dot',abbr:'D',weight:2,atk:10,def:55,sta:25,dash:10,burstR:30},
 {src:'images/bits/Elevate.png',name:'Elevate',abbr:'E',weight:3.2,atk:30,def:15,sta:20,dash:35,burstR:30},
 {src:'images/bits/Flat.png',name:'Flat',abbr:'F',weight:2.2,atk:40,def:15,sta:10,dash:35,burstR:80},
 {src:'images/bits/FreeBall.png',name:'FreeBall',abbr:'FB',weight:1.9,atk:10,def:25,sta:60,dash:5,burstR:30},
@@ -139,6 +142,7 @@ const masterBits = [
 {src:'images/bits/Merge.png',name:'Merge',abbr:'M',weight:3.4,atk:50,def:20,sta:10,dash:20,burstR:80},
 {src:'images/bits/MetalNeedle.png',name:'MetalNeedle',abbr:'MN',weight:2.8,atk:8,def:57,sta:30,dash:5,burstR:30},
 {src:'images/bits/Needle.png',name:'Needle',abbr:'N',weight:2,atk:10,def:50,sta:30,dash:10,burstR:30},
+{src:'images/bits/Orb.png',name:'Orb',abbr:'O',weight:2,atk:10,def:30,sta:50,dash:10,burstR:30},
 {src:'images/bits/Point.png',name:'Point',abbr:'P',weight:2.2,atk:25,def:25,sta:25,dash:25,burstR:80},
 {src:'images/bits/RubberAccel.png',name:'RubberAccel',abbr:'RA',weight:3.1,atk:60,def:17,sta:3,dash:20,burstR:80},
 {src:'images/bits/Rush.png',name:'Rush',abbr:'R',weight:2.1,atk:40,def:10,sta:20,dash:30,burstR:80},
@@ -150,7 +154,7 @@ const masterBits = [
 {src:'images/bits/Vortex.png',name:'Vortex',abbr:'V',weight:2.2,atk:45,def:10,sta:5,dash:40,burstR:80},
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
 {src:'images/bits/WallWedge.png',name:'WallWedge',abbr:'WW',weight:2.6,atk:5,def:60,sta:25,dash:10,burstR:30},
-{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80}
+{src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
 ];
 
 

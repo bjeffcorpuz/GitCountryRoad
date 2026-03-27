@@ -414,24 +414,54 @@ button:hover {
 
 <script>
 /* ================= DATA ================= */
+// Added the "type" property to the bladers array. 
+// You can adjust these values as needed.
+//["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Ronan","src":"avatars/Ronan.png"},
-    {"name":"Wolf","src":"avatars/Wolf.png"},
-    {"name":"Darius","src":"avatars/Darius.png"},
-    {"name":"Darian","src":"avatars/Darian.png"},
-    {"name":"Lucian","src":"avatars/Lucian.png"},
-    {"name":"Zera","src":"avatars/Zera.png"},
-    {"name":"Haruka","src":"avatars/Haruka.png"},
-    {"name":"Ryomaru","src":"avatars/Ryomaru.png"}
+    {"name":"Natsumi","src":"avatars/Natsumi.png","type":"all"},
+    {"name":"Haruka","src":"avatars/Haruka.png","type":"all"},
+    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"all"},
+    {"name":"Darius","src":"avatars/Darius.png","type":"all"},
+    {"name":"Lucian","src":"avatars/Lucian.png","type":"all"},
+    {"name":"Darian","src":"avatars/Darian.png","type":"all"},
+    {"name":"Jaren","src":"avatars/Jaren.png","type":"all"},
+    {"name":"Sasha","src":"avatars/Sasha.png","type":"all"}
 ]
+// NEW STATIC VARIABLES FOR STAT THRESHOLDS
+const blades_minAtk = 30;
+const blades_minDef = 30;
+const blades_minSta = 25;
 
+const assist_minAtk = 13;
+const assist_minDef = 15;
+const assist_minSta = 10;
+
+const ratchet_minAtk = 11;
+const ratchet_minDef = 10;
+const ratchet_minSta = 8;
+
+const bit_minAtk = 30;
+const bit_minDef = 25;
+const bit_minSta = 20;
+
+let removeBlade = ["Hunt", "PhoenixRudder", "Dark", "TriceraPress", "KnightShield","SharkScale","HellsHammer","WizardRod"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits;
 let generatedBeyblades = []; // Store the generated data
 
 function resetPools() {
     poolSystem = [...masterSystem];
-    poolBlades = [...masterBlades];
+    
+    // NEW FILTER LOGIC: Apply the removeBlade ban list
+    poolBlades = masterBlades.filter(bladeItem => {
+        // Handle both single objects and arrays of variations
+        const checkItem = Array.isArray(bladeItem) ? bladeItem[0] : bladeItem;
+        
+        // If the blade's displayName IS in the removeBlade array, return false to exclude it
+        // If it is NOT in the array, return true to keep it (along with all its color/stat variations)
+        return !removeBlade.includes(checkItem.displayName);
+    });
+
     poolRatchets = [...masterRatchets];
     poolChips = [...masterChips];
     poolAssist = [...masterAssist];
@@ -450,7 +480,96 @@ function getRandomItem(pool, remove = true) {
     return { item: actualItem, raw: item };
 }
 
-function generateFullBeyblade() {
+// NEW HELPER FUNCTION: Filters a pool based on the blader's type and category thresholds
+function filterPoolByType(pool, partCategory, type) {
+    if (!pool || pool.length === 0) return pool;
+    if (!type || type === "all") return pool; // "all" type skips filtering completely (Tr and Op stay here!)
+
+    // --- NEW RULE: Exclude integrated-bit Ratchets (Tr, Op) for specialized types ---
+    let workingPool = pool;
+    if (partCategory === "ratchet") {
+        workingPool = pool.filter(item => {
+            const checkItem = Array.isArray(item) ? item[0] : item;
+            // Keep it ONLY if it takes a bit. (Removes Tr, Op(Atk), Op(Def))
+            return checkItem.bit !== "No";
+        });
+        
+        // Safety check: if removing them somehow emptied the pool, revert
+        if (workingPool.length === 0) workingPool = pool;
+    }
+
+    let minAtk = 0, minDef = 0, minSta = 0;
+
+    // Determine thresholds based on part category
+    if (partCategory === "blade") {
+        minAtk = blades_minAtk; minDef = blades_minDef; minSta = blades_minSta;
+    } else if (partCategory === "assist") {
+        minAtk = assist_minAtk; minDef = assist_minDef; minSta = assist_minSta;
+    } else if (partCategory === "ratchet") {
+        minAtk = ratchet_minAtk; minDef = ratchet_minDef; minSta = ratchet_minSta;
+    } else if (partCategory === "bit") {
+        minAtk = bit_minAtk; minDef = bit_minDef; minSta = bit_minSta;
+    } else {
+        return workingPool; // Default fallback for unknown categories
+    }
+
+    // AI SCORING PROCESS
+    let scoredPool = workingPool.map(item => {
+        const checkItem = Array.isArray(item) ? item[0] : item;
+        let atk = checkItem.atk || 0;
+        let def = checkItem.def || 0;
+        let sta = checkItem.sta || 0;
+
+        // Normalize stats so they can be compared fairly
+        let nAtk = minAtk > 0 ? atk / minAtk : 0;
+        let nDef = minDef > 0 ? def / minDef : 0;
+        let nSta = minSta > 0 ? sta / minSta : 0;
+
+        let passes = false;
+        let aiScore = 0;
+
+        if (type === "Atk") {
+            passes = atk >= minAtk;
+        } else if (type === "Def") {
+            passes = def >= minDef;
+        } else if (type === "Sta") {
+            passes = sta >= minSta;
+        } 
+        // --- AI BALANCE LOGIC FOR MIXED TYPES ---
+        else if (type === "AtkDef") {
+            passes = (atk >= minAtk || def >= minDef);
+            aiScore = (nAtk + nDef) - Math.abs(nAtk - nDef); 
+        } else if (type === "AtkSta") {
+            passes = (atk >= minAtk || sta >= minSta);
+            aiScore = (nAtk + nSta) - Math.abs(nAtk - nSta);
+        } else if (type === "DefSta") {
+            passes = (def >= minDef || sta >= minSta);
+            aiScore = (nDef + nSta) - Math.abs(nDef - nSta);
+        }
+
+        return { original: item, passes: passes, score: aiScore };
+    });
+
+    // 1. Filter out parts that completely fail the basic threshold
+    let validItems = scoredPool.filter(x => x.passes);
+
+    // If the filtered pool is empty, revert to the workingPool (which still excludes Tr/Op for ratchets)
+    if (validItems.length === 0) {
+        return workingPool;
+    }
+
+    // 2. AI SELECTION: If it's a mixed type, ensure we get truly "balanced" parts
+    if (type === "AtkDef" || type === "AtkSta" || type === "DefSta") {
+        validItems.sort((a, b) => b.score - a.score);
+        let topTierCount = Math.max(3, Math.ceil(validItems.length * 0.5));
+        validItems = validItems.slice(0, topTierCount);
+    }
+
+    return validItems.map(x => x.original);
+}
+
+// UPDATED: Now accepts the bladerType as an argument
+function generateFullBeyblade(bladerType) {
     const sysRes = getRandomItem(poolSystem, false);
     if(!sysRes) return null;
     const system = sysRes.item;
@@ -461,10 +580,15 @@ function generateFullBeyblade() {
         if(chipRes) chip = chipRes.item;
     }
 
-    const validBlades = poolBlades.filter(b => {
+    // --- BLADE SELECTION ---
+    // 1. Filter by System first
+    let validBlades = poolBlades.filter(b => {
         const check = Array.isArray(b) ? b[0] : b;
         return check.system === system.name;
     });
+    
+    // 2. NEW: Filter by Blader Type
+    validBlades = filterPoolByType(validBlades, "blade", bladerType);
 
     if(validBlades.length === 0) return null;
     
@@ -475,13 +599,23 @@ function generateFullBeyblade() {
     const realIndex = poolBlades.indexOf(rawBlade);
     if(realIndex > -1) poolBlades.splice(realIndex, 1);
 
+    // --- ASSIST SELECTION ---
     let assist = null;
     if(system.name === "CX" && blade.astBlade === "Yes") {
-        const astRes = getRandomItem(poolAssist, true);
-        if(astRes) assist = astRes.item;
+        // NEW: Filter by Blader Type before randomizing
+        let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
+        
+        const rIndex = Math.floor(Math.random() * validAssists.length);
+        let rawAssist = validAssists[rIndex];
+        assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
+        
+        const realAIndex = poolAssist.indexOf(rawAssist);
+        if(realAIndex > -1) poolAssist.splice(realAIndex, 1);
     }
 
+    // --- RATCHET SELECTION ---
     let validRatchets = poolRatchets;
+    // 1. Filter by Core compatibility
     if(blade.core !== "Any") {
         let filterKey = blade.core === "Round" ? "R" : "W";
         validRatchets = poolRatchets.filter(r => {
@@ -489,6 +623,9 @@ function generateFullBeyblade() {
              return check.core === filterKey;
         });
     }
+
+    // 2. NEW: Filter by Blader Type
+    validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
 
     let ratchet = null;
     if(validRatchets.length > 0) {
@@ -499,10 +636,18 @@ function generateFullBeyblade() {
         if(realRIndex > -1) poolRatchets.splice(realRIndex, 1);
     }
 
+    // --- BIT SELECTION ---
     let bit = null;
     if(ratchet && ratchet.bit !== "No") {
-        const bitRes = getRandomItem(poolBits, true);
-        if(bitRes) bit = bitRes.item;
+        // NEW: Filter by Blader Type
+        let validBits = filterPoolByType(poolBits, "bit", bladerType);
+        
+        const rIndex = Math.floor(Math.random() * validBits.length);
+        let rawBit = validBits[rIndex];
+        bit = Array.isArray(rawBit) ? rawBit[Math.floor(Math.random() * rawBit.length)] : rawBit;
+        
+        const realBIndex = poolBits.indexOf(rawBit);
+        if(realBIndex > -1) poolBits.splice(realBIndex, 1);
     }
 
     const stats = { atk:0, def:0, sta:0, dash:0, burstR:0 };
@@ -775,7 +920,8 @@ function startGeneration(container) {
     let rowsData = [];
 
     bladers.forEach((blader, index) => {
-        const bey = generateFullBeyblade();
+        // UPDATED: Pass the blader's type to the generation function
+        const bey = generateFullBeyblade(blader.type || "all");
         
         if(!bey) {
             const errDiv = document.createElement("div");
