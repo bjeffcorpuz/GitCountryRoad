@@ -1076,42 +1076,109 @@ font-weight:bold !important;
 
 {% assign clicktracking = '' %}
 
-
 {% else %}	
 
 {% assign clicktracking = '' %}
-				
+						
 
 {% endif %} 
-{% assign Link01 = {{BaseURL}} | append: '/new-in/' %}		
 
+{% assign Link01 = {{BaseURL}} %}
 -->
 
+ <!--[if true]>
+    <style>
+        table { border-collapse: collapse; }
+        table, td { mso-line-height-rule: exactly; mso-margin-bottom-alt: 0; mso-margin-top-alt: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        table, td, h1, h2, h3, h4, h5, h6, a { font-family: Arial, sans-serif !important; }
+        sup { font-size: 110%; mso-text-raise: 12%; }
+        .column { margin: 0 !important; }
+        td.body-copy{padding-top:0px !important;}
+        td.bull{padding-top:10px !important; color: red !important; line-height:24px !important}
+    </style>
+    <![endif]-->
 <!-- BLOCK 1 -->
+<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-weight: 500; letter-spacing: 0.1em; color:#000000; padding:  0 0 0px;" align="center">
+      <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/69d78f1243383f00aa7496fa/original.png?1775734545" alt="" width="600" height="auto" class="full-width" style="display: block; height: auto;" border="0">
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size:1px; line-height:1px; height:20px;" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="mobile-hide" style="font-size:1px; line-height:1px; height:20px;" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="padC2" style="padding: 0 50px">
+      <table class="full-width" align="center" width="500" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr>
+            <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0;">
+              Dear {{${first_name}  | capitalize}},
+              <br><br>
+                This email is to update you about changes to the Terms and Conditions of the Mimco Loyalty program that you are currently enrolled in.
+                <br><br>
+                Many of the benefits will remain, however the following Loyalty Rewards will be changing:
+                <br><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="padC2" style="padding: 0 50px">
+      <table class="full-width" align="center" width="500" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr>
+            <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0;">
+              <table class="full-width" align="center" width="500" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="bull" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:24px; line-height: 16px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 10px 25px 10px;" valign="top">•</td>
+                  <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 0 25px 0;" valign="top">Birthday Rewards will no longer be issued to Member tier <br class="mobile-hide">customers (but will be retained for Black, Silver and Rose Gold tiers). </td>
+                </tr>
+                <tr>
+                  <td class="bull" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:24px; line-height: 16px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 10px 25px 10px;" valign="top">•</td>
+                  <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 0 25px 0;" valign="top">Anniversary Rewards will be retired across all tiers. </td>
+                </tr>
+                <tr>
+                  <td class="bull" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:24px; line-height: 16px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 10px 25px 10px;" valign="top">•</td>
+                  <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0 0 25px 0;" valign="top">The Spend and Earn structure of earning rewards on <br class="mobile-hide">transactions will no longer be offered across all tiers. </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="padC2" style="padding: 0 50px">
+      <table class="full-width" align="center" width="500" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr>
+            <td class="body-copy" style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-size:14px; line-height: 20px; font-weight: 400; letter-spacing: 0.05em; color:#000000; text-align:left;padding: 0;">
 
-<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0">   
-<tr>          
-    <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-weight: 500; letter-spacing: 0.1em; color:#000000; padding:  0 0 0px;" align="center" align="top">
-        <a href="{{Link01}}?" target="_blank" style="text-decoration: none;" {{clicktracking}}><img src="https://braze-images.com/appboy/communication/assets/image_assets/images/69dc80b319daa300acd24021/original.png?1776058546" alt="" width="600" height="auto" class="full-width" style="display: block"></a>
+              These changes will take effect from Monday 11 May. <br class="mobile-hide">Any rewards issued before this date will remain valid until their expiry.
+              <br><br>
+
+              Thank you for your loyalty and for being part of our <br class="mobile-hide">community. Our updated Loyalty Terms and Conditions <br class="mobile-hide">can be found on our website.
+              <br><br><br>
+              The Mimco Team.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </td>
-</tr>    
-</table>
-<table class="full-width" align="center" width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#610e1e">   
-<tr>          
-    <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-weight: 500; letter-spacing: 0.1em; color:#000000; padding:  0 0 0px;" align="center" align="top">
-        <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/69dc8285025a8900aa1d98a1/original.png?1776059013" alt="" width="600" height="auto" class="full-width" style="display: block">
-    </td>
-</tr>  
-<tr>          
-    <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-weight: 500; letter-spacing: 0.1em; color:#000000; padding:  0 0 0px;" align="center" align="top">
-        <a href="{{Link01}}?" target="_blank" style="text-decoration: none;" {{clicktracking}}><img src="https://braze-images.com/appboy/communication/assets/image_assets/images/69dc828cec126f00acdfab3d/original.png?1776059019" alt="" width="600" height="auto" class="full-width" style="display: block"></a>
-    </td>
-</tr>   
-<tr>          
-    <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;  font-weight: 500; letter-spacing: 0.1em; color:#000000; padding:  0 0 0px;" align="center" align="top">
-        <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/69dc82ced7542700ac0371b9/original.png?1776059085" alt="" width="600" height="auto" class="full-width" style="display: block">
-    </td>
-</tr>  
+  </tr>
+  <tr>
+    <td style="font-size:1px; line-height:1px; height:50px;" height="50">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="mobile-hide" style="font-size:1px; line-height:1px; height:50px;" height="50">&nbsp;</td>
+  </tr>
 </table>
 <!-- end of BLock 1 -->
 
@@ -1122,9 +1189,7 @@ font-weight:bold !important;
 <table class="width-90 terms-container" width="546" cellspacing="0" cellpadding="0" border="0" align="center">
   <tr>
     <td style="font-family: Montserrat,Avenir,  Ebrima, Corbel, 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif; text-align:center; font-size:11px; line-height: 19px; font-weight: 300; letter-spacing: 0.08em; color:#000000;padding: 0px 0 0;" class="body-copy-small">
-      <p style="margin: 30px 0 0">The offer is available to theMimCollective Member on the Mimco App, Mimco Boutiques, Mimco Online, Myer Concessions, Myer Online, David Jones Online and David Jones Concessions from 12:01am AEDT Tuesday 14th April until 11:59pm AEDT Sunday 19 April , while stocks last. Promotion not available in Outlets or on The Iconic. 
-<br><br>
-To receive $30 off, $150 or more must be spent on selected full price styles in one transaction. The offer may be redeemed multiple times during the offer period, but only once per transaction. The offer is only available on selected full priced styles. The offer excludes the Mimco x OW Tote 60318720, Limited Edition Citrine Ring 60319338, Limited Edition Amethyst Ring 60319339, sale items, Gift boxes and shipping. This offer cannot be used in conjunction with any other offer. For full T&C’s, <a href="{{ BaseURL | append: '/terms-and-conditions/' }}?" target="_blank" alias="Privacy Policy (Footer)" style="color:#000000; text-decoration:underline;"><span style="color:#000000; text-decoration:underline;">click here.</span></a>.
+      <p style="margin: 30px 0 0">*Take 25% off selected full-priced styles only. The offer is available to all Myer One Members at Myer Concession Stores and Myer Online and to all David Jones Rewards Members at David Jones Concession Stores and David Jones Online  from 12:01am AEDT Thursday 2 April 2026 until 11:59pm AEDT Sunday 12 April  2026, while stocks last. The Myer One Member and David Jones Rewards offer is not available in conjunction with the MIMCollective Member offer. The offer excludes the Mimco x OW Tote 60318720, Limited Edition Citrine Ring 60319338, Limited Edition Amethyst Ring 60319339,  sale items, Gift boxes and shipping. For full T&C’s <a href="{{ BaseURL | append: '/terms-and-conditions/' }}?" target="_blank" alias="Privacy Policy (Footer)" style="color:#000000; text-decoration:underline;"><span style="color:#000000; text-decoration:underline;">click here.</span></a>.
       </p>
     </td>
   </tr>

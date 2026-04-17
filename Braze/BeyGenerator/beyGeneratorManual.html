@@ -11,7 +11,7 @@
   --neon-green: #00ff41;
   --neon-pink: #ff0055;
   --bg-dark: #0a0a12;
-  --panel-bg: rgba(20, 20, 35, 0.85); /* Slightly more opaque for grouping */
+  --panel-bg: rgba(20, 20, 35, 0.85);
   --border-color: rgba(0, 243, 255, 0.3);
 }
 
@@ -22,7 +22,7 @@ body {
   color: #e0e0e0;
   min-height: 100vh;
   overflow-x: hidden; 
-  padding-bottom: 100px; /* Space for add button */
+  padding-bottom: 100px;
 }
 
 /* ================= TITLE ANIMATION ================= */
@@ -47,7 +47,7 @@ h1 {
   20%, 24%, 55% { text-shadow: none; opacity: 0.6; }
 }
 
-/* ================= BUILD ROW CONTAINER (THE GROUP) ================= */
+/* ================= BUILD ROW CONTAINER ================= */
 #builders-list {
   max-width: 1600px;
   margin: 0 auto;
@@ -104,7 +104,7 @@ h1 {
   box-shadow: 0 0 15px var(--neon-pink);
 }
 
-/* ================= 3-COLUMN LAYOUT (Inside Row) ================= */
+/* ================= 3-COLUMN LAYOUT ================= */
 .layout {
   display: grid;
   grid-template-columns: 350px 1fr 400px;
@@ -124,7 +124,6 @@ h1 {
   min-width: 0; 
 }
 
-/* System Logo */
 .systemLogo {
   display: none;
   width: 100%;
@@ -309,7 +308,6 @@ h1 {
   flex-shrink: 0;
 }
 
-/* Let the image scale naturally inside the container */
 .part-img-container img {
   max-width: 100%;
   max-height: 100%;
@@ -352,7 +350,7 @@ h1 {
 /* ================= RIGHT COLUMN (Stats) ================= */
 .downloadArea {
   background: #000;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -403,7 +401,6 @@ button.downloadBtn:hover {
   transform: scale(1.02);
 }
 
-/* MAIN ADD BUTTON */
 #addBuildBtn {
   display: block;
   width: 300px;
@@ -466,17 +463,15 @@ function flattenArray(arr){
 }
 
 /* ===================== DATA ====================== */
-// Global data used by all instances
 let chips = masterChips.sort((a,b)=>a.name.localeCompare(b.name));
-
 let blades = flattenArray(masterBlades).sort((a,b)=>a.name.localeCompare(b.name));
 
+// Safeguard check just in case masterMetalBlade isn't fully loaded yet
+let metalBlades = typeof masterMetalBlade !== 'undefined' ? flattenArray(masterMetalBlade).sort((a,b)=>a.name.localeCompare(b.name)) : [];
+
 let assist = flattenArray(masterAssist).sort((a,b)=>a.name.localeCompare(b.name));
-
 let ratchets = flattenArray(masterRatchets).sort((a,b)=>a.name.localeCompare(b.name));
-
 let bits = flattenArray(masterBits).sort((a,b)=>a.name.localeCompare(b.name));
-
 
 /* =========================================================================
    CLASS: BeyBuilder (Logic for ONE Row)
@@ -486,7 +481,7 @@ let builderCount = 0;
 class BeyBuilder {
     constructor() {
         this.id = ++builderCount;
-        this.selected = {chip:null, blade:null, assist:null, ratchet:null, bit:null};
+        this.selected = {chip:null, blade:null, metal:null, assist:null, ratchet:null, bit:null};
         this.chartInstance = null;
         
         this.initDOM();
@@ -506,8 +501,9 @@ class BeyBuilder {
             <div class="layout">
                 <div class="column">
                     <img class="systemLogo" src="" alt="System Logo">
-                    <div class="dropdown" data-type="blade"></div>
                     <div class="dropdown disabled" data-type="chip"></div>
+                    <div class="dropdown" data-type="blade"></div>
+                    <div class="dropdown disabled" data-type="metal"></div>
                     <div class="dropdown disabled" data-type="assist"></div>
                     <div class="dropdown" data-type="ratchet"></div>
                     <div class="dropdown" data-type="bit"></div>
@@ -546,6 +542,7 @@ class BeyBuilder {
             dropdowns: {
                 blade: wrapper.querySelector('.dropdown[data-type="blade"]'),
                 chip: wrapper.querySelector('.dropdown[data-type="chip"]'),
+                metal: wrapper.querySelector('.dropdown[data-type="metal"]'),
                 assist: wrapper.querySelector('.dropdown[data-type="assist"]'),
                 ratchet: wrapper.querySelector('.dropdown[data-type="ratchet"]'),
                 bit: wrapper.querySelector('.dropdown[data-type="bit"]'),
@@ -564,6 +561,7 @@ class BeyBuilder {
     initLogic() {
         this.createDropdown(this.els.dropdowns.blade, "Select Main Blade", blades, "blade");
         this.createDropdown(this.els.dropdowns.chip, "Select Lock Chip", chips, "chip");
+        this.createDropdown(this.els.dropdowns.metal, "Select Metal Blade", metalBlades, "metal");
         this.createDropdown(this.els.dropdowns.assist, "Select Assist Blade", assist, "assist");
         this.createDropdown(this.els.dropdowns.ratchet, "Select Ratchet", ratchets, "ratchet");
         this.createDropdown(this.els.dropdowns.bit, "Select Bit", bits, "bit");
@@ -577,7 +575,7 @@ class BeyBuilder {
     }
 
     reset() {
-        this.selected = {chip:null, blade:null, assist:null, ratchet:null, bit:null};
+        this.selected = {chip:null, blade:null, metal:null, assist:null, ratchet:null, bit:null};
         
         this.els.logo.style.display = "none";
         this.els.display.innerHTML = "";
@@ -590,7 +588,7 @@ class BeyBuilder {
             const btn = d.querySelector("button");
             // Set Default Text
             const labels = {
-                blade: "Select Main Blade", chip: "Select Lock Chip",
+                blade: "Select Main Blade", chip: "Select Lock Chip", metal: "Select Metal Blade",
                 assist: "Select Assist Blade", ratchet: "Select Ratchet", bit: "Select Bit"
             };
             btn.textContent = labels[key];
@@ -598,6 +596,7 @@ class BeyBuilder {
 
         // Lock dependents
         this.els.dropdowns.chip.classList.add("disabled");
+        this.els.dropdowns.metal.classList.add("disabled");
         this.els.dropdowns.assist.classList.add("disabled");
 
         // Reset Data Source for Ratchets
@@ -610,7 +609,6 @@ class BeyBuilder {
 
     // 3. DROPDOWN CREATION (Scoped)
     createDropdown(container, label, dataArray, type) {
-        // Init UI
         container.innerHTML = `
             <button>${label}</button>
             <div class="dropdown-content">
@@ -624,7 +622,6 @@ class BeyBuilder {
         const grid = container.querySelector(".items-grid");
         const input = container.querySelector("input");
 
-        // Dynamic List Function
         container.updateList = (newData) => {
             grid.innerHTML = "";
             if(!newData.length) {
@@ -648,10 +645,8 @@ class BeyBuilder {
             });
         };
 
-        // Initial populate
         container.updateList(dataArray);
 
-        // Toggle Logic
         button.onclick = (e) => {
             e.stopPropagation();
             if(container.classList.contains("disabled")) return;
@@ -665,7 +660,6 @@ class BeyBuilder {
                 container.classList.add("is-open");
                 content.classList.add("show");
                 button.classList.add("active");
-                // Reset list if filtered
                 container.updateList(container.currentData || dataArray);
             }
         };
@@ -676,8 +670,6 @@ class BeyBuilder {
             const filtered = source.filter(i => i.name.toLowerCase().includes(filter));
             container.updateList(filtered);
         };
-        
-        // Global click to close is handled via document listener at bottom
     }
 
     closeDropdown(container) {
@@ -690,23 +682,36 @@ class BeyBuilder {
     handleDependencies(type) {
         if(type === 'blade' && this.selected.blade) {
             const sys = this.selected.blade.system;
+            const bladeType = this.selected.blade.blade; // "Main" or "Over"
+
             this.els.logo.src = `images/system/${sys.toLowerCase()}.png`;
             this.els.logo.style.display = 'block';
 
-            // CX Logic
+            // CX Logic & Metal Blade conditions
             if(sys === "CX") {
                 this.els.dropdowns.chip.classList.remove("disabled");
                 this.els.dropdowns.assist.classList.remove("disabled");
+
+                if(bladeType === "Over") {
+                    this.els.dropdowns.metal.classList.remove("disabled");
+                } else {
+                    this.els.dropdowns.metal.classList.add("disabled");
+                    this.selected.metal = null;
+                    this.els.dropdowns.metal.querySelector("button").textContent = "Select Metal Blade";
+                }
             } else {
                 this.els.dropdowns.chip.classList.add("disabled");
                 this.els.dropdowns.assist.classList.add("disabled");
+                this.els.dropdowns.metal.classList.add("disabled");
                 this.selected.chip = null;
                 this.selected.assist = null;
+                this.selected.metal = null;
                 this.els.dropdowns.chip.querySelector("button").textContent = "Select Lock Chip";
                 this.els.dropdowns.assist.querySelector("button").textContent = "Select Assist Blade";
+                this.els.dropdowns.metal.querySelector("button").textContent = "Select Metal Blade";
             }
 
-            // Ratchet Filter (Core)
+            // Ratchet Filter
             let validRatchets = ratchets;
             if(this.selected.blade.core === "Round") validRatchets = ratchets.filter(r => r.core === "R");
             
@@ -714,7 +719,6 @@ class BeyBuilder {
             rDrop.currentData = validRatchets;
             rDrop.updateList(validRatchets);
 
-            // Reset Ratchet if invalid
             if(this.selected.ratchet && !validRatchets.includes(this.selected.ratchet)) {
                 this.selected.ratchet = null;
                 rDrop.querySelector("button").textContent = "Select Ratchet";
@@ -734,31 +738,63 @@ class BeyBuilder {
         }
     }
 
-    // 5. UPDATE UI
+// 5. UPDATE UI
     updateAll() {
         this.els.display.innerHTML = "";
         
-        // Order: Chip, Blade, Assist, Ratchet, Bit
-        const order = ['chip', 'blade', 'assist', 'ratchet', 'bit'];
+        // Render Order
+        const order = ['chip', 'blade', 'metal', 'assist', 'ratchet', 'bit'];
         order.forEach(k => {
             if(this.selected[k]) this.els.display.innerHTML += this.createPartHTML(this.selected[k]);
         });
 
-        // Weight
+        // Weight Calculation
         let w = 0;
         Object.values(this.selected).forEach(p => { if(p) w += p.weight || 0; });
         this.els.weight.textContent = w > 0 ? `TOTAL WEIGHT: ${w.toFixed(1)}g (approx.)` : "";
 
-        // Name
-        let n = "";
+        // Naming Logic & Dynamic Color (2 Lines)
+        let line1 = "";
+        let line2 = "";
+        let glowColor = 'var(--neon-blue)'; // Default BX color
+
         if(this.selected.blade && this.selected.ratchet) {
-            if(this.selected.chip) n += this.selected.chip.name;
-            n += (this.selected.blade.displayName || this.selected.blade.name) + " ";
-            if(this.selected.assist) n += this.selected.assist.name.charAt(0);
-            n += this.selected.ratchet.name;
-            if(this.selected.bit) n += this.selected.bit.abbr;
+            const b = this.selected.blade;
+            
+            // Set glow color based on system
+            if(b.system === "UX") glowColor = '#ffaa00'; // Orange
+            if(b.system === "CX") glowColor = '#ff0044'; // Pink/Red
+
+            if(b.blade === "Over") {
+                // LINE 1: [Chip][MetalBlade]
+                if(this.selected.chip) line1 += this.selected.chip.name;
+                if(this.selected.metal) line1 += this.selected.metal.name;
+                
+                // LINE 2: [Over(1st letter)][Assist(1st letter)][ratchet][Bit(abbr)]
+                line2 += (b.displayName || b.name).charAt(0).toUpperCase();
+                if(this.selected.assist) line2 += (this.selected.assist.displayName || this.selected.assist.name).charAt(0).toUpperCase();
+                line2 += this.selected.ratchet.name;
+                if(this.selected.bit) line2 += this.selected.bit.abbr;
+            } else {
+                // LINE 1: [Chip][MainBlade]
+                if(this.selected.chip) line1 += this.selected.chip.name;
+                line1 += (b.displayName || b.name);
+                
+                // LINE 2: [Assist(1st letter)][ratchet][Bit(abbr)]
+                if(this.selected.assist) line2 += this.selected.assist.name.charAt(0).toUpperCase();
+                line2 += this.selected.ratchet.name;
+                if(this.selected.bit) line2 += this.selected.bit.abbr;
+            }
         }
-        this.els.name.textContent = n;
+        
+        // Apply 2-line text and dynamic shadow
+        if (line1 || line2) {
+            this.els.name.innerHTML = `${line1}<br>${line2}`;
+        } else {
+            this.els.name.innerHTML = "";
+        }
+        
+        this.els.name.style.textShadow = `0 0 10px ${glowColor}, 0 0 20px ${glowColor}`;
 
         this.updateChart();
     }
@@ -867,7 +903,6 @@ function addBuilder() {
 
 document.getElementById('addBuildBtn').onclick = addBuilder;
 
-// Global listener to close dropdowns if clicking outside
 document.addEventListener('click', (e) => {
     if(!e.target.closest('.dropdown')) {
         document.querySelectorAll('.dropdown.is-open').forEach(d => {
@@ -878,7 +913,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Start with 1 builder
 addBuilder();
 
 </script>

@@ -300,10 +300,21 @@ h1 {
   background: rgba(0,0,0,0.6);
 }
 
-.part img {
+.part-img-container {
   width: 100px;
   height: 100px;
-  object-fit: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Let the image scale naturally inside the container */
+.part-img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
 }
 
@@ -546,7 +557,7 @@ class BeyBuilder {
         wrapper.querySelector('.resetBtn').onclick = () => this.reset();
         
         wrapper.querySelector('.dl-card').onclick = () => this.downloadImage(this.els.downloadArea);
-        wrapper.querySelector('.dl-parts').onclick = () => this.downloadImage(wrapper.querySelector('.displayColumnContainer'), true);
+        wrapper.querySelector('.dl-parts').onclick = () => this.downloadImage(wrapper.querySelector('.displayColumn'), true);
     }
 
     // 2. SETUP DROPDOWNS & CHART
@@ -774,7 +785,9 @@ class BeyBuilder {
 
         return `
         <div class="part">
-            <img src="${part.src}">
+            <div class="part-img-container">
+                <img src="${part.src}">
+            </div>
             <div class="stats">
                 <strong>${part.displayName || part.name}</strong>
                 ${statRows}

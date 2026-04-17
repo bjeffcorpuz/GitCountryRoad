@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Battle Stats Tracker v13</title>
+<title>Battle Stats Tracker v15</title>
 <script src="data.js"></script>
 <style>
 :root{
@@ -472,7 +472,7 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
 <body>
 
 <div class="app">
-  <h1>Battle Stats Tracker v14</h1>
+  <h1>Battle Stats Tracker v15</h1>
   
   <div class="input-section">
     <input type="text" id="jsonInput" 
@@ -551,7 +551,8 @@ const allParts = {
     ratchet: masterRatchets.flat(),
     bit: masterBits.flat(),
     assist: masterAssist.flat(),
-    chip: masterChips.flat()
+    chip: masterChips.flat(),
+    metalblade: typeof masterMetalBlade !== 'undefined' ? masterMetalBlade.flat() : []
 };
 
 function findPart(type, name) {
@@ -622,7 +623,7 @@ function processInput(){
         let totalStats = { atk:0, def:0, sta:0, dash:0, burstR:0, weight:0 };
         let mainSystem = data['system'] || null; 
 
-        ['chip','blade','assist','ratchet','bit'].forEach(type => {
+        ['chip','blade','metalblade','assist','ratchet','bit'].forEach(type => {
             if(data[type]){
                 const found = findPart(type, data[type]);
                 if(found){
@@ -710,17 +711,45 @@ function renderRow(originalJson, parts, totals, system){
     canvas.className = "radar-chart";
     chartSection.appendChild(canvas);
 
-    const getP = (t) => parts.find(p => p.type === t);
-    const pChip = getP('chip'); const pBlade = getP('blade');
-    const pAssist = getP('assist'); const pRatchet = getP('ratchet'); const pBit = getP('bit');
+const getP = (t) => parts.find(p => p.type === t);
+    const pChip = getP('chip'); 
+    const pBlade = getP('blade');
+    const pMetalBlade = getP('metalblade'); // Grabs the new metal blade
+    const pAssist = getP('assist'); 
+    const pRatchet = getP('ratchet'); 
+    const pBit = getP('bit');
 
     let displayName = "";
-    if(pChip) displayName += pChip.name;
-    if(pBlade) displayName += pBlade.displayName;
-    displayName += " ";
-    if(pAssist) displayName += pAssist.displayName.charAt(0);
-    if(pRatchet) displayName += pRatchet.name;
-    if(pBit) displayName += (pBit.abbr || pBit.name);
+
+    if (pMetalBlade) {
+        // --- NEW CX FORMAT WITH METAL BLADE ---
+        // Format: [Chip][MetalBlade] [OverBlade(1st letter)][AssistBlade][ratchet][Bit]
+        if(pChip) displayName += pChip.name;
+        displayName += pMetalBlade.name;
+        displayName += " ";
+        
+        // Over blade (First letter, capitalized)
+        if(pBlade) {
+            let bName = pBlade.displayName || pBlade.name;
+            displayName += bName.charAt(0).toUpperCase();
+        }
+        // Assist blade (First letter, capitalized)
+        if(pAssist) {
+            let aName = pAssist.displayName || pAssist.name;
+            displayName += aName.charAt(0).toUpperCase();
+        }
+        if(pRatchet) displayName += pRatchet.name;
+        if(pBit) displayName += (pBit.abbr || pBit.name);
+
+    } else {
+        // --- OLD STANDARD FORMAT ---
+        if(pChip) displayName += pChip.name;
+        if(pBlade) displayName += (pBlade.displayName || pBlade.name);
+        displayName += " ";
+        if(pAssist) displayName += (pAssist.displayName || pAssist.name).charAt(0).toUpperCase();
+        if(pRatchet) displayName += pRatchet.name;
+        if(pBit) displayName += (pBit.abbr || pBit.name);
+    }
 
     const sysColor = getSystemColor(system);
     const nameDisplay = document.createElement("div");
