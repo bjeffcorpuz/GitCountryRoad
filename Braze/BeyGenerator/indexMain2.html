@@ -445,15 +445,18 @@ button:hover {
 
 <script>
 /* ================= DATA ================= */
+// Added the "type" property to the bladers array. 
+// You can adjust these values as needed.
+//["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Ronan","src":"avatars/Ronan.png","type":"all"},
-    {"name":"Wolf","src":"avatars/Wolf.png","type":"all"},
-    {"name":"Darius","src":"avatars/Darius.png","type":"all"},
-    {"name":"Darian","src":"avatars/Darian.png","type":"all"},
-    {"name":"Lucian","src":"avatars/Lucian.png","type":"all"},
-    {"name":"Zera","src":"avatars/Zera.png","type":"all"},
-    {"name":"Haruka","src":"avatars/Haruka.png","type":"all"},
-    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"all"}
+    {"name":"Victor","src":"avatars/Victor.png","type":"all"},
+    {"name":"Kael","src":"avatars/Kael.png","type":"AtkDef"},
+    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"Sta"},
+    {"name":"Renji","src":"avatars/Renji.png","type":"AtkDef"},
+    {"name":"Darius","src":"avatars/Darius.png","type":"Def"},
+    {"name":"Natsumi","src":"avatars/Natsumi.png","type":"all"},
+    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"AtkDef"},
+    {"name":"Kaito","src":"avatars/Kaito.png","type":"AtkSta"}
 ]
 
 // THRESHOLDS
@@ -484,12 +487,12 @@ const metal_minDef = 1;
 const metal_minSta = 1;
 
 // BAN LIST
-let removeBlade = [];
+let removeBlade = ["HellsHammer","KnightMail","PhoenixWing","MummyCurse","ShelterDrake","Break","StormSpriggan","WeissTiger"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
 let generatedBeyblades = []; 
 
-function resetPools() {
+    function resetPools() {
     poolSystem = [...masterSystem];
     
     // Ban list filter
