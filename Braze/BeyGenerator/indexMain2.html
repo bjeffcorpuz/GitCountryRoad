@@ -449,14 +449,14 @@ button:hover {
 // You can adjust these values as needed.
 //["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Victor","src":"avatars/Victor.png","type":"all"},
-    {"name":"Kael","src":"avatars/Kael.png","type":"AtkDef"},
-    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"Sta"},
+    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkDef"},
+    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"Atk"},
+    {"name":"Sasha","src":"avatars/Sasha.png","type":"all"},
     {"name":"Renji","src":"avatars/Renji.png","type":"AtkDef"},
-    {"name":"Darius","src":"avatars/Darius.png","type":"Def"},
-    {"name":"Natsumi","src":"avatars/Natsumi.png","type":"all"},
-    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"AtkDef"},
-    {"name":"Kaito","src":"avatars/Kaito.png","type":"AtkSta"}
+    {"name":"Aiko","src":"avatars/Aiko.png","type":"DefSta"},
+    {"name":"Lucian","src":"avatars/Lucian.png","type":"all"},
+    {"name":"Jaren","src":"avatars/Jaren.png","type":"Atk"},
+    {"name":"Kael","src":"avatars/Kael.png","type":"AtkSta"}
 ]
 
 // THRESHOLDS
@@ -486,8 +486,8 @@ const metal_minAtk = 1;
 const metal_minDef = 1;
 const metal_minSta = 1;
 
-// BAN LIST
-let removeBlade = ["HellsHammer","KnightMail","PhoenixWing","MummyCurse","ShelterDrake","Break","StormSpriggan","WeissTiger"];
+// BAN LIST ["1","2","3","4","5","6","7","8"]
+let removeBlade = ["PhoenixWing","HellsScythe","GolemRock","MummyCurse","WyvernGale","SharkScale","PteraSwing","KnightMail"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
 let generatedBeyblades = []; 
@@ -692,9 +692,40 @@ function generateFullBeyblade(bladerType) {
             validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
             if(validRatchets.length === 0) errorFound = true;
             else {
-                const rIndex = Math.floor(Math.random() * validRatchets.length);
+                let rIndex = 0;
+
+                // --- NEW: LIGHTWEIGHT BLADE BUFF ---
+                // Check if it's a standard BX/UX blade weighing 33 or less
+                if ((system.name === "BX" || system.name === "UX") && blade.blade !== "Over" && blade.weight <= 32.9) {
+                    
+                    // 1. Find the highest weight currently available in the valid ratchets pool
+                    let maxWeight = -1;
+                    validRatchets.forEach(r => {
+                        const checkR = Array.isArray(r) ? r[0] : r;
+                        if ((checkR.weight || 0) > maxWeight) {
+                            maxWeight = checkR.weight || 0;
+                        }
+                    });
+
+                    // 2. Isolate ONLY the ratchets that match that maximum weight
+                    const heaviestRatchets = validRatchets.filter(r => {
+                        const checkR = Array.isArray(r) ? r[0] : r;
+                        return (checkR.weight || 0) === maxWeight;
+                    });
+
+                    // 3. Randomly pick from the heaviest ratchets, then find its original index in validRatchets
+                    const heavyPick = heaviestRatchets[Math.floor(Math.random() * heaviestRatchets.length)];
+                    rIndex = validRatchets.indexOf(heavyPick);
+                    
+                } else {
+                    // Normal Random Selection for heavier blades or CX blades
+                    rIndex = Math.floor(Math.random() * validRatchets.length);
+                }
+
+                // Finalize the ratchet choice
                 let rawRatchet = validRatchets[rIndex];
                 ratchet = Array.isArray(rawRatchet) ? rawRatchet[Math.floor(Math.random() * rawRatchet.length)] : rawRatchet;
+                
                 const realRIndex = poolRatchets.indexOf(rawRatchet);
                 if(realRIndex > -1) poolRatchets.splice(realRIndex, 1);
             }

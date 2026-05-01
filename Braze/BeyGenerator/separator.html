@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse Engineer Beyblade</title>
+<script src="data.js"></script>
+<style>
+    :root {
+        --primary: #ff9800;
+        --primary-glow: rgba(255, 152, 0, 0.5);
+        --bg-dark: #0a0a0a;
+        --card-bg: #1a1a1a;
+        --p1-color: #00d4ff;
+    }
+
+    body {
+        margin: 0;
+        background: radial-gradient(circle at top, #1a1a2e, #000);
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        color: #fff;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 50px;
+    }
+
+    h1 {
+        text-transform: uppercase; letter-spacing: 4px;
+        color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); 
+        margin: 30px 0 10px 0; user-select: none; text-align: center;
+    }
+
+    /* === SEARCH INTERFACE === */
+    .search-container {
+        display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px;
+    }
+
+    input[type="text"] {
+        padding: 15px 30px;
+        font-size: 20px;
+        border-radius: 50px;
+        border: 2px solid var(--primary);
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        width: 450px;
+        max-width: 90vw;
+        text-align: center;
+        outline: none;
+        box-shadow: 0 0 15px rgba(255, 152, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus { box-shadow: 0 0 30px var(--primary-glow); }
+
+    .action-btn {
+        padding: 15px 50px; font-size: 18px; border-radius: 50px; 
+        border: 2px solid var(--primary); background: rgba(0,0,0,0.5); 
+        color: var(--primary); cursor: pointer; transition: all 0.3s ease; 
+        font-weight: bold; text-transform: uppercase;
+        box-shadow: 0 0 15px rgba(255, 152, 0, 0.2);
+    }
+    
+    .action-btn:hover { 
+        background: var(--primary); color: #000; 
+        box-shadow: 0 0 30px var(--primary-glow); transform: scale(1.05);
+    }
+
+    /* === BATTLE ARENA (Adapted for Single Display) === */
+    #resultArena {
+        display: none;
+        width: 100%;
+        max-width: 700px; /* narrowed for single card */
+        justify-content: center;
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+
+    .player-section {
+        width: 100%;
+        max-width: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
+    }
+
+    /* Slide in animations */
+    .slide-in-up { animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    @keyframes slideUp { 0% { opacity: 0; transform: translateY(50px); } 100% { opacity: 1; transform: translateY(0); } }
+
+    /* === DISPLAY STYLES FROM 1v1.html === */
+    .hero-container {
+        display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px;
+        background: rgba(0,0,0,0.4); padding: 25px; border-radius: 16px; border: 1px solid #333; width: 100%; box-sizing: border-box;
+    }
+
+    .avatar-container {
+        position: relative; width: 160px; height: 230px; border-radius: 12px; overflow: hidden;
+        border: 2px solid var(--p1-color); box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+    }
+    
+    .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+    .player-name {
+        position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        padding: 8px 0; font-size: 16px; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; color: var(--p1-color);
+    }
+
+    .chart-container { width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .weight-badge { margin-top: 10px; font-size: 16px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--p1-color); }
+    .bey-name-badge { width: 100%; text-align: center; font-size: 20px; font-weight: 900; margin-top: 10px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); letter-spacing: 1px; color: var(--p1-color); }
+
+    .build-container {
+        display: flex; flex-direction: column; gap: 8px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; width: 100%; box-sizing: border-box;
+    }
+    .part-card {
+        background: #151515; border: 1px solid #333; border-radius: 8px; padding: 10px; width: 100%; box-sizing: border-box; display: flex; flex-direction: row; align-items: center;
+    }
+    .part-card-left {
+        width: 70px; height: 70px; flex-shrink: 0; margin-right: 15px; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border-radius: 6px;
+    }
+    .part-card-left img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    .part-card-right { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .part-type { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 2px; }
+    .part-name { font-size: 15px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;}
+
+    .mini-stats { width: 100%; display: flex; flex-direction: column; gap: 4px; }
+    .stat-row { display: flex; align-items: center; font-size: 10px; color: #aaa; width: 100%; }
+    .stat-label { width: 50px; font-weight: bold; text-align: left; }
+    .stat-bar-bg { flex-grow: 1; height: 5px; background: #333; border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill { height: 100%; background: linear-gradient(90deg, #00c6ff, #0072ff); border-radius: 2px; }
+    .stat-val { width: 35px; text-align: right; margin-left: 8px; font-weight: bold; color: #fff; font-family: monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>Reverse Engineer</h1>
+
+<div class="search-container">
+    <input type="text" id="beyInput" placeholder="e.g. EmperorBlitz BA3-60F" onkeypress="if(event.key === 'Enter') extractBeyblade()">
+    <button class="action-btn" onclick="extractBeyblade()">Identify Parts</button>
+</div>
+
+<div id="resultArena">
+    <div id="player1" class="player-section"></div>
+</div>
+
+<script>
+/* =========================================
+   Data Preparation & Flat-mapping
+   Gets only the [0] index to satisfy Requirement #3
+========================================= */
+const getFirst = item => Array.isArray(item) ? item[0] : item;
+const bBlades = masterBlades.map(getFirst);
+const bChips = masterChips.map(getFirst);
+const bMetals = masterMetalBlade.map(getFirst);
+const bAssists = masterAssist.map(getFirst);
+const bRatchets = masterRatchets.map(getFirst);
+const bBits = masterBits.map(getFirst);
+
+/* =========================================
+   Levenshtein Distance Logic (Typo Handler)
+========================================= */
+function levenshtein(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1, // substitution
+                    Math.min(matrix[i][j - 1] + 1, // insertion
+                    matrix[i - 1][j] + 1) // deletion
+                );
+            }
+        }
+    }
+    return matrix[b.length][a.length];
+}
+
+function normalize(str) {
+    return str.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+/* =========================================
+   Reverse Engineering Parser
+========================================= */
+function parseBeyblade(rawInput) {
+    let str = normalize(rawInput);
+    
+    // 1. Identify and Strip Bit (from the end)
+    let bestBit = null;
+    let bitLen = 0;
+    // Sort descending by length to catch 'GF' before 'F'
+    let sortedBits = [...bBits].sort((a,b) => b.abbr.length - a.abbr.length);
+    for(let bit of sortedBits) {
+        let bitStr = normalize(bit.abbr);
+        if(str.endsWith(bitStr)) {
+            bestBit = bit;
+            bitLen = bitStr.length;
+            break;
+        }
+    }
+    if(bestBit) str = str.slice(0, str.length - bitLen);
+
+    // 2. Identify and Strip Ratchet (from the end)
+    let bestRatchet = null;
+    let ratchetLen = 0;
+    let sortedRatchets = [...bRatchets].sort((a,b) => b.name.length - a.name.length);
+    for(let r of sortedRatchets) {
+        let rStr = normalize(r.name);
+        if(str.endsWith(rStr)) {
+            bestRatchet = r;
+            ratchetLen = rStr.length;
+            break;
+        }
+    }
+    if(bestRatchet) str = str.slice(0, str.length - ratchetLen);
+
+    // 3. Find the best matching Word/Prefix combination
+    let bestCombo = null;
+    let bestDist = Infinity;
+
+    // A) Test Over Blades Combos
+    bChips.forEach(c => {
+        bMetals.forEach(m => {
+            let baseWord = normalize(c.name + m.displayName);
+            bBlades.filter(b => b.blade === 'Over').forEach(b => {
+                let bInit = b.displayName.charAt(0).toLowerCase();
+                bAssists.forEach(a => {
+                    let aInit = a.displayName.charAt(0).toLowerCase();
+                    let fullPrefix = baseWord + bInit + aInit;
+                    let dist = levenshtein(str, fullPrefix);
+                    if(dist < bestDist) {
+                        bestDist = dist;
+                        bestCombo = { chip: c, metalBlade: m, blade: b, assist: a };
+                    }
+                });
+            });
+        });
+    });
+
+    // B) Test Standard Blades Combos
+    bBlades.filter(b => b.blade !== 'Over').forEach(b => {
+        let bWord = normalize(b.displayName);
+        
+        const testStandard = (wordToTest, cObj) => {
+            if (b.astBlade === 'Yes') {
+                bAssists.forEach(a => {
+                    let aInit = a.displayName.charAt(0).toLowerCase();
+                    let fullPrefix = wordToTest + aInit;
+                    let dist = levenshtein(str, fullPrefix);
+                    if(dist < bestDist) {
+                        bestDist = dist;
+                        bestCombo = { chip: cObj, blade: b, assist: a };
+                    }
+                });
+            } else {
+                let dist = levenshtein(str, wordToTest);
+                if(dist < bestDist) {
+                    bestDist = dist;
+                    bestCombo = { chip: cObj, blade: b };
+                }
+            }
+        };
+
+        // Test with chip
+        bChips.forEach(c => testStandard(normalize(c.name) + bWord, c));
+        // Test without chip
+        testStandard(bWord, null);
+    });
+
+    return { ...bestCombo, ratchet: bestRatchet, bit: bestBit, stats: { atk:0, def:0, sta:0, dash:0, burstR:0, weight:0 } };
+}
+
+function calculateStats(bey) {
+    ['chip', 'blade', 'metalBlade', 'assist', 'ratchet', 'bit'].forEach(p => {
+        if(bey[p]) {
+            bey.stats.atk += bey[p].atk || 0;
+            bey.stats.def += bey[p].def || 0;
+            bey.stats.sta += bey[p].sta || 0;
+            bey.stats.dash += bey[p].dash || 0;
+            bey.stats.burstR += bey[p].burstR || 0;
+            bey.stats.weight += bey[p].weight || 0;
+        }
+    });
+    return bey;
+}
+
+/* =========================================
+   UI Rendering (Reused from 1v1.html)
+========================================= */
+function renderStatBars(item, type) {
+    if(!item) return "";
+    let showStats = [];
+    if(type === 'Chip') showStats = ['weight'];
+    if(['Blade', 'Metal', 'Assist'].includes(type)) showStats = ['weight', 'atk', 'def', 'sta'];
+    if(type === 'Ratchet') {
+        if(item.bit === "No") showStats = ['weight', 'atk', 'def', 'sta', 'dash', 'burstR'];
+        else showStats = ['weight', 'atk', 'def', 'sta'];
+    }
+    if(type === 'Bit') showStats = ['weight', 'atk', 'def', 'sta', 'dash', 'burstR'];
+
+    if(showStats.length === 0) return "";
+    let html = `<div class="mini-stats">`;
+    showStats.forEach(key => {
+        let val = item[key] || 0;
+        let displayVal = key === 'weight' ? val.toFixed(1) + 'g' : val;
+        let barWidth = key === 'weight' ? Math.min((val / 45) * 100, 100) : Math.min(val, 100);
+        html += `<div class="stat-row">
+            <span class="stat-label">${key.toUpperCase()}</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${barWidth}%"></div></div>
+            <span class="stat-val">${displayVal}</span>
+        </div>`;
+    });
+    return html + `</div>`;
+}
+
+function renderPart(label, item) {
+    if(!item) return "";
+    let itemName = item.displayName || item.name || item.abbr;
+    return `<div class="part-card">
+        <div class="part-card-left"><img src="${item.src}"></div>
+        <div class="part-card-right">
+            <div class="part-type">${label}</div>
+            <div class="part-name">${itemName}</div>
+            ${renderStatBars(item, label)}
+        </div>
+    </div>`;
+}
+
+function drawMiniChart(canvasId, stats, colorHex) {
+    const cvs = document.getElementById(canvasId);
+    if(!cvs) return;
+    const ctx = cvs.getContext('2d');
+    const w = cvs.width; const h = cvs.height;
+    const cx = w/2; const cy = h/2;
+    const r = (Math.min(w,h)/2) - 30; 
+    const max = 150;
+    const values = [stats.atk, stats.def, stats.sta, stats.dash, stats.burstR];
+    const labels = ["ATK", "DEF", "STA", "DASH", "BR"];
+    const count = 5;
+    
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)"; 
+    ctx.lineWidth = 1;
+    for(let i=1; i<=3; i++) {
+        ctx.beginPath();
+        for(let j=0; j<count; j++){
+            const angle = (Math.PI*2/count)*j - Math.PI/2;
+            const dist = (r/3)*i;
+            ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
+        }
+        ctx.closePath(); ctx.stroke();
+    }
+
+    ctx.fillStyle = colorHex + "44"; ctx.strokeStyle = colorHex; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for(let j=0; j<count; j++){
+        const val = Math.min(values[j], max);
+        const angle = (Math.PI*2/count)*j - Math.PI/2;
+        const dist = (val/max)*r;
+        ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+
+    ctx.font = "bold 10px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    labels.forEach((l, i) => {
+        const angle = (Math.PI*2/count)*i - Math.PI/2;
+        const lx = cx + Math.cos(angle)*(r+15); const ly = cy + Math.sin(angle)*(r+15);
+        ctx.fillStyle = "#aaa"; ctx.fillText(l, lx, ly - 6); 
+        ctx.fillStyle = colorHex; ctx.fillText(values[i], lx, ly + 6); 
+    });
+}
+
+function renderPlayer(containerId, beybladeBuild) {
+    const container = document.getElementById(containerId);
+    let fullName = "";
+    
+    // Exact identical naming generation check
+    if (beybladeBuild.blade.blade === "Over") {
+        if(beybladeBuild.chip) fullName += beybladeBuild.chip.name;
+        if(beybladeBuild.metalBlade) fullName += beybladeBuild.metalBlade.displayName;
+        fullName += " "; 
+        if(beybladeBuild.blade) fullName += beybladeBuild.blade.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.assist) fullName += beybladeBuild.assist.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.ratchet) fullName += beybladeBuild.ratchet.name;
+        if(beybladeBuild.bit) fullName += beybladeBuild.bit.abbr; 
+    } else {
+        if(beybladeBuild.chip) fullName += beybladeBuild.chip.name;
+        fullName += beybladeBuild.blade.displayName;
+        fullName += " "; 
+        if(beybladeBuild.assist) fullName += beybladeBuild.assist.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.ratchet) fullName += beybladeBuild.ratchet.name;
+        if(beybladeBuild.bit) fullName += beybladeBuild.bit.abbr; 
+    }
+
+    let buildHTML = "";
+    if(beybladeBuild.chip) buildHTML += renderPart("Chip", beybladeBuild.chip);
+    buildHTML += renderPart("Blade", beybladeBuild.blade);
+    if(beybladeBuild.metalBlade) buildHTML += renderPart("Metal", beybladeBuild.metalBlade);
+    if(beybladeBuild.assist) buildHTML += renderPart("Assist", beybladeBuild.assist);
+    if(beybladeBuild.ratchet) buildHTML += renderPart("Ratchet", beybladeBuild.ratchet);
+    if(beybladeBuild.bit) buildHTML += renderPart("Bit", beybladeBuild.bit);
+
+    container.className = `player-section slide-in-up`;
+    container.innerHTML = `
+        <div class="hero-container">
+            <div class="chart-container">
+                <canvas id="chart-${containerId}" width="200" height="200"></canvas>
+                <div class="weight-badge">Total Weight: ${beybladeBuild.stats.weight.toFixed(1)}g</div>
+            </div>
+            <div class="bey-name-badge">${fullName}</div>
+        </div>
+        <div class="build-container">
+            ${buildHTML}
+        </div>
+    `;
+    drawMiniChart(`chart-${containerId}`, beybladeBuild.stats, "#00d4ff");
+}
+
+/* =========================================
+   Execution Trigger
+========================================= */
+function extractBeyblade() {
+    const inputField = document.getElementById("beyInput");
+    const val = inputField.value.trim();
+    if(!val) return;
+
+    // Reset Animation Context
+    const arena = document.getElementById("resultArena");
+    const container = document.getElementById("player1");
+    container.className = "player-section"; 
+    void container.offsetWidth; // Force DOM reflow to restart animation
+    
+    // Parse & display
+    const rawBey = parseBeyblade(val);
+    const finalBey = calculateStats(rawBey);
+    
+    arena.style.display = "flex";
+    renderPlayer("player1", finalBey);
+}
+</script>
+</body>
+</html>

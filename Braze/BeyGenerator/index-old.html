@@ -319,7 +319,7 @@ button:hover {
 .bey-full-name {
   width: 100%;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   padding: 10px 4px; 
   border-top: 1px solid #444;
@@ -392,6 +392,37 @@ button:hover {
   filter: grayscale(40%);
 }
 
+/* Add this to your <style> block */
+
+.card-hidden .card {
+    opacity: 0;
+    transform: translateY(-100px) rotateX(20deg);
+}
+
+.card-reveal .card {
+    animation: heavyImpact 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+@keyframes heavyImpact {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px) rotateX(20deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(15px) rotateX(-10deg); /* Overshoots the drop */
+    }
+    80% {
+        transform: translateY(-5px) rotateX(5deg); /* Bounces back up slightly */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg); /* Locks in */
+    }
+}
+
+
+
 </style>
 </head>
 <body>
@@ -418,19 +449,25 @@ button:hover {
 // You can adjust these values as needed.
 //["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
+    {"name":"Victor","src":"avatars/Victor.png","type":"all"},
+    {"name":"Kael","src":"avatars/Kael.png","type":"AtkDef"},
+    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"Sta"},
+    {"name":"Renji","src":"avatars/Renji.png","type":"AtkDef"},
+    {"name":"Darius","src":"avatars/Darius.png","type":"Def"},
     {"name":"Natsumi","src":"avatars/Natsumi.png","type":"all"},
-    {"name":"Haruka","src":"avatars/Haruka.png","type":"all"},
-    {"name":"Ryomaru","src":"avatars/Ryomaru.png","type":"all"},
-    {"name":"Darius","src":"avatars/Darius.png","type":"all"},
-    {"name":"Lucian","src":"avatars/Lucian.png","type":"all"},
-    {"name":"Darian","src":"avatars/Darian.png","type":"all"},
-    {"name":"Jaren","src":"avatars/Jaren.png","type":"all"},
-    {"name":"Sasha","src":"avatars/Sasha.png","type":"all"}
+    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"AtkDef"},
+    {"name":"Kaito","src":"avatars/Kaito.png","type":"AtkSta"}
 ]
-// NEW STATIC VARIABLES FOR STAT THRESHOLDS
+
+// THRESHOLDS
 const blades_minAtk = 30;
 const blades_minDef = 30;
 const blades_minSta = 25;
+
+// NEW: Over Blade Thresholds
+const over_minAtk = 1;
+const over_minDef = 1;
+const over_minSta = 1;
 
 const assist_minAtk = 13;
 const assist_minDef = 15;
@@ -444,21 +481,23 @@ const bit_minAtk = 30;
 const bit_minDef = 25;
 const bit_minSta = 20;
 
-let removeBlade = ["Hunt", "PhoenixRudder", "Dark", "TriceraPress", "KnightShield","SharkScale","HellsHammer","WizardRod"];
+// NEW: Metal Blade Thresholds
+const metal_minAtk = 1;
+const metal_minDef = 1;
+const metal_minSta = 1;
 
-let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits;
-let generatedBeyblades = []; // Store the generated data
+// BAN LIST
+let removeBlade = ["HellsHammer","KnightMail","PhoenixWing","MummyCurse","ShelterDrake","Break","StormSpriggan","WeissTiger"];
 
-function resetPools() {
+let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
+let generatedBeyblades = []; 
+
+    function resetPools() {
     poolSystem = [...masterSystem];
     
-    // NEW FILTER LOGIC: Apply the removeBlade ban list
+    // Ban list filter
     poolBlades = masterBlades.filter(bladeItem => {
-        // Handle both single objects and arrays of variations
         const checkItem = Array.isArray(bladeItem) ? bladeItem[0] : bladeItem;
-        
-        // If the blade's displayName IS in the removeBlade array, return false to exclude it
-        // If it is NOT in the array, return true to keep it (along with all its color/stat variations)
         return !removeBlade.includes(checkItem.displayName);
     });
 
@@ -466,7 +505,9 @@ function resetPools() {
     poolChips = [...masterChips];
     poolAssist = [...masterAssist];
     poolBits = [...masterBits];
-    generatedBeyblades = []; // Reset storage
+    poolMetalBlades = [...masterMetalBlade]; 
+    
+    generatedBeyblades = []; 
 }
 
 /* ================= LOGIC ================= */
@@ -480,47 +521,47 @@ function getRandomItem(pool, remove = true) {
     return { item: actualItem, raw: item };
 }
 
-// NEW HELPER FUNCTION: Filters a pool based on the blader's type and category thresholds
 function filterPoolByType(pool, partCategory, type) {
     if (!pool || pool.length === 0) return pool;
-    if (!type || type === "all") return pool; // "all" type skips filtering completely (Tr and Op stay here!)
+    if (!type || type === "all") return pool;
 
-    // --- NEW RULE: Exclude integrated-bit Ratchets (Tr, Op) for specialized types ---
     let workingPool = pool;
     if (partCategory === "ratchet") {
         workingPool = pool.filter(item => {
             const checkItem = Array.isArray(item) ? item[0] : item;
-            // Keep it ONLY if it takes a bit. (Removes Tr, Op(Atk), Op(Def))
             return checkItem.bit !== "No";
         });
-        
-        // Safety check: if removing them somehow emptied the pool, revert
         if (workingPool.length === 0) workingPool = pool;
     }
 
-    let minAtk = 0, minDef = 0, minSta = 0;
-
-    // Determine thresholds based on part category
-    if (partCategory === "blade") {
-        minAtk = blades_minAtk; minDef = blades_minDef; minSta = blades_minSta;
-    } else if (partCategory === "assist") {
-        minAtk = assist_minAtk; minDef = assist_minDef; minSta = assist_minSta;
-    } else if (partCategory === "ratchet") {
-        minAtk = ratchet_minAtk; minDef = ratchet_minDef; minSta = ratchet_minSta;
-    } else if (partCategory === "bit") {
-        minAtk = bit_minAtk; minDef = bit_minDef; minSta = bit_minSta;
-    } else {
-        return workingPool; // Default fallback for unknown categories
-    }
-
-    // AI SCORING PROCESS
     let scoredPool = workingPool.map(item => {
         const checkItem = Array.isArray(item) ? item[0] : item;
+        
+        // --- NEW: DYNAMIC THRESHOLD ASSIGNMENT ---
+        let minAtk = 0, minDef = 0, minSta = 0;
+        
+        if (partCategory === "blade") {
+            if (checkItem.blade === "Over") {
+                // If it's an Over Blade, use the Over thresholds
+                minAtk = over_minAtk; minDef = over_minDef; minSta = over_minSta;
+            } else {
+                // Otherwise, use the standard Main Blade thresholds
+                minAtk = blades_minAtk; minDef = blades_minDef; minSta = blades_minSta;
+            }
+        } else if (partCategory === "metalBlade") {
+            minAtk = metal_minAtk; minDef = metal_minDef; minSta = metal_minSta;
+        } else if (partCategory === "assist") {
+            minAtk = assist_minAtk; minDef = assist_minDef; minSta = assist_minSta;
+        } else if (partCategory === "ratchet") {
+            minAtk = ratchet_minAtk; minDef = ratchet_minDef; minSta = ratchet_minSta;
+        } else if (partCategory === "bit") {
+            minAtk = bit_minAtk; minDef = bit_minDef; minSta = bit_minSta;
+        }
+
         let atk = checkItem.atk || 0;
         let def = checkItem.def || 0;
         let sta = checkItem.sta || 0;
 
-        // Normalize stats so they can be compared fairly
         let nAtk = minAtk > 0 ? atk / minAtk : 0;
         let nDef = minDef > 0 ? def / minDef : 0;
         let nSta = minSta > 0 ? sta / minSta : 0;
@@ -528,14 +569,9 @@ function filterPoolByType(pool, partCategory, type) {
         let passes = false;
         let aiScore = 0;
 
-        if (type === "Atk") {
-            passes = atk >= minAtk;
-        } else if (type === "Def") {
-            passes = def >= minDef;
-        } else if (type === "Sta") {
-            passes = sta >= minSta;
-        } 
-        // --- AI BALANCE LOGIC FOR MIXED TYPES ---
+        if (type === "Atk") passes = atk >= minAtk;
+        else if (type === "Def") passes = def >= minDef;
+        else if (type === "Sta") passes = sta >= minSta;
         else if (type === "AtkDef") {
             passes = (atk >= minAtk || def >= minDef);
             aiScore = (nAtk + nDef) - Math.abs(nAtk - nDef); 
@@ -550,15 +586,10 @@ function filterPoolByType(pool, partCategory, type) {
         return { original: item, passes: passes, score: aiScore };
     });
 
-    // 1. Filter out parts that completely fail the basic threshold
     let validItems = scoredPool.filter(x => x.passes);
 
-    // If the filtered pool is empty, revert to the workingPool (which still excludes Tr/Op for ratchets)
-    if (validItems.length === 0) {
-        return workingPool;
-    }
+    if (validItems.length === 0) return workingPool;
 
-    // 2. AI SELECTION: If it's a mixed type, ensure we get truly "balanced" parts
     if (type === "AtkDef" || type === "AtkSta" || type === "DefSta") {
         validItems.sort((a, b) => b.score - a.score);
         let topTierCount = Math.max(3, Math.ceil(validItems.length * 0.5));
@@ -568,100 +599,152 @@ function filterPoolByType(pool, partCategory, type) {
     return validItems.map(x => x.original);
 }
 
-// UPDATED: Now accepts the bladerType as an argument
+
 function generateFullBeyblade(bladerType) {
-    const sysRes = getRandomItem(poolSystem, false);
-    if(!sysRes) return null;
-    const system = sysRes.item;
 
-    let chip = null;
-    if(system.name === "CX") {
-        const chipRes = getRandomItem(poolChips, true);
-        if(chipRes) chip = chipRes.item;
-    }
+    // 1. Randomize the order of systems to try (e.g., it might try CX, then UX, then BX)
+    let availableSystems = [...poolSystem].sort(() => 0.5 - Math.random());
 
-    // --- BLADE SELECTION ---
-    // 1. Filter by System first
-    let validBlades = poolBlades.filter(b => {
-        const check = Array.isArray(b) ? b[0] : b;
-        return check.system === system.name;
-    });
-    
-    // 2. NEW: Filter by Blader Type
-    validBlades = filterPoolByType(validBlades, "blade", bladerType);
+    // 2. Loop through the systems. If one fails, it moves to the next one!
+    for (let i = 0; i < availableSystems.length; i++) {
+        const system = availableSystems[i];
 
-    if(validBlades.length === 0) return null;
-    
-    const bladeIndex = Math.floor(Math.random() * validBlades.length);
-    let rawBlade = validBlades[bladeIndex];
-    let blade = Array.isArray(rawBlade) ? rawBlade[Math.floor(Math.random() * rawBlade.length)] : rawBlade;
-    
-    const realIndex = poolBlades.indexOf(rawBlade);
-    if(realIndex > -1) poolBlades.splice(realIndex, 1);
+        // --- CREATE BACKUPS OF THE POOLS ---
+        // We take a snapshot of the pools. If this system fails to build a complete
+        // Beyblade, we restore the pools so no parts are accidentally deleted.
+        let backupChips = [...poolChips];
+        let backupBlades = [...poolBlades];
+        let backupMetal = [...poolMetalBlades];
+        let backupAssist = [...poolAssist];
+        let backupRatchets = [...poolRatchets];
+        let backupBits = [...poolBits];
 
-    // --- ASSIST SELECTION ---
-    let assist = null;
-    if(system.name === "CX" && blade.astBlade === "Yes") {
-        // NEW: Filter by Blader Type before randomizing
-        let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
-        
-        const rIndex = Math.floor(Math.random() * validAssists.length);
-        let rawAssist = validAssists[rIndex];
-        assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
-        
-        const realAIndex = poolAssist.indexOf(rawAssist);
-        if(realAIndex > -1) poolAssist.splice(realAIndex, 1);
-    }
+        let errorFound = false;
+        let chip = null, blade = null, metalBlade = null, assist = null, ratchet = null, bit = null;
 
-    // --- RATCHET SELECTION ---
-    let validRatchets = poolRatchets;
-    // 1. Filter by Core compatibility
-    if(blade.core !== "Any") {
-        let filterKey = blade.core === "Round" ? "R" : "W";
-        validRatchets = poolRatchets.filter(r => {
-             const check = Array.isArray(r) ? r[0] : r;
-             return check.core === filterKey;
-        });
-    }
-
-    // 2. NEW: Filter by Blader Type
-    validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
-
-    let ratchet = null;
-    if(validRatchets.length > 0) {
-        const rIndex = Math.floor(Math.random() * validRatchets.length);
-        let rawRatchet = validRatchets[rIndex];
-        ratchet = Array.isArray(rawRatchet) ? rawRatchet[Math.floor(Math.random() * rawRatchet.length)] : rawRatchet;
-        const realRIndex = poolRatchets.indexOf(rawRatchet);
-        if(realRIndex > -1) poolRatchets.splice(realRIndex, 1);
-    }
-
-    // --- BIT SELECTION ---
-    let bit = null;
-    if(ratchet && ratchet.bit !== "No") {
-        // NEW: Filter by Blader Type
-        let validBits = filterPoolByType(poolBits, "bit", bladerType);
-        
-        const rIndex = Math.floor(Math.random() * validBits.length);
-        let rawBit = validBits[rIndex];
-        bit = Array.isArray(rawBit) ? rawBit[Math.floor(Math.random() * rawBit.length)] : rawBit;
-        
-        const realBIndex = poolBits.indexOf(rawBit);
-        if(realBIndex > -1) poolBits.splice(realBIndex, 1);
-    }
-
-    const stats = { atk:0, def:0, sta:0, dash:0, burstR:0 };
-    [blade, assist, ratchet, bit].forEach(p => {
-        if(p) {
-            stats.atk += p.atk || 0;
-            stats.def += p.def || 0;
-            stats.sta += p.sta || 0;
-            stats.dash += p.dash || 0;
-            stats.burstR += p.burstR || 0;
+        // --- CHIP SELECTION ---
+        if(system.name === "CX") {
+            const chipRes = getRandomItem(poolChips, true);
+            if(!chipRes) errorFound = true;
+            else chip = chipRes.item;
         }
-    });
 
-    return { system, chip, blade, assist, ratchet, bit, stats };
+        // --- BLADE SELECTION ---
+        if (!errorFound) {
+            let validBlades = poolBlades.filter(b => {
+                const check = Array.isArray(b) ? b[0] : b;
+                return check.system === system.name;
+            });
+            
+            validBlades = filterPoolByType(validBlades, "blade", bladerType);
+            if(validBlades.length === 0) errorFound = true;
+            else {
+                const bladeIndex = Math.floor(Math.random() * validBlades.length);
+                let rawBlade = validBlades[bladeIndex];
+                blade = Array.isArray(rawBlade) ? rawBlade[Math.floor(Math.random() * rawBlade.length)] : rawBlade;
+                
+                const realIndex = poolBlades.indexOf(rawBlade);
+                if(realIndex > -1) poolBlades.splice(realIndex, 1);
+            }
+        }
+
+        // --- METAL BLADE SELECTION ---
+        if (!errorFound && blade.blade === "Over") {
+            // NEW: Apply the filter!
+            let validMetals = filterPoolByType(poolMetalBlades, "metalBlade", bladerType);
+            
+            if(validMetals.length === 0) errorFound = true;
+            else {
+                const mIndex = Math.floor(Math.random() * validMetals.length);
+                let rawMetal = validMetals[mIndex];
+                metalBlade = Array.isArray(rawMetal) ? rawMetal[Math.floor(Math.random() * rawMetal.length)] : rawMetal;
+                
+                const realMIndex = poolMetalBlades.indexOf(rawMetal);
+                if(realMIndex > -1) poolMetalBlades.splice(realMIndex, 1);
+            }
+        }
+
+        // --- ASSIST SELECTION ---
+        if (!errorFound && system.name === "CX" && (blade.astBlade === "Yes" || blade.blade === "Over")) {
+            let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
+            if(validAssists.length === 0) errorFound = true;
+            else {
+                const rIndex = Math.floor(Math.random() * validAssists.length);
+                let rawAssist = validAssists[rIndex];
+                assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
+                
+                const realAIndex = poolAssist.indexOf(rawAssist);
+                if(realAIndex > -1) poolAssist.splice(realAIndex, 1);
+            }
+        }
+
+        // --- RATCHET SELECTION ---
+        if (!errorFound) {
+            let validRatchets = poolRatchets;
+            if(blade.core !== "Any") {
+                let filterKey = blade.core === "Round" ? "R" : "W";
+                validRatchets = poolRatchets.filter(r => {
+                     const check = Array.isArray(r) ? r[0] : r;
+                     return check.core === filterKey;
+                });
+            }
+
+            validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
+            if(validRatchets.length === 0) errorFound = true;
+            else {
+                const rIndex = Math.floor(Math.random() * validRatchets.length);
+                let rawRatchet = validRatchets[rIndex];
+                ratchet = Array.isArray(rawRatchet) ? rawRatchet[Math.floor(Math.random() * rawRatchet.length)] : rawRatchet;
+                const realRIndex = poolRatchets.indexOf(rawRatchet);
+                if(realRIndex > -1) poolRatchets.splice(realRIndex, 1);
+            }
+        }
+
+        // --- BIT SELECTION ---
+        if (!errorFound && ratchet && ratchet.bit !== "No") {
+            let validBits = filterPoolByType(poolBits, "bit", bladerType);
+            if(validBits.length === 0) errorFound = true;
+            else {
+                const bIndex = Math.floor(Math.random() * validBits.length);
+                let rawBit = validBits[bIndex];
+                bit = Array.isArray(rawBit) ? rawBit[Math.floor(Math.random() * rawBit.length)] : rawBit;
+                
+                const realBIndex = poolBits.indexOf(rawBit);
+                if(realBIndex > -1) poolBits.splice(realBIndex, 1);
+            }
+        }
+
+        // --- EVALUATE ATTEMPT ---
+        if (!errorFound) {
+            // SUCCESS! The Beyblade was successfully built.
+            // Calculate stats and return. (The global pools keep the updated splices).
+            const stats = { atk:0, def:0, sta:0, dash:0, burstR:0 };
+            [blade, metalBlade, assist, ratchet, bit].forEach(p => {
+                if(p) {
+                    stats.atk += p.atk || 0;
+                    stats.def += p.def || 0;
+                    stats.sta += p.sta || 0;
+                    stats.dash += p.dash || 0;
+                    stats.burstR += p.burstR || 0;
+                }
+            });
+
+            return { system, chip, blade, metalBlade, assist, ratchet, bit, stats };
+        } else {
+            // FAILED! This specific system ran out of parts.
+            // Rollback the global pools to the snapshot so no parts are lost, 
+            // and the loop will automatically try the next system!
+            poolChips = backupChips;
+            poolBlades = backupBlades;
+            poolMetalBlades = backupMetal;
+            poolAssist = backupAssist;
+            poolRatchets = backupRatchets;
+            poolBits = backupBits;
+        }
+    }
+
+    // If the code reaches this point, it means it tried UX, BX, and CX, and ALL of them failed.
+    return { error: `All Systems exhausted. Completely out of compatible parts for Type: ${bladerType}.` };
 }
 
 /* ================= UI BUILDER ================= */
@@ -671,6 +754,7 @@ function createStatBars(item, type) {
     
     let showStats = [];
     if(type === 'blade') showStats = ['atk', 'def', 'sta'];
+    if(type === 'metalBlade') showStats = ['atk', 'def', 'sta']; 
     if(type === 'assist') showStats = ['atk', 'def', 'sta'];
     if(type === 'ratchet') {
         if(item.bit === "No") showStats = ['atk', 'def', 'sta', 'dash', 'burstR'];
@@ -700,7 +784,6 @@ function createCardHTML(type, item, blader = null) {
     let showStats = true;
     let faceStyle = "";
 
-    // Determine Category Label & Name
     if (type === "blader") {
         className = "blader-face";
         content = `
@@ -708,21 +791,25 @@ function createCardHTML(type, item, blader = null) {
             <div class="blader-name-overlay">${blader.name}</div>
         `;
         showStats = false;
-    } else if (type === "system") {
-        className = "system-face";
-        content = `
-            <div class="img-container">
-                <img src="${item.src}">
-            </div>
-        `;
-        showStats = false;
     } else {
         if(type === "chip") {
             categoryLabel = "Lock Chip";
             specificName = item.name;
             faceStyle = "justify-content: center;";
+            // Keep the chip clean and simple!
+            content = `
+                <div class="card-category-top">${categoryLabel}</div>
+                <div class="img-container">
+                    <img src="${item.src}">
+                </div>
+                <div class="part-specific-name">${specificName}</div>
+            `;
+            showStats = false;
         } else if(type === "blade") {
-            categoryLabel = "Main Blade";
+            categoryLabel = item.blade === "Over" ? "Over Blade" : "Main Blade";
+            specificName = item.displayName;
+        } else if(type === "metalBlade") {
+            categoryLabel = "Metal Blade";
             specificName = item.displayName;
         } else if(type === "assist") {
             categoryLabel = "Assist Blade";
@@ -732,37 +819,27 @@ function createCardHTML(type, item, blader = null) {
             specificName = item.name;
         } else if(type === "bit") {
             categoryLabel = "Bit";
-            specificName = item.name; // Full name for card
+            specificName = item.name; 
         }
 
-        // UNIFORM STRUCTURE: Title -> Image Container -> Name -> Stats
-        content = `
-            <div class="card-category-top">${categoryLabel}</div>
-            <div class="img-container">
-                <img src="${item.src}">
-            </div>
-            <div class="part-specific-name">${specificName}</div>
-            ${createStatBars(item, type)}
-        `;
+        // Apply standard layout for everything with stats
+        if (type !== "chip") {
+            content = `
+                <div class="card-category-top">${categoryLabel}</div>
+                <div class="img-container">
+                    <img src="${item.src}">
+                </div>
+                <div class="part-specific-name">${specificName}</div>
+                ${createStatBars(item, type)}
+            `;
+        }
     }
 
-    if(!showStats && type === "system") {
+    if(!showStats && type === "blader") {
         return `
         <div class="${wrapperClass} card-hidden">
             <div class="card">
-                <div class="face ${className}" style="justify-content:center;">
-                    ${content}
-                </div>
-            </div>
-        </div>
-        `;
-    }
-    
-    if(!showStats && type === "blader") {
-         return `
-        <div class="${wrapperClass} card-hidden">
-            <div class="card">
-                <div class="face ${className}">
+                <div class="face ${className}" style="${faceStyle}">
                     ${content}
                 </div>
             </div>
@@ -789,7 +866,7 @@ function drawMiniChart(canvasId, stats, systemName) {
     const h = cvs.height;
     const cx = w/2;
     const cy = h/2;
-    const r = (Math.min(w,h)/2) - 35; 
+    const r = (Math.min(w,h)/2) - 45; 
     const max = 150;
 
     let color = "#0ff";
@@ -803,8 +880,7 @@ function drawMiniChart(canvasId, stats, systemName) {
     
     ctx.clearRect(0,0,w,h);
     
-    // Grid (The Spider Web) - WHITE LINES as requested
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"; // Visible white lines
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"; 
     ctx.lineWidth = 1;
     for(let i=1; i<=3; i++) {
         ctx.beginPath();
@@ -819,9 +895,8 @@ function drawMiniChart(canvasId, stats, systemName) {
         ctx.stroke();
     }
 
-    // Stat Polygon Fill - REVERTED TO TRANSPARENT COLOR
-    ctx.fillStyle = color + "44"; // Semi-transparent system color
-    ctx.strokeStyle = color;      // Solid system color outline
+    ctx.fillStyle = color + "44"; 
+    ctx.strokeStyle = color;      
     ctx.lineWidth = 2;
     ctx.beginPath();
     for(let j=0; j<count; j++){
@@ -836,34 +911,31 @@ function drawMiniChart(canvasId, stats, systemName) {
     ctx.fill();
     ctx.stroke();
 
-    // Labels + Values
     ctx.fillStyle = "#fff";
-    ctx.font = "bold 11px sans-serif";
+    ctx.font = "bold 16px sans-serif"; 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     labels.forEach((l, i) => {
         const angle = (Math.PI*2/count)*i - Math.PI/2;
-        const lx = cx + Math.cos(angle)*(r+18);
-        const ly = cy + Math.sin(angle)*(r+18);
+        const lx = cx + Math.cos(angle)*(r+24); 
+        const ly = cy + Math.sin(angle)*(r+24);
         
         ctx.fillStyle = "#aaa";
-        ctx.fillText(l, lx, ly - 8); 
+        ctx.fillText(l, lx, ly - 10); 
         
         ctx.fillStyle = color;
-        ctx.fillText(values[i], lx, ly + 6); 
+        ctx.fillText(values[i], lx, ly + 8); 
     });
 }
 
 /* ================= MAIN ================= */
 
-// CLICK HANDLER FOR TITLE TO EXPORT DATA
 document.getElementById("app-title").addEventListener("click", () => {
-    if(generatedBeyblades.length === 0) return; // Nothing generated yet
+    if(generatedBeyblades.length === 0) return; 
 
     const outputContainer = document.getElementById("data-output-container");
     const textArea = document.getElementById("data-textarea");
     
-    // Convert array to format: { ... }, { ... }
     let text = generatedBeyblades.map(obj => JSON.stringify(obj)).join(",\n");
     
     textArea.value = text;
@@ -876,26 +948,21 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     const outputContainer = document.getElementById("data-output-container");
     
     container.innerHTML = ""; 
-    outputContainer.style.display = "none"; // Hide previous data output
+    outputContainer.style.display = "none"; 
     resetPools(); 
     
     const btn = document.getElementById("generateBtn");
     const loader = document.getElementById("loading");
     
-    // 1. Remove Button
     btn.remove();
-    
-    // 2. Show Loader
     loader.style.display = "flex";
 
-    // 3. Wait 2 Seconds, then Start Generation
     setTimeout(() => {
-        loader.style.display = "none"; // Hide Loader
-        startGeneration(container);    // Start Process
+        loader.style.display = "none"; 
+        startGeneration(container);    
     }, 2000); 
 });
 
-// Helper function for a controlled, slow scroll to top
 function slowScrollToTop(duration) {
     const startPosition = window.scrollY;
     const startTime = performance.now();
@@ -903,8 +970,6 @@ function slowScrollToTop(duration) {
     function animation(currentTime) {
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
-        // Easing function (easeOutQuart) for a nice slowdown as it reaches the top
         const ease = 1 - Math.pow(1 - progress, 4); 
 
         window.scrollTo(0, startPosition * (1 - ease));
@@ -920,23 +985,35 @@ function startGeneration(container) {
     let rowsData = [];
 
     bladers.forEach((blader, index) => {
-        // UPDATED: Pass the blader's type to the generation function
         const bey = generateFullBeyblade(blader.type || "all");
         
-        if(!bey) {
+        // --- NEW: ADVANCED ERROR DISPLAY ---
+        if(!bey || bey.error) {
             const errDiv = document.createElement("div");
-            errDiv.textContent = `Error for ${blader.name}`;
+            errDiv.textContent = `🛑 ERROR FOR ${blader.name.toUpperCase()}: ${bey ? bey.error : 'Unknown error'}`;
+            
+            // Stylize the error box so it is clearly visible
+            errDiv.style.color = "#ff4d4d";
+            errDiv.style.backgroundColor = "rgba(255, 0, 0, 0.1)";
+            errDiv.style.border = "2px solid #ff4d4d";
+            errDiv.style.borderRadius = "8px";
+            errDiv.style.fontWeight = "bold";
+            errDiv.style.padding = "15px";
+            errDiv.style.margin = "20px auto";
+            errDiv.style.maxWidth = "800px";
+            errDiv.style.fontSize = "18px";
+            
             container.appendChild(errDiv);
-            return;
+            return; // Skip this blader and move to the next one
         }
 
-        // SAVE DATA TO GLOBAL ARRAY
         generatedBeyblades.push({
             name: blader.name,
             src: blader.src,
             system: bey.system.name,
             chip: bey.chip ? bey.chip.name : "",
             blade: bey.blade.name,
+            metalBlade: bey.metalBlade ? bey.metalBlade.name : "",
             asst: bey.assist ? bey.assist.name : "",
             ratchet: bey.ratchet ? bey.ratchet.name : "",
             bit: bey.bit ? bey.bit.abbr : ""
@@ -949,38 +1026,46 @@ function startGeneration(container) {
         rowDiv.className = "blader-row";
         rowDiv.id = rowId;
 
-        // Construct Name: [Chip][Blade] [AssistInitial][Ratchet][BitAbbr]
         let fullName = "";
-        if(bey.chip) fullName += bey.chip.name;
-        fullName += bey.blade.displayName;
-        fullName += " ";
-        if(bey.assist) fullName += bey.assist.displayName.charAt(0);
-        if(bey.ratchet) fullName += bey.ratchet.name;
-        if(bey.bit) fullName += bey.bit.abbr; 
+        if (bey.blade.blade === "Over") {
+            if(bey.chip) fullName += bey.chip.name;
+            if(bey.metalBlade) fullName += bey.metalBlade.displayName;
+            fullName += "<br>"; // NEW: Drops to a new line
+            if(bey.blade) fullName += bey.blade.displayName.charAt(0).toUpperCase();
+            if(bey.assist) fullName += bey.assist.displayName.charAt(0).toUpperCase();
+            if(bey.ratchet) fullName += bey.ratchet.name;
+            if(bey.bit) fullName += bey.bit.abbr; 
+        } else {
+            if(bey.chip) fullName += bey.chip.name;
+            fullName += bey.blade.displayName;
+            fullName += "<br>"; // NEW: Drops to a new line
+            if(bey.assist) fullName += bey.assist.displayName.charAt(0);
+            if(bey.ratchet) fullName += bey.ratchet.name;
+            if(bey.bit) fullName += bey.bit.abbr; 
+        }
 
-
-        // Color Class
         let colorClass = "text-bx";
         if(bey.system.name === "UX") colorClass = "text-ux";
         if(bey.system.name === "CX") colorClass = "text-cx";
 
-        // Build HTML
         let html = "";
         html += createCardHTML("blader", null, blader);
-        html += createCardHTML("system", bey.system);
-        if(bey.chip) html += createCardHTML("chip", bey.chip);
+        if(bey.chip) html += createCardHTML("chip", bey.chip); // Reverted chip call
         html += createCardHTML("blade", bey.blade);
+        if(bey.metalBlade) html += createCardHTML("metalBlade", bey.metalBlade);
         if(bey.assist) html += createCardHTML("assist", bey.assist);
         if(bey.ratchet) html += createCardHTML("ratchet", bey.ratchet);
         if(bey.bit) html += createCardHTML("bit", bey.bit);
         
-        // Chart Card with Flex Layout
         html += `
         <div class="card-wrapper card-hidden">
              <div class="card">
-                 <div class="face" style="background:#000; border:1px solid #333; display:flex; flex-direction:column; justify-content: space-between; padding:0;">
-                    <canvas id="${canvasId}" width="200" height="240" style="flex-grow:1; width:100%; object-fit:contain;"></canvas>
-                    <div class="bey-full-name ${colorClass}">${fullName}</div>
+                 <div class="face" style="background:#000; border:1px solid #333; display:flex; flex-direction:column; justify-content: space-between; padding:0; position:relative;">
+                    
+                    <img src="${bey.system.src}" style="position:absolute; top:12px; left:12px; width:40px; height:auto; z-index:10; filter: drop-shadow(0 0 4px rgba(0,0,0,0.8));">
+                    
+                    <canvas id="${canvasId}" width="200" height="210" style="flex-grow:1; width:100%; object-fit:contain; position:relative; z-index:1;"></canvas>
+                    <div class="bey-full-name ${colorClass}" style="line-height: 1.2; padding-bottom: 15px; position:relative; z-index:2;">${fullName}</div>
                  </div>
              </div>
         </div>`;
@@ -996,16 +1081,14 @@ function startGeneration(container) {
         });
     });
 
-    // Animate
     let globalDelay = 0;
     const CARD_DELAY = 250; 
     const ROW_DELAY = 3500;
 
-rowsData.forEach((data) => {
+    rowsData.forEach((data) => {
         const row = document.getElementById(data.id);
         
         setTimeout(() => {
-            // Dim all OTHER rows and remove their focus
             document.querySelectorAll('.blader-row').forEach(r => {
                 if (r.id !== data.id) {
                     r.classList.add('dimmed');
@@ -1013,12 +1096,10 @@ rowsData.forEach((data) => {
                 }
             });
 
-            // Highlight the current row
             row.classList.remove("dimmed");
             row.classList.add("visible");
             row.classList.add("focused");
             
-            // AUTO SCROLL TO CENTER
             row.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, globalDelay);
 
@@ -1033,11 +1114,9 @@ rowsData.forEach((data) => {
             }, globalDelay + (i * CARD_DELAY));
         });
 
-        // Calculate delay for the next row
         globalDelay += (cards.length * CARD_DELAY) + ROW_DELAY;
     });
 
-    // FINAL RESET: Triggers exactly when all animations have finished
     setTimeout(() => {
         document.querySelectorAll('.blader-row').forEach(r => {
             r.classList.remove('dimmed');
@@ -1045,15 +1124,11 @@ rowsData.forEach((data) => {
             r.classList.add('visible'); 
         });
 
-// NEW: Wait 1 second (1000ms), then trigger the slow scroll to top
         setTimeout(() => {
-            // The '2500' is the duration of the scroll in milliseconds (2.5 seconds)
-            // You can increase this number to make the scroll even slower!
             slowScrollToTop(16000);
         }, 1000);
 
     }, globalDelay);
-
 }
 </script>
 </body>

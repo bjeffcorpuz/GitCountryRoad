@@ -467,12 +467,77 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
 }
 .restore-item div { display: flex; flex-direction: column; gap: 4px; }
 
+/* --- GLOBAL SUMMARY DASHBOARD --- */
+.global-summary { display: flex; gap: 15px; margin-bottom: 20px; }
+.summary-card { 
+    flex: 1; background: #0d1117; border: 1px solid var(--border); 
+    border-radius: 8px; padding: 15px; text-align: center; 
+}
+.summary-card.spin-card { border-bottom: 3px solid #2563eb; }
+.summary-card.over-card { border-bottom: 3px solid #f59e0b; }
+.summary-card.burst-card { border-bottom: 3px solid #dc2626; }
+.summary-card.extreme-card { border-bottom: 3px solid #16a34a; }
+
+.summary-title { font-weight: bold; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-size: 13px; margin-bottom: 8px; }
+.summary-stats { font-size: 15px; font-weight: bold; color: #fff; }
+.summary-stats span { color: var(--neon-cyan); font-family: monospace; font-size: 18px; }
+
+/* --- SCROLL TO TOP BUTTON --- */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    color: #000;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+    display: none; /* Hidden by default at the top */
+    justify-content: center;
+    align-items: center;
+    z-index: 1500; /* Stays above the table but below modals */
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.scroll-top-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+.scroll-top-btn:active {
+    transform: scale(0.95);
+}
+
 </style>
 </head>
 <body>
 
 <div class="app">
   <h1>Battle Stats Tracker v15</h1>
+
+    <!-- GLOBAL SUMMARY DASHBOARD -->
+  <div class="global-summary">
+      <div class="summary-card spin-card">
+          <div class="summary-title">SPIN WINS</div>
+          <div class="summary-stats">Total: <span id="gs-total-spin">0</span> | Unique: <span id="gs-unique-spin">0</span></div>
+      </div>
+      <div class="summary-card over-card">
+          <div class="summary-title">OVER WINS</div>
+          <div class="summary-stats">Total: <span id="gs-total-over">0</span> | Unique: <span id="gs-unique-over">0</span></div>
+      </div>
+      <div class="summary-card burst-card">
+          <div class="summary-title">BURST WINS</div>
+          <div class="summary-stats">Total: <span id="gs-total-burst">0</span> | Unique: <span id="gs-unique-burst">0</span></div>
+      </div>
+      <div class="summary-card extreme-card">
+          <div class="summary-title">XTREME WINS</div>
+          <div class="summary-stats">Total: <span id="gs-total-extreme">0</span> | Unique: <span id="gs-unique-extreme">0</span></div>
+      </div>
+  </div>
   
   <div class="input-section">
     <input type="text" id="jsonInput" 
@@ -544,8 +609,11 @@ canvas.radar-chart { width: 300px; height: 300px; display: block; }
             </div>
     </div>
 </div>
-<script>
 
+<!-- SCROLL TO TOP BUTTON -->
+<button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()">▲</button>
+
+<script>
 const allParts = {
     blade: masterBlades.flat(),
     ratchet: masterRatchets.flat(),
@@ -591,6 +659,49 @@ function safeCopy(text) {
     }
 }
 
+/* --- GLOBAL SUMMARY LOGIC --- */
+/* --- GLOBAL SUMMARY LOGIC --- */
+function updateGlobalSummary() {
+    let totals = { spin:0, over:0, burst:0, extreme:0 };
+    let uniques = { spin:0, over:0, burst:0, extreme:0 };
+
+    // Helper function to tally stats from any given row
+    const processRowStats = (tr) => {
+        if (tr.rowStats) {
+            totals.spin += tr.rowStats['SpinWin'] || 0;
+            totals.over += tr.rowStats['OverWin'] || 0;
+            totals.burst += tr.rowStats['BurstWin'] || 0;
+            totals.extreme += tr.rowStats['ExtremeWin'] || 0;
+
+            uniques.spin += tr.rowStats['UniqueSpinWin'] || 0;
+            uniques.over += tr.rowStats['UniqueOverWin'] || 0;
+            uniques.burst += tr.rowStats['UniqueBurstWin'] || 0;
+            uniques.extreme += tr.rowStats['UniqueExtremeWin'] || 0;
+        }
+    };
+
+    // 1. Tally stats from all ACTIVE players currently on the main table
+    document.querySelectorAll('#tableBody tr').forEach(processRowStats);
+
+    // 2. Tally stats from all REMOVED players in the archive (Keeps scores retained!)
+    if (typeof archivedEntries !== 'undefined') {
+        archivedEntries.forEach(entry => processRowStats(entry.rowElement));
+    }
+
+    // Update the dashboard UI
+    document.getElementById('gs-total-spin').innerText = totals.spin;
+    document.getElementById('gs-unique-spin').innerText = uniques.spin;
+    
+    document.getElementById('gs-total-over').innerText = totals.over;
+    document.getElementById('gs-unique-over').innerText = uniques.over;
+    
+    document.getElementById('gs-total-burst').innerText = totals.burst;
+    document.getElementById('gs-unique-burst').innerText = uniques.burst;
+    
+    document.getElementById('gs-total-extreme').innerText = totals.extreme;
+    document.getElementById('gs-unique-extreme').innerText = uniques.extreme;
+}
+
 /* --- UPDATED: Process Multiple Inputs --- */
 function processInput(){
     const input = document.getElementById("jsonInput");
@@ -599,7 +710,6 @@ function processInput(){
     
     let dataArray;
     try {
-        // Automatically wrap in brackets if user provided comma-separated objects
         dataArray = JSON.parse("[" + rawVal + "]");
     } catch(e) {
         try {
@@ -649,7 +759,6 @@ function processInput(){
 function renderRow(originalJson, parts, totals, system){
     const tr = document.createElement("tr");
 
-    // --- 1. BLADER COLUMN ---
     const avatarTd = document.createElement("td");
     avatarTd.className = "avatar-cell";
     const avatarWrapper = document.createElement("div");
@@ -669,16 +778,13 @@ function renderRow(originalJson, parts, totals, system){
     nameDiv.className = "avatar-name";
     nameDiv.textContent = originalJson.name || "Unknown";
 
-    // --- SCORING FEATURE (Quantity Input + Global Reset) ---
     const scoreContainer = document.createElement("div");
     scoreContainer.className = "score-container";
-
     const scoreInput = document.createElement("input");
     scoreInput.type = "text";
     scoreInput.className = "score-display";
     scoreInput.value = 0;
     scoreInput.disabled = true;
-
     const resetBtn = document.createElement("button");
     resetBtn.className = "reset-all-btn";
     resetBtn.textContent = "Reset All Scores";
@@ -686,17 +792,14 @@ function renderRow(originalJson, parts, totals, system){
 
     scoreContainer.appendChild(scoreInput);
     scoreContainer.appendChild(resetBtn);
-
     avatarWrapper.appendChild(img);
     avatarWrapper.appendChild(nameDiv);
     avatarWrapper.appendChild(scoreContainer); 
     avatarTd.appendChild(avatarWrapper);
     tr.appendChild(avatarTd);
 
-    // --- 2. ANALYSIS COLUMN ---
     const analysisTd = document.createElement("td");
     analysisTd.className = "analysis-cell";
-    // ... (rest of analysis logic remains the same)
     if(system){
         const sysImg = document.createElement("img");
         sysImg.className = "system-icon-overlay";
@@ -711,10 +814,10 @@ function renderRow(originalJson, parts, totals, system){
     canvas.className = "radar-chart";
     chartSection.appendChild(canvas);
 
-const getP = (t) => parts.find(p => p.type === t);
+    const getP = (t) => parts.find(p => p.type === t);
     const pChip = getP('chip'); 
     const pBlade = getP('blade');
-    const pMetalBlade = getP('metalblade'); // Grabs the new metal blade
+    const pMetalBlade = getP('metalblade'); 
     const pAssist = getP('assist'); 
     const pRatchet = getP('ratchet'); 
     const pBit = getP('bit');
@@ -722,27 +825,14 @@ const getP = (t) => parts.find(p => p.type === t);
     let displayName = "";
 
     if (pMetalBlade) {
-        // --- NEW CX FORMAT WITH METAL BLADE ---
-        // Format: [Chip][MetalBlade] [OverBlade(1st letter)][AssistBlade][ratchet][Bit]
         if(pChip) displayName += pChip.name;
         displayName += pMetalBlade.name;
         displayName += " ";
-        
-        // Over blade (First letter, capitalized)
-        if(pBlade) {
-            let bName = pBlade.displayName || pBlade.name;
-            displayName += bName.charAt(0).toUpperCase();
-        }
-        // Assist blade (First letter, capitalized)
-        if(pAssist) {
-            let aName = pAssist.displayName || pAssist.name;
-            displayName += aName.charAt(0).toUpperCase();
-        }
+        if(pBlade) displayName += (pBlade.displayName || pBlade.name).charAt(0).toUpperCase();
+        if(pAssist) displayName += (pAssist.displayName || pAssist.name).charAt(0).toUpperCase();
         if(pRatchet) displayName += pRatchet.name;
         if(pBit) displayName += (pBit.abbr || pBit.name);
-
     } else {
-        // --- OLD STANDARD FORMAT ---
         if(pChip) displayName += pChip.name;
         if(pBlade) displayName += (pBlade.displayName || pBlade.name);
         displayName += " ";
@@ -780,23 +870,27 @@ const getP = (t) => parts.find(p => p.type === t);
     analysisTd.appendChild(partsGrid);
     tr.appendChild(analysisTd);
 
-    // --- 3. RECORDS & ACTIONS (THE UPDATED LOGIC) ---
     const statsTd = document.createElement("td");
     statsTd.className = "stats-cell";
     const statsGrid = document.createElement("div");
     statsGrid.className = "stats-grid";
     
     const rowStats = {}; 
-    const statGroups = [["SelfKOWin","SelfKOLose","SpinWin","SpinLose"], ["OverWin","OverLose","BurstWin","BurstLose"], ["ExtremeWin","ExtremeLose"]];
 
-    // Point Weight Mapping
-    const pointWeights = {
-        "SpinWin": 1,
-        "SelfKOWin": 2,
-        "OverWin": 2,
-        "BurstWin": 2,
-        "ExtremeWin": 3
+    // --- LOAD UNIQUE STATS FROM JSON ---
+    ["UniqueSpinWin", "UniqueOverWin", "UniqueBurstWin", "UniqueExtremeWin"].forEach(k => {
+        rowStats[k] = originalJson[k] || 0;
+    });
+
+    // Attach to TR so summary can read it, and create unique helper
+    tr.rowStats = rowStats;
+    tr.addUnique = function(type) {
+        rowStats['Unique' + type] = (rowStats['Unique' + type] || 0) + 1;
+        updateGlobalSummary();
     };
+
+    const statGroups = [["SelfKOWin","SelfKOLose","SpinWin","SpinLose"], ["OverWin","OverLose","BurstWin","BurstLose"], ["ExtremeWin","ExtremeLose"]];
+    const pointWeights = { "SpinWin": 1, "SelfKOWin": 2, "OverWin": 2, "BurstWin": 2, "ExtremeWin": 3 };
 
     statGroups.forEach((group) => {
         const rowDiv = document.createElement("div");
@@ -808,37 +902,33 @@ const getP = (t) => parts.find(p => p.type === t);
             btn.className = `stat-btn ${key.replace("Win","").replace("Lose","").toLowerCase()}-${key.includes("Win") ? "win" : "lose"}`;
             btn.innerHTML = `<span>${key.replace("Win"," W").replace("Lose"," L")}</span><span class="stat-val">${savedVal}</span>`;
             
-            // --- LEFT CLICK: ADD POINT & UPDATE SCORE ---
             btn.onclick = () => { 
                 rowStats[key]++; 
                 btn.querySelector(".stat-val").textContent = rowStats[key]; 
-                
                 let logMsg = key.replace("Win"," W").replace("Lose"," L");
                 addLog(originalJson.name || "Unknown", logMsg, "+1");
 
-                // Check if this button has a score weight
                 if(pointWeights[key]) {
                     let currentScore = parseInt(scoreInput.value);
                     scoreInput.value = currentScore + pointWeights[key];
                     addLog(originalJson.name || "Unknown", "Scoring", `+${pointWeights[key]}`);
                 }
+                updateGlobalSummary(); // UPDATE SUMMARY
             };
 
-            // --- RIGHT CLICK: REDUCE POINT & UPDATE SCORE ---
             btn.oncontextmenu = (e) => { 
                 e.preventDefault(); 
                 if(rowStats[key] > 0) { 
                     rowStats[key]--; 
                     btn.querySelector(".stat-val").textContent = rowStats[key]; 
-                    
                     let logMsg = key.replace("Win"," W").replace("Lose"," L");
                     addLog(originalJson.name || "Unknown", logMsg, "-1");
 
-                    // Deduct from score if applicable
                     if(pointWeights[key]) {
                         let currentScore = parseInt(scoreInput.value);
                         scoreInput.value = Math.max(0, currentScore - pointWeights[key]);
                     }
+                    updateGlobalSummary(); // UPDATE SUMMARY
                 }
             };
             rowDiv.appendChild(btn);
@@ -860,7 +950,7 @@ const getP = (t) => parts.find(p => p.type === t);
     const delBtn = document.createElement("button");
     delBtn.className = "action-btn delete-btn";
     delBtn.innerText = "Remove Entry";
-    delBtn.onclick = function() { archiveEntry(this); }; // <--- SENDS IT TO ARCHIVE
+    delBtn.onclick = function() { archiveEntry(this); }; 
 
     actionGroup.appendChild(copyBtn);
     actionGroup.appendChild(delBtn);
@@ -869,24 +959,17 @@ const getP = (t) => parts.find(p => p.type === t);
     tr.appendChild(statsTd);
 
     document.getElementById("tableBody").appendChild(tr);
+    updateGlobalSummary(); // Initial check after loading
 }
 
-/* --- UPDATED: Show Total Stats on Chart Labels --- */
 function drawRadarChart(canvas, stats, color){
     const ctx = canvas.getContext('2d');
     const w = canvas.width, h = canvas.height, cx = w/2, cy = h/2, radius = 90; 
-    const axes = [
-        {l:"ATK",v:stats.atk}, 
-        {l:"DEF",v:stats.def}, 
-        {l:"STA",v:stats.sta}, 
-        {l:"DSH",v:stats.dash}, 
-        {l:"BURST",v:stats.burstR}
-    ];
+    const axes = [ {l:"ATK",v:stats.atk}, {l:"DEF",v:stats.def}, {l:"STA",v:stats.sta}, {l:"DSH",v:stats.dash}, {l:"BURST",v:stats.burstR} ];
     const angleStep = (Math.PI * 2) / 5, startAngle = -Math.PI / 2; 
 
     ctx.clearRect(0,0,w,h);
     
-    // Grid lines
     ctx.strokeStyle = "#2a2f3a";
     for(let r=1; r<=4; r++){
         ctx.beginPath();
@@ -897,19 +980,15 @@ function drawRadarChart(canvas, stats, color){
         ctx.closePath(); ctx.stroke();
     }
 
-    // Text Labels + Values
     for(let i=0; i<5; i++){
         const a = startAngle + (i * angleStep);
         const x = cx + Math.cos(a)*(radius+25);
         const y = cy + Math.sin(a)*(radius+25);
-        
         ctx.fillStyle = "#8b949e"; ctx.font = "bold 11px monospace";
         ctx.textAlign = "center";
-        // Show Name and Value (e.g., ATK: 85)
         ctx.fillText(`${axes[i].l}: ${axes[i].v}`, x, y);
     }
 
-    // Shape
     ctx.beginPath();
     axes.forEach((ax, i) => {
         const a = startAngle + (i * angleStep), d = (Math.min(ax.v, 100) / 100) * radius;
@@ -930,22 +1009,16 @@ function addLog(bladerName, action, value) {
     const content = document.getElementById('logContent');
     const entry = document.createElement('div');
     entry.className = 'log-entry';
-    // Logic: If value is +1, show green, if -1 show red
     const color = value.includes('+') ? '#4ade80' : '#f87171';
     entry.innerHTML = `${bladerName} <span style="color:var(--neon-cyan)">${action}</span> <span style="color:${color}">${value}</span>`;
     content.appendChild(entry);
-    
-    // Auto-scroll to bottom
     const body = document.getElementById('loggerBody');
     body.scrollTop = body.scrollHeight;
 }
 
 function clearLog() {
     const logContent = document.getElementById('logContent');
-    // Clear the inner HTML
     logContent.innerHTML = '';
-    
-    // Optional: Add a subtle confirmation log
     const entry = document.createElement('div');
     entry.className = 'log-entry';
     entry.style.color = 'var(--muted)';
@@ -956,13 +1029,8 @@ function clearLog() {
 
 function resetAllScores() {
     if(confirm("Reset all blader points to 0?")) {
-        const scoreInputs = document.querySelectorAll('.score-display');
-        scoreInputs.forEach(input => {
-            input.value = 0;
-        });
-        if(typeof addLog === "function") {
-            addLog("SYSTEM", "All Scores Reset", "0");
-        }
+        document.querySelectorAll('.score-display').forEach(input => input.value = 0);
+        if(typeof addLog === "function") addLog("SYSTEM", "All Scores Reset", "0");
     }
 }
 
@@ -971,7 +1039,7 @@ let loadedPlayers = [];
 let matchupState = { 
     p1: null, p2: null, 
     p1Score: 0, p2Score: 0,
-    currentRound: 1, // <--- NEW ROUND STATE
+    currentRound: 1,
     p1Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 },
     p2Stats: { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 }
 };
@@ -979,11 +1047,10 @@ let matchupState = {
 function openMatchupModal() {
     document.getElementById('matchupModal').style.display = 'flex';
     populateMatchupDropdowns();
-    // Reset everything upon opening
     document.getElementById('p1Select').value = "";
     document.getElementById('p2Select').value = "";
     document.getElementById('matchupArena').style.display = 'none';
-    document.getElementById('matchupRoundCounter').style.display = 'none'; // Hide counter
+    document.getElementById('matchupRoundCounter').style.display = 'none';
     
     matchupState = { 
         p1: null, p2: null, p1Score: 0, p2Score: 0, currentRound: 1,
@@ -994,7 +1061,6 @@ function openMatchupModal() {
 }
 
 function closeMatchupModal() {
-    // Save ONLY the currently loaded matchup players to the main table
     saveMatchupStats();
     document.getElementById('matchupModal').style.display = 'none';
 }
@@ -1005,25 +1071,26 @@ function saveMatchupStats() {
         const pData = matchupState[`p${pNum}`];
         if (!pData || !pData.originalRow) return;
 
-        // Map the internal stat keys to the main table's button text
         const statMapping = [
-            { key: 'spinW', text: 'SPIN W' },
-            { key: 'spinL', text: 'SPIN L' },
-            { key: 'overW', text: 'OVER W' },
-            { key: 'overL', text: 'OVER L' },
-            { key: 'burstW', text: 'BURST W' },
-            { key: 'burstL', text: 'BURST L' },
-            { key: 'extremeW', text: 'XTREME W' },
-            { key: 'extremeL', text: 'XTREME L' }
+            { key: 'spinW', text: 'SPIN W' }, { key: 'spinL', text: 'SPIN L' },
+            { key: 'overW', text: 'OVER W' }, { key: 'overL', text: 'OVER L' },
+            { key: 'burstW', text: 'BURST W' }, { key: 'burstL', text: 'BURST L' },
+            { key: 'extremeW', text: 'XTREME W' }, { key: 'extremeL', text: 'XTREME L' }
         ];
 
-        // Trigger clicks on the main table invisibly to update scores and logger
+        // Normal Clicks
         statMapping.forEach(map => {
             const count = stats[map.key];
             for (let i = 0; i < count; i++) {
                 triggerMainTableClick(pNum, map.text);
             }
         });
+
+        // Unique Count Triggers
+        if (stats.spinW > 0 && pData.originalRow.addUnique) pData.originalRow.addUnique('SpinWin');
+        if (stats.overW > 0 && pData.originalRow.addUnique) pData.originalRow.addUnique('OverWin');
+        if (stats.burstW > 0 && pData.originalRow.addUnique) pData.originalRow.addUnique('BurstWin');
+        if (stats.extremeW > 0 && pData.originalRow.addUnique) pData.originalRow.addUnique('ExtremeWin');
     });
 }
 
@@ -1042,7 +1109,6 @@ function populateMatchupDropdowns() {
         optionsHtml += `<option value="${index}">${name} (${comboName})</option>`;
     });
 
-    // Preserve current selections if populating after a deletion
     const p1Val = document.getElementById('p1Select') ? document.getElementById('p1Select').value : "";
     const p2Val = document.getElementById('p2Select') ? document.getElementById('p2Select').value : "";
 
@@ -1059,13 +1125,11 @@ function updateDropdownExclusions() {
     const p1Val = document.getElementById('p1Select').value;
     const p2Val = document.getElementById('p2Select').value;
 
-    // Disable Player 2's selection in Player 1's dropdown
     Array.from(document.getElementById('p1Select').options).forEach(opt => {
         if (opt.value === "") return;
         opt.disabled = (opt.value === p2Val);
     });
 
-    // Disable Player 1's selection in Player 2's dropdown
     Array.from(document.getElementById('p2Select').options).forEach(opt => {
         if (opt.value === "") return;
         opt.disabled = (opt.value === p1Val);
@@ -1076,10 +1140,9 @@ function loadMatchupPlayer(playerNum) {
     const selectId = playerNum === 1 ? 'p1Select' : 'p2Select';
     const selectedId = document.getElementById(selectId).value;
     
-    // Reset stats & rounds for the side when ANY player is selected or changed
     matchupState[`p${playerNum}Score`] = 0;
     matchupState[`p${playerNum}Stats`] = { spinW:0, spinL:0, overW:0, overL:0, burstW:0, burstL:0, extremeW:0, extremeL:0 };
-    matchupState.currentRound = 1; // Reset round on player change
+    matchupState.currentRound = 1;
 
     if (selectedId === "") {
         matchupState[`p${playerNum}`] = null;
@@ -1096,13 +1159,13 @@ function loadMatchupPlayer(playerNum) {
 function checkMatchupReady() {
     if (matchupState.p1 && matchupState.p2) {
         document.getElementById('matchupArena').style.display = 'flex';
-        document.getElementById('matchupRoundCounter').style.display = 'block'; // Show counter
+        document.getElementById('matchupRoundCounter').style.display = 'block';
         renderMatchupPlayer(1);
         renderMatchupPlayer(2);
         updateMatchupUI();
     } else {
         document.getElementById('matchupArena').style.display = 'none';
-        document.getElementById('matchupRoundCounter').style.display = 'none'; // Hide counter
+        document.getElementById('matchupRoundCounter').style.display = 'none';
     }
 }
 
@@ -1110,7 +1173,6 @@ function renderMatchupPlayer(pNum) {
     const pData = matchupState[`p${pNum}`];
     const container = document.getElementById(`matchupP${pNum}`);
     
-    // Notice the onmousedown and oncontextmenu added to the buttons for Right/Left click support
     container.innerHTML = `
         <img src="${pData.img}" class="matchup-avatar" onerror="this.src='avatars/default.png'">
         <h3 style="color:var(--neon-cyan); margin:10px 0;">${pData.name}</h3>
@@ -1131,11 +1193,6 @@ function renderMatchupPlayer(pNum) {
             <div class="matchup-btn loss-row win-over" onmousedown="handleMatchupAction(event, ${pNum}, 'Over', false)" oncontextmenu="return false;">OVER L<br><span id="m-overL-${pNum}" class="stat-val">0</span></div>
             <div class="matchup-btn loss-row win-burst" onmousedown="handleMatchupAction(event, ${pNum}, 'Burst', false)" oncontextmenu="return false;">BURST L<br><span id="m-burstL-${pNum}" class="stat-val">0</span></div>
             <div class="matchup-btn loss-row win-extreme" onmousedown="handleMatchupAction(event, ${pNum}, 'Extreme', false)" oncontextmenu="return false;">XTREME L<br><span id="m-extremeL-${pNum}" class="stat-val">0</span></div>
-        </div>
-        
-        <div class="action-group" style="width:100%;">
-            <button class="action-btn copy-btn" onclick="copyMatchupJson(${pNum})">Copy JSON</button>
-            <!--<button class="action-btn delete-btn" onclick="removeMatchupEntry(${pNum})">Remove Entry</button>-->
         </div>
     `;
 
@@ -1163,50 +1220,41 @@ function handleMatchupAction(event, actingPlayerNum, type, isWin) {
     if (isWin) {
         const oppStatKey = type.toLowerCase() + 'L';
         if (isRightClick) {
-            // Undo logic
             if (matchupState[`p${actingPlayerNum}Stats`][actingStatKey] > 0) {
                 matchupState[`p${actingPlayerNum}Stats`][actingStatKey]--;
                 matchupState[`p${actingPlayerNum}Score`] -= points;
                 matchupState[`p${oppNum}Stats`][oppStatKey]--;
-                // Revert round counter, minimum of 1
                 matchupState.currentRound = Math.max(1, matchupState.currentRound - 1);
             }
         } else {
-            // Add point logic
             matchupState[`p${actingPlayerNum}Stats`][actingStatKey]++;
             matchupState[`p${actingPlayerNum}Score`] += points;
             matchupState[`p${oppNum}Stats`][oppStatKey]++;
-            // Increment round counter
             matchupState.currentRound++;
         }
     } else {
-        // If they click a Loss button, route it to the opponent's Win logic
         handleMatchupAction(event, oppNum, type, true); 
-        return; // Prevent double-updating UI since the re-routed call will do it
+        return; 
     }
     
     updateMatchupUI();
 }
 
 function updateMatchupUI() {
-    // Update Round Counter Display
     document.getElementById('matchupRoundCounter').innerText = `ROUND ${matchupState.currentRound}`;
 
     [1, 2].forEach(pNum => {
         if (matchupState[`p${pNum}`]) {
-            // Update Score
             const scoreElement = document.getElementById(`matchupScore${pNum}`);
             const currentScore = matchupState[`p${pNum}Score`];
             scoreElement.innerText = currentScore;
             
-            // Alert Animation
             if (currentScore >= 4) {
                 scoreElement.classList.add('score-alert-anim');
             } else {
                 scoreElement.classList.remove('score-alert-anim');
             }
             
-            // Update Buttons
             const stats = matchupState[`p${pNum}Stats`];
             document.getElementById(`m-spinW-${pNum}`).innerText = stats.spinW;
             document.getElementById(`m-spinL-${pNum}`).innerText = stats.spinL;
@@ -1240,21 +1288,6 @@ function copyMatchupJson(pNum) {
     }
 }
 
-function removeMatchupEntry(pNum) {
-    const pData = matchupState[`p${pNum}`];
-    if (pData && pData.originalRow) {
-        const deleteBtn = pData.originalRow.querySelector('.delete-btn');
-        if (deleteBtn) deleteBtn.click(); // Uses the main table's delete function
-        
-        // Remove from matchup UI
-        document.getElementById(`p${pNum}Select`).value = "";
-        loadMatchupPlayer(pNum);
-        
-        // Re-populate dropdowns to reflect the deleted blader without resetting the active side
-        populateMatchupDropdowns();
-    }
-}
-
 /* --- ARCHIVE & RESTORE LOGIC --- */
 let archivedEntries = [];
 
@@ -1263,15 +1296,9 @@ function archiveEntry(btn) {
     const name = row.querySelector('.avatar-name').innerText;
     const comboName = row.querySelector('.combo-name-display').innerText;
     
-    // Store the exact DOM element in our array so no data/scores are lost
-    archivedEntries.push({
-        name: name,
-        comboName: comboName,
-        rowElement: row
-    });
-    
-    // Remove it from the live table UI
+    archivedEntries.push({ name: name, comboName: comboName, rowElement: row });
     row.remove();
+    updateGlobalSummary(); // UPDATE SUMMARY
 }
 
 function openRestoreModal() {
@@ -1307,65 +1334,62 @@ function populateRestoreList() {
 
 function restoreEntry(index) {
     const entry = archivedEntries[index];
-    
-    // Append the exact HTML row back to the main table body
     document.getElementById('tableBody').appendChild(entry.rowElement);
-    
-    // Remove it from the archive array
     archivedEntries.splice(index, 1);
-    
-    // Refresh the list UI
     populateRestoreList();
-    
-    // If the archive is empty, close the modal automatically
-    if (archivedEntries.length === 0) {
-        closeRestoreModal();
-    }
+    if (archivedEntries.length === 0) { closeRestoreModal(); }
+    updateGlobalSummary(); // UPDATE SUMMARY
 }
 
 function saveAndDeclare() {
     const p1Score = matchupState.p1Score;
     const p2Score = matchupState.p2Score;
 
-    // 1. Check for a tie or 0-0 game
     if (p1Score === p2Score) {
         alert("The match is tied! Both players will retain their current stats. Break the tie before declaring a winner.");
-        return; // Stops the function, nothing happens
+        return;
     }
 
-    // 2. Save the current stats to the main table
     saveMatchupStats();
 
-    // 3. Determine who won and who lost
     let winnerNum = p1Score > p2Score ? 1 : 2;
     let loserNum = p1Score > p2Score ? 2 : 1;
     
-    // Keep a reference to the winner's HTML row before we delete the loser
     const winnerRow = matchupState[`p${winnerNum}`].originalRow;
-
-    // 4. Send the loser to the Archive
     const loserData = matchupState[`p${loserNum}`];
+    
     if (loserData && loserData.originalRow) {
         const deleteBtn = loserData.originalRow.querySelector('.delete-btn');
-        if (deleteBtn) deleteBtn.click(); // This seamlessly triggers the archiveEntry() function!
+        if (deleteBtn) deleteBtn.click(); 
     }
 
-    // 5. Update the Arena Dropdowns
-    populateMatchupDropdowns(); // Rebuild the list without the loser
-    
-    // Find the winner's new index in the list (in case deleting the loser shifted their spot)
+    populateMatchupDropdowns(); 
     let newWinnerIndex = loadedPlayers.findIndex(p => p.originalRow === winnerRow);
     
-    // Keep winner selected, empty the loser's slot
     document.getElementById(`p${winnerNum}Select`).value = newWinnerIndex !== -1 ? newWinnerIndex : "";
     document.getElementById(`p${loserNum}Select`).value = "";
     
-    // 6. Reload the arena slots
-    // This perfectly resets the sandbox stats and Round Counter back to 0/1 for the winner's next match!
     loadMatchupPlayer(1);
     loadMatchupPlayer(2);
 }
 
+/* --- SCROLL TO TOP LOGIC --- */
+window.onscroll = function() {
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    // Show the button if the user scrolls down more than 300 pixels
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollBtn.style.display = "flex";
+    } else {
+        scrollBtn.style.display = "none";
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' /* This gives it that nice gliding animation */
+    });
+}
 </script>
 
 

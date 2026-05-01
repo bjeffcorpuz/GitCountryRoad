@@ -74,7 +74,10 @@ const masterBlades = [
 {name:'Guard',src:'images/blades/Guard.png',displayName:'Guard',blade:'Over',weight:3.4,atk:5,def:10,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Flow',src:'images/blades/Flow.png',displayName:'Flow',blade:'Over',weight:3.7,atk:5,def:5,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'StormSpriggan',src:'images/blades/StormSpriggan.png',displayName:'StormSpriggan',blade:'Main',weight:31,atk:30,def:40,sta:30,core:'Any',astBlade:'No',system:'BX'},
-{name:'Volt',src:'images/blades/Volt.png',displayName:'Volt',blade:'Main',weight:31,atk:45,def:15,sta:15,core:'Any',astBlade:'Yes',system:'CX'}
+{name:'Volt',src:'images/blades/Volt.png',displayName:'Volt',blade:'Main',weight:31,atk:45,def:15,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'LeonCrest',src:'images/blades/LeonCrest.png',displayName:'LeonCrest',blade:'Main',weight:35,atk:15,def:70,sta:15,core:'Any',astBlade:'No',system:'UX'},
+{name:'Reaper',src:'images/blades/Reaper.png',displayName:'Reaper',blade:'Main',weight:29,atk:25,def:10,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
+{name:'Flame',src:'images/blades/Flame.png',displayName:'Flame',blade:'Main',weight:28.5,atk:5,def:15,sta:40,core:'Any',astBlade:'Yes',system:'CX'}
 ];
 
 const masterAssist = [

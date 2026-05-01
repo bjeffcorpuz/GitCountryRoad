@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1v1 Battle Selector</title>
+<script src="data.js"></script>
+<style>
+    :root {
+        --primary: #ff9800;
+        --primary-glow: rgba(255, 152, 0, 0.5);
+        --bg-dark: #0a0a0a;
+        --card-bg: #1a1a1a;
+        --p1-color: #00d4ff;
+        --p2-color: #ff0055;
+    }
+
+    body {
+        margin: 0;
+        background: radial-gradient(circle at top, #1a1a2e, #000);
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        color: #fff;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 50px;
+    }
+
+    /* === TYPOGRAPHY & BUTTONS === */
+    h1 {
+        text-transform: uppercase; letter-spacing: 4px;
+        color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); 
+        margin: 30px 0 10px 0; user-select: none; text-align: center;
+    }
+
+    .action-btn {
+        padding: 15px 50px; font-size: 18px; border-radius: 50px; 
+        border: 2px solid var(--primary); background: rgba(0,0,0,0.5); 
+        color: var(--primary); cursor: pointer; transition: all 0.3s ease; 
+        font-weight: bold; text-transform: uppercase; margin: 40px auto;
+        box-shadow: 0 0 15px rgba(255, 152, 0, 0.2);
+        display: block;
+    }
+    
+    .action-btn:hover { 
+        background: var(--primary); color: #000; 
+        box-shadow: 0 0 30px var(--primary-glow); transform: scale(1.05);
+    }
+
+    /* === BATTLE ARENA === */
+    #battleArena {
+        display: none;
+        width: 100%;
+        max-width: 1400px;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .player-section {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
+    }
+
+    /* Slide in animations */
+    .slide-in-left { animation: slideLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    .slide-in-right { animation: slideRight 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+    @keyframes slideLeft { 0% { opacity: 0; transform: translateX(-100px); } 100% { opacity: 1; transform: translateX(0); } }
+    @keyframes slideRight { 0% { opacity: 0; transform: translateX(100px); } 100% { opacity: 1; transform: translateX(0); } }
+
+    /* === TOP SECTION: AVATAR & CHART === */
+    .hero-container {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        background: rgba(0,0,0,0.4);
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .avatar-container {
+        position: relative;
+        width: 160px; height: 230px;
+        border-radius: 12px; overflow: hidden;
+        border: 2px solid #444;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    .p1-style { border-color: var(--p1-color); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+    .p2-style { border-color: var(--p2-color); box-shadow: 0 0 20px rgba(255, 0, 85, 0.3); }
+    
+    .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+    .player-name {
+        position: absolute; bottom: 0; width: 100%; 
+        background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        padding: 8px 0; font-size: 16px; font-weight: bold; text-align: center;
+        text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    .chart-container {
+        width: 220px;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    
+    .weight-badge {
+        margin-top: 10px; font-size: 16px; font-weight: bold; color: #fff; 
+        background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; 
+    }
+
+    .bey-name-badge {
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 900;
+        margin-top: 10px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        letter-spacing: 1px;
+    }
+
+    /* === BEYBLADE BUILD DISPLAY (Row Layout) === */
+    .build-container {
+        display: flex; flex-direction: column; gap: 8px;
+        background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;
+        width: 100%; box-sizing: border-box;
+    }
+    
+    .part-card {
+        background: #151515; border: 1px solid #333; border-radius: 8px;
+        padding: 10px; width: 100%; box-sizing: border-box;
+        display: flex; flex-direction: row; align-items: center;
+    }
+    
+    .part-card-left {
+        width: 70px; height: 70px; flex-shrink: 0; margin-right: 15px;
+        display: flex; justify-content: center; align-items: center;
+        background: rgba(255,255,255,0.02); border-radius: 6px;
+    }
+    .part-card-left img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    
+    .part-card-right {
+        flex-grow: 1; display: flex; flex-direction: column; justify-content: center;
+    }
+    
+    .part-type { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 2px; }
+    .part-name { font-size: 15px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;}
+
+    /* === MINI STATS === */
+    .mini-stats { width: 100%; display: flex; flex-direction: column; gap: 4px; }
+    .stat-row { display: flex; align-items: center; font-size: 10px; color: #aaa; width: 100%; }
+    .stat-label { width: 50px; font-weight: bold; text-align: left; }
+    .stat-bar-bg { flex-grow: 1; height: 5px; background: #333; border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill { height: 100%; background: linear-gradient(90deg, #00c6ff, #0072ff); border-radius: 2px; }
+    .stat-val { width: 35px; text-align: right; margin-left: 8px; font-weight: bold; color: #fff; font-family: monospace; font-size: 12px; }
+
+    #vs-badge {
+        font-size: 54px; font-weight: 900; font-style: italic;
+        background: linear-gradient(to bottom, #fff, #555);
+        -webkit-background-clip: text; color: transparent;
+        margin-top: 250px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        flex-shrink: 0;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="mainTitle">Next Battle</h1>
+
+<div id="battleArena">
+    <div id="player1" class="player-section"></div>
+    <div id="vs-badge">VS</div>
+    <div id="player2" class="player-section"></div>
+</div>
+
+<button id="battleBtn" class="action-btn" onclick="triggerBattle()">Generate Matchup</button>
+
+<script>
+/* =========================================
+   Variables Configuration
+========================================= */
+let system = ["CX", "BX"]; // Use ["all"] to allow everything
+let weight = "all";        // Options: "all", "<32.9", "33-35", ">35"
+let meta = "off";          // Placeholder for future update
+
+let banRatchets = ["Tr"]; // Empty array [] to allow all
+let banBits = ["M"];            // Empty array [] to allow all
+
+let duplicate = "off";     // Options: "on", "off" (Prevents P2 from getting P1's parts)
+
+let activePoolBlades = [];
+
+/* =========================================
+   Filtering Logic
+========================================= */
+function filterBladesForBattle() {
+    return masterBlades.filter(bladeItem => {
+        const b = Array.isArray(bladeItem) ? bladeItem[0] : bladeItem;
+        
+        // System check
+        if (!system.includes("all") && !system.includes(b.system)) return false;
+        
+        // Weight check
+        if (weight !== "all") {
+            const bWeight = b.weight || 0;
+            if (weight.startsWith("<")) {
+                if (bWeight >= parseFloat(weight.substring(1))) return false;
+            } else if (weight.startsWith(">")) {
+                if (bWeight <= parseFloat(weight.substring(1))) return false;
+            } else if (weight.includes("-")) {
+                const parts = weight.split("-");
+                if (bWeight < parseFloat(parts[0]) || bWeight > parseFloat(parts[1])) return false;
+            }
+        }
+        return true;
+    });
+}
+
+function getRandomItem(pool) {
+    if (!pool || pool.length === 0) return null;
+    const index = Math.floor(Math.random() * pool.length);
+    let item = pool[index];
+    return Array.isArray(item) ? item[Math.floor(Math.random() * item.length)] : item;
+}
+
+/* =========================================
+   Beyblade Generation & Stat Calculation
+========================================= */
+// Accepts excludeParts parameter to prevent duplicates if enabled
+function buildRandomBeyblade(excludeParts = {}) {
+    let bey = { system: null, chip: null, blade: null, metalBlade: null, assist: null, ratchet: null, bit: null, stats: { atk:0, def:0, sta:0, dash:0, burstR:0, weight:0 } };
+    
+    // Process Blade
+    let availableBlades = activePoolBlades;
+    if (duplicate === "off" && excludeParts.blade) {
+        availableBlades = availableBlades.filter(b => {
+            const check = Array.isArray(b) ? b[0] : b;
+            return check.displayName !== excludeParts.blade.displayName;
+        });
+    }
+    bey.blade = getRandomItem(availableBlades);
+    if(!bey.blade) return { error: "No blades match the current variables or all available are used." };
+    
+    bey.system = masterSystem.find(s => s.name === bey.blade.system);
+
+    // Process Chip
+    if (bey.system.name === "CX") {
+        let availableChips = masterChips;
+        if (duplicate === "off" && excludeParts.chip) {
+            availableChips = availableChips.filter(c => c.name !== excludeParts.chip.name);
+        }
+        bey.chip = getRandomItem(availableChips);
+    }
+    
+    // Process Metal Blade
+    if (bey.blade.blade === "Over") {
+        let availableMetals = masterMetalBlade;
+        if (duplicate === "off" && excludeParts.metalBlade) {
+            availableMetals = availableMetals.filter(m => m.name !== excludeParts.metalBlade.name);
+        }
+        bey.metalBlade = getRandomItem(availableMetals);
+    }
+    
+    // Process Assist
+    if (bey.system.name === "CX" && (bey.blade.astBlade === "Yes" || bey.blade.blade === "Over")) {
+        let availableAssists = masterAssist;
+        if (duplicate === "off" && excludeParts.assist) {
+            availableAssists = availableAssists.filter(a => {
+                const check = Array.isArray(a) ? a[0] : a;
+                return check.name !== excludeParts.assist.name;
+            });
+        }
+        bey.assist = getRandomItem(availableAssists);
+    }
+
+    // Process Ratchets (Apply Core filter, Ban List, AND Duplicate Check)
+    let validRatchets = masterRatchets;
+    if (bey.blade.core !== "Any") {
+        let filterKey = bey.blade.core === "Round" ? "R" : "W";
+        validRatchets = validRatchets.filter(r => {
+             const check = Array.isArray(r) ? r[0] : r;
+             return check.core === filterKey;
+        });
+    }
+    if (banRatchets.length > 0) {
+        validRatchets = validRatchets.filter(r => {
+             const check = Array.isArray(r) ? r[0] : r;
+             return !banRatchets.includes(check.name);
+        });
+    }
+    if (duplicate === "off" && excludeParts.ratchet) {
+        validRatchets = validRatchets.filter(r => {
+             const check = Array.isArray(r) ? r[0] : r;
+             return check.name !== excludeParts.ratchet.name;
+        });
+    }
+    bey.ratchet = getRandomItem(validRatchets);
+
+    // Process Bits (Apply Ban List AND Duplicate Check)
+    if (bey.ratchet && bey.ratchet.bit !== "No") {
+        let validBits = masterBits;
+        if (banBits.length > 0) {
+            validBits = validBits.filter(b => {
+                 const check = Array.isArray(b) ? b[0] : b;
+                 return !banBits.includes(check.abbr);
+            });
+        }
+        if (duplicate === "off" && excludeParts.bit) {
+            validBits = validBits.filter(b => {
+                 const check = Array.isArray(b) ? b[0] : b;
+                 return check.abbr !== excludeParts.bit.abbr;
+            });
+        }
+        bey.bit = getRandomItem(validBits);
+    }
+
+    // Calculate Totals
+    [bey.chip, bey.blade, bey.metalBlade, bey.assist, bey.ratchet, bey.bit].forEach(p => {
+        if(p) {
+            bey.stats.atk += p.atk || 0;
+            bey.stats.def += p.def || 0;
+            bey.stats.sta += p.sta || 0;
+            bey.stats.dash += p.dash || 0;
+            bey.stats.burstR += p.burstR || 0;
+            bey.stats.weight += p.weight || 0;
+        }
+    });
+
+    return bey;
+}
+
+/* =========================================
+   UI Rendering
+========================================= */
+function renderStatBars(item, type) {
+    if(!item) return "";
+    let showStats = [];
+    
+    if(type === 'Chip') showStats = ['weight'];
+    if(['Blade', 'Metal', 'Assist'].includes(type)) showStats = ['weight', 'atk', 'def', 'sta'];
+    if(type === 'Ratchet') {
+        if(item.bit === "No") showStats = ['weight', 'atk', 'def', 'sta', 'dash', 'burstR'];
+        else showStats = ['weight', 'atk', 'def', 'sta'];
+    }
+    if(type === 'Bit') showStats = ['weight', 'atk', 'def', 'sta', 'dash', 'burstR'];
+
+    if(showStats.length === 0) return "";
+
+    let html = `<div class="mini-stats">`;
+    showStats.forEach(key => {
+        let val = item[key] || 0;
+        let displayVal = key === 'weight' ? val.toFixed(1) + 'g' : val;
+        let barWidth = key === 'weight' ? Math.min((val / 45) * 100, 100) : Math.min(val, 100);
+
+        html += `<div class="stat-row">
+            <span class="stat-label">${key.toUpperCase()}</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${barWidth}%"></div></div>
+            <span class="stat-val">${displayVal}</span>
+        </div>`;
+    });
+    html += `</div>`;
+    return html;
+}
+
+function renderPart(label, item) {
+    if(!item) return "";
+    let itemName = item.displayName || item.name || item.abbr;
+    return `
+        <div class="part-card">
+            <div class="part-card-left">
+                <img src="${item.src}">
+            </div>
+            <div class="part-card-right">
+                <div class="part-type">${label}</div>
+                <div class="part-name">${itemName}</div>
+                ${renderStatBars(item, label)}
+            </div>
+        </div>
+    `;
+}
+
+function drawMiniChart(canvasId, stats, colorHex) {
+    const cvs = document.getElementById(canvasId);
+    if(!cvs) return;
+    const ctx = cvs.getContext('2d');
+    const w = cvs.width; const h = cvs.height;
+    const cx = w/2; const cy = h/2;
+    const r = (Math.min(w,h)/2) - 30; 
+    const max = 150;
+
+    const values = [stats.atk, stats.def, stats.sta, stats.dash, stats.burstR];
+    const labels = ["ATK", "DEF", "STA", "DASH", "BR"];
+    const count = 5;
+    
+    ctx.clearRect(0,0,w,h);
+    
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)"; 
+    ctx.lineWidth = 1;
+    for(let i=1; i<=3; i++) {
+        ctx.beginPath();
+        for(let j=0; j<count; j++){
+            const angle = (Math.PI*2/count)*j - Math.PI/2;
+            const dist = (r/3)*i;
+            ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
+        }
+        ctx.closePath(); ctx.stroke();
+    }
+
+    ctx.fillStyle = colorHex + "44"; 
+    ctx.strokeStyle = colorHex;      
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for(let j=0; j<count; j++){
+        const val = Math.min(values[j], max);
+        const angle = (Math.PI*2/count)*j - Math.PI/2;
+        const dist = (val/max)*r;
+        ctx.lineTo(cx + Math.cos(angle)*dist, cy + Math.sin(angle)*dist);
+    }
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    ctx.font = "bold 10px sans-serif"; 
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    labels.forEach((l, i) => {
+        const angle = (Math.PI*2/count)*i - Math.PI/2;
+        const lx = cx + Math.cos(angle)*(r+15); 
+        const ly = cy + Math.sin(angle)*(r+15);
+        ctx.fillStyle = "#aaa";
+        ctx.fillText(l, lx, ly - 6); 
+        ctx.fillStyle = colorHex;
+        ctx.fillText(values[i], lx, ly + 6); 
+    });
+}
+
+function renderPlayer(containerId, playerInfo, beybladeBuild, styleClass, animationClass, colorHex) {
+    const container = document.getElementById(containerId);
+    
+    if (beybladeBuild.error) {
+        container.innerHTML = `<div style="color:red; padding:20px;">${beybladeBuild.error}</div>`;
+        return;
+    }
+
+    let fullName = "";
+    if (beybladeBuild.blade.blade === "Over") {
+        if(beybladeBuild.chip) fullName += beybladeBuild.chip.name;
+        if(beybladeBuild.metalBlade) fullName += beybladeBuild.metalBlade.displayName;
+        fullName += " "; 
+        if(beybladeBuild.blade) fullName += beybladeBuild.blade.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.assist) fullName += beybladeBuild.assist.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.ratchet) fullName += beybladeBuild.ratchet.name;
+        if(beybladeBuild.bit) fullName += beybladeBuild.bit.abbr; 
+    } else {
+        if(beybladeBuild.chip) fullName += beybladeBuild.chip.name;
+        fullName += beybladeBuild.blade.displayName;
+        fullName += " "; 
+        if(beybladeBuild.assist) fullName += beybladeBuild.assist.displayName.charAt(0).toUpperCase();
+        if(beybladeBuild.ratchet) fullName += beybladeBuild.ratchet.name;
+        if(beybladeBuild.bit) fullName += beybladeBuild.bit.abbr; 
+    }
+
+    let buildHTML = "";
+    if(beybladeBuild.chip) buildHTML += renderPart("Chip", beybladeBuild.chip);
+    buildHTML += renderPart("Blade", beybladeBuild.blade);
+    if(beybladeBuild.metalBlade) buildHTML += renderPart("Metal", beybladeBuild.metalBlade);
+    if(beybladeBuild.assist) buildHTML += renderPart("Assist", beybladeBuild.assist);
+    if(beybladeBuild.ratchet) buildHTML += renderPart("Ratchet", beybladeBuild.ratchet);
+    if(beybladeBuild.bit) buildHTML += renderPart("Bit", beybladeBuild.bit);
+
+    container.className = `player-section ${animationClass}`;
+    container.innerHTML = `
+        <div class="hero-container">
+            <div class="avatar-container ${styleClass}">
+                <img src="${playerInfo.src}" onerror="this.src='shadow.png'">
+                <div class="player-name" style="color: ${colorHex}">${playerInfo.name}</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="chart-${containerId}" width="200" height="200"></canvas>
+                <div class="weight-badge" style="border: 1px solid ${colorHex};">Total Weight: ${beybladeBuild.stats.weight.toFixed(1)}g</div>
+            </div>
+            <div class="bey-name-badge" style="color: ${colorHex};">${fullName}</div>
+        </div>
+        <div class="build-container">
+            ${buildHTML}
+        </div>
+    `;
+
+    drawMiniChart(`chart-${containerId}`, beybladeBuild.stats, colorHex);
+}
+
+function triggerBattle() {
+    const btn = document.getElementById("battleBtn");
+    const arena = document.getElementById("battleArena");
+    
+    arena.style.display = "flex";
+
+    document.getElementById("player1").className = "player-section";
+    document.getElementById("player2").className = "player-section";
+    
+    activePoolBlades = filterBladesForBattle();
+
+    const shuffledPlayers = [...participants].sort(() => 0.5 - Math.random());
+    const p1 = shuffledPlayers[0];
+    const p2 = shuffledPlayers[1];
+
+    // Build Player 1
+    const p1Bey = buildRandomBeyblade();
+    
+    // Build Player 2, passing Player 1's parts so they can be excluded if duplicate === "off"
+    const p2Bey = buildRandomBeyblade(p1Bey);
+
+    setTimeout(() => {
+        renderPlayer("player1", p1, p1Bey, "p1-style", "slide-in-left", "#00d4ff");
+        renderPlayer("player2", p2, p2Bey, "p2-style", "slide-in-right", "#ff0055");
+        
+        btn.textContent = "Rematch";
+    }, 100);
+}
+</script>
+</body>
+</html>
