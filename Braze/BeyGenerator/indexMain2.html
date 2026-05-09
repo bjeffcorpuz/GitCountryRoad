@@ -444,19 +444,27 @@ button:hover {
   <div id="results-container"></div>
 
 <script>
-/* ================= DATA ================= */
-// Added the "type" property to the bladers array. 
+/* ================= DATA AND SETTINGS ================= */
+
+// NEW: Duplicate Toggle ("on" or "off")
+// If "on", Ratchets and Bits are NOT removed from the pool after use.
+const duplicate = "off"; 
+
+// NEW: Weighted Category System
+let category = {random: 40, metaCombo: 30, mostUsed: 30};
+let categoryValues = ["random", "metaCombo", "mostUsed"];
+
 // You can adjust these values as needed.
 //["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkDef"},
+    {"name":"Darius","src":"avatars/Darius.png","type":"Atk"},
+    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkSta"},
     {"name":"Stephanie","src":"avatars/Stephanie.png","type":"Atk"},
-    {"name":"Sasha","src":"avatars/Sasha.png","type":"all"},
-    {"name":"Renji","src":"avatars/Renji.png","type":"AtkDef"},
-    {"name":"Aiko","src":"avatars/Aiko.png","type":"DefSta"},
-    {"name":"Lucian","src":"avatars/Lucian.png","type":"all"},
-    {"name":"Jaren","src":"avatars/Jaren.png","type":"Atk"},
-    {"name":"Kael","src":"avatars/Kael.png","type":"AtkSta"}
+    {"name":"Mei","src":"avatars/Mei.png","type":"AtkSta"},
+    {"name":"Kael","src":"avatars/Kael.png","type":"Atk"},
+    {"name":"Ronan","src":"avatars/Ronan.png","type":"AtkSta"},
+    {"name":"Haruka","src":"avatars/Haruka.png","type":"DefSta"},
+    {"name":"Victor","src":"avatars/Victor.png","type":"all"}
 ]
 
 // THRESHOLDS
@@ -464,7 +472,6 @@ const blades_minAtk = 30;
 const blades_minDef = 30;
 const blades_minSta = 25;
 
-// NEW: Over Blade Thresholds
 const over_minAtk = 1;
 const over_minDef = 1;
 const over_minSta = 1;
@@ -481,18 +488,18 @@ const bit_minAtk = 30;
 const bit_minDef = 25;
 const bit_minSta = 20;
 
-// NEW: Metal Blade Thresholds
 const metal_minAtk = 1;
 const metal_minDef = 1;
 const metal_minSta = 1;
 
-// BAN LIST ["1","2","3","4","5","6","7","8"]
-let removeBlade = ["PhoenixWing","HellsScythe","GolemRock","MummyCurse","WyvernGale","SharkScale","PteraSwing","KnightMail"];
+// BAN LIST
+let removeBlade = ["TyrannoBeat","Flow","WizardArrow","Break","Dark","Reaper","UnicornSting","ShelterDrake"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
+let poolMostUsed = { assist: [], ratchet: [], bit: [] }; // NEW: Working copy for mostUsed logic
 let generatedBeyblades = []; 
 
-    function resetPools() {
+function resetPools() {
     poolSystem = [...masterSystem];
     
     // Ban list filter
@@ -507,6 +514,13 @@ let generatedBeyblades = [];
     poolBits = [...masterBits];
     poolMetalBlades = [...masterMetalBlade]; 
     
+    // Deep copy mostUsed so we can safely splice arrays inside it if duplicate is off
+    poolMostUsed = {
+        assist: [...mostUsed.assist],
+        ratchet: [...mostUsed.ratchet],
+        bit: [...mostUsed.bit]
+    };
+    
     generatedBeyblades = []; 
 }
 
@@ -519,6 +533,17 @@ function getRandomItem(pool, remove = true) {
     let actualItem = Array.isArray(item) ? item[Math.floor(Math.random() * item.length)] : item;
     if (remove) pool.splice(index, 1);
     return { item: actualItem, raw: item };
+}
+
+// NEW HELPER: Picks a category based on the defined weights
+function getWeightedCategory() {
+    let total = category.random + category.metaCombo + category.mostUsed;
+    let r = Math.random() * total;
+    
+    if (r < category.random) return "random";
+    r -= category.random;
+    if (r < category.metaCombo) return "metaCombo";
+    return "mostUsed";
 }
 
 function filterPoolByType(pool, partCategory, type) {
@@ -537,15 +562,12 @@ function filterPoolByType(pool, partCategory, type) {
     let scoredPool = workingPool.map(item => {
         const checkItem = Array.isArray(item) ? item[0] : item;
         
-        // --- NEW: DYNAMIC THRESHOLD ASSIGNMENT ---
         let minAtk = 0, minDef = 0, minSta = 0;
         
         if (partCategory === "blade") {
             if (checkItem.blade === "Over") {
-                // If it's an Over Blade, use the Over thresholds
                 minAtk = over_minAtk; minDef = over_minDef; minSta = over_minSta;
             } else {
-                // Otherwise, use the standard Main Blade thresholds
                 minAtk = blades_minAtk; minDef = blades_minDef; minSta = blades_minSta;
             }
         } else if (partCategory === "metalBlade") {
@@ -599,32 +621,31 @@ function filterPoolByType(pool, partCategory, type) {
     return validItems.map(x => x.original);
 }
 
-
-function generateFullBeyblade(bladerType) {
-
-    // 1. Randomize the order of systems to try (e.g., it might try CX, then UX, then BX)
+function generateFullBeyblade(bladerType, bladerName) {
     let availableSystems = [...poolSystem].sort(() => 0.5 - Math.random());
 
-    // 2. Loop through the systems. If one fails, it moves to the next one!
     for (let i = 0; i < availableSystems.length; i++) {
         const system = availableSystems[i];
 
-        // --- CREATE BACKUPS OF THE POOLS ---
-        // We take a snapshot of the pools. If this system fails to build a complete
-        // Beyblade, we restore the pools so no parts are accidentally deleted.
+        // --- SNAPSHOT BACKUPS ---
         let backupChips = [...poolChips];
         let backupBlades = [...poolBlades];
         let backupMetal = [...poolMetalBlades];
         let backupAssist = [...poolAssist];
         let backupRatchets = [...poolRatchets];
         let backupBits = [...poolBits];
+        let backupMostUsed = {
+            assist: [...poolMostUsed.assist],
+            ratchet: [...poolMostUsed.ratchet],
+            bit: [...poolMostUsed.bit]
+        };
 
         let errorFound = false;
         let chip = null, blade = null, metalBlade = null, assist = null, ratchet = null, bit = null;
 
         // --- CHIP SELECTION ---
         if(system.name === "CX") {
-            const chipRes = getRandomItem(poolChips, true);
+            const chipRes = getRandomItem(poolChips, true); // Chips ALWAYS duplicate="off" 
             if(!chipRes) errorFound = true;
             else chip = chipRes.item;
         }
@@ -644,15 +665,13 @@ function generateFullBeyblade(bladerType) {
                 blade = Array.isArray(rawBlade) ? rawBlade[Math.floor(Math.random() * rawBlade.length)] : rawBlade;
                 
                 const realIndex = poolBlades.indexOf(rawBlade);
-                if(realIndex > -1) poolBlades.splice(realIndex, 1);
+                if(realIndex > -1) poolBlades.splice(realIndex, 1); // Blades ALWAYS duplicate="off"
             }
         }
 
         // --- METAL BLADE SELECTION ---
         if (!errorFound && blade.blade === "Over") {
-            // NEW: Apply the filter!
             let validMetals = filterPoolByType(poolMetalBlades, "metalBlade", bladerType);
-            
             if(validMetals.length === 0) errorFound = true;
             else {
                 const mIndex = Math.floor(Math.random() * validMetals.length);
@@ -660,95 +679,241 @@ function generateFullBeyblade(bladerType) {
                 metalBlade = Array.isArray(rawMetal) ? rawMetal[Math.floor(Math.random() * rawMetal.length)] : rawMetal;
                 
                 const realMIndex = poolMetalBlades.indexOf(rawMetal);
-                if(realMIndex > -1) poolMetalBlades.splice(realMIndex, 1);
+                if(realMIndex > -1) poolMetalBlades.splice(realMIndex, 1); // Metal Blades ALWAYS duplicate="off"
             }
         }
 
-        // --- ASSIST SELECTION ---
-        if (!errorFound && system.name === "CX" && (blade.astBlade === "Yes" || blade.blade === "Over")) {
-            let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
-            if(validAssists.length === 0) errorFound = true;
-            else {
-                const rIndex = Math.floor(Math.random() * validAssists.length);
-                let rawAssist = validAssists[rIndex];
-                assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
-                
-                const realAIndex = poolAssist.indexOf(rawAssist);
-                if(realAIndex > -1) poolAssist.splice(realAIndex, 1);
-            }
+        if (errorFound) {
+            poolChips = backupChips; poolBlades = backupBlades; poolMetalBlades = backupMetal;
+            continue; // Skip to next system if we failed before category selection
         }
 
-        // --- RATCHET SELECTION ---
-        if (!errorFound) {
-            let validRatchets = poolRatchets;
-            if(blade.core !== "Any") {
-                let filterKey = blade.core === "Round" ? "R" : "W";
-                validRatchets = poolRatchets.filter(r => {
-                     const check = Array.isArray(r) ? r[0] : r;
-                     return check.core === filterKey;
-                });
-            }
+        // ==========================================
+        // CATEGORY BRANCHING LOGIC
+        // ==========================================
+        let currentCategory = getWeightedCategory();
+        console.log(`\n[${bladerName}] 🎲 Selected Category: ${currentCategory.toUpperCase()}`);
 
-            validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
-            if(validRatchets.length === 0) errorFound = true;
-            else {
-                let rIndex = 0;
-
-                // --- NEW: LIGHTWEIGHT BLADE BUFF ---
-                // Check if it's a standard BX/UX blade weighing 33 or less
-                if ((system.name === "BX" || system.name === "UX") && blade.blade !== "Over" && blade.weight <= 32.9) {
-                    
-                    // 1. Find the highest weight currently available in the valid ratchets pool
-                    let maxWeight = -1;
-                    validRatchets.forEach(r => {
-                        const checkR = Array.isArray(r) ? r[0] : r;
-                        if ((checkR.weight || 0) > maxWeight) {
-                            maxWeight = checkR.weight || 0;
-                        }
-                    });
-
-                    // 2. Isolate ONLY the ratchets that match that maximum weight
-                    const heaviestRatchets = validRatchets.filter(r => {
-                        const checkR = Array.isArray(r) ? r[0] : r;
-                        return (checkR.weight || 0) === maxWeight;
-                    });
-
-                    // 3. Randomly pick from the heaviest ratchets, then find its original index in validRatchets
-                    const heavyPick = heaviestRatchets[Math.floor(Math.random() * heaviestRatchets.length)];
-                    rIndex = validRatchets.indexOf(heavyPick);
-                    
+        // --- META COMBO LOGIC ---
+        if (currentCategory === "metaCombo") {
+            let metaSuccess = false;
+            if (blade.blade === "Over") {
+                console.log(`[${bladerName}] ⚠️ MetaCombo Failed: Blade is an 'Over' blade. Falling back to RANDOM.`);
+                currentCategory = "random";
+            } else {
+                let availableCombos = metaCombo.filter(c => c.blade === blade.displayName);
+                if (availableCombos.length === 0) {
+                    console.log(`[${bladerName}] ⚠️ MetaCombo Failed: No predefined combos exist for blade '${blade.displayName}'. Falling back to RANDOM.`);
+                    currentCategory = "random";
                 } else {
-                    // Normal Random Selection for heavier blades or CX blades
-                    rIndex = Math.floor(Math.random() * validRatchets.length);
+                    availableCombos.sort(() => 0.5 - Math.random()); // Shuffle combos
+                    
+                    for (let combo of availableCombos) {
+                        let reqAssist = combo.assist;
+                        let assistFound = null;
+
+                        // Check Assist
+                        if (reqAssist && reqAssist !== "") {
+                            assistFound = poolAssist.find(a => {
+                                let check = Array.isArray(a) ? a[0] : a;
+                                return check.name === reqAssist || check.displayName === reqAssist; 
+                            });
+                            if (!assistFound) continue; // Combo part missing
+                        }
+
+                        // Check Ratchet & Bit
+                        let ratchetFound = poolRatchets.find(r => {
+                            let check = Array.isArray(r) ? r[0] : r;
+                            return check.name === combo.ratchet;
+                        });
+                        if (!ratchetFound) continue;
+
+                        let bitFound = poolBits.find(b => {
+                            let check = Array.isArray(b) ? b[0] : b;
+                            return check.abbr === combo.bit || check.name === combo.bit;
+                        });
+                        if (!bitFound) continue;
+
+                        // Check Core Match for ratchet
+                        if (blade.core !== "Any") {
+                            let filterKey = blade.core === "Round" ? "R" : "W";
+                            let rCheck = Array.isArray(ratchetFound) ? ratchetFound[0] : ratchetFound;
+                            if (rCheck.core !== filterKey) continue;
+                        }
+
+                        // If we made it here, all parts exist! Assign them.
+                        metaSuccess = true;
+                        if (assistFound) {
+                            assist = Array.isArray(assistFound) ? assistFound[Math.floor(Math.random() * assistFound.length)] : assistFound;
+                            poolAssist.splice(poolAssist.indexOf(assistFound), 1); // Assist always removes
+                        }
+                        
+                        ratchet = Array.isArray(ratchetFound) ? ratchetFound[Math.floor(Math.random() * ratchetFound.length)] : ratchetFound;
+                        if (duplicate === "off") poolRatchets.splice(poolRatchets.indexOf(ratchetFound), 1);
+                        
+                        bit = Array.isArray(bitFound) ? bitFound[Math.floor(Math.random() * bitFound.length)] : bitFound;
+                        if (duplicate === "off") poolBits.splice(poolBits.indexOf(bitFound), 1);
+
+                        console.log(`[${bladerName}] ✅ SUCCESS: Built MetaCombo -> ${blade.displayName} / ${reqAssist||"N/A"} / ${combo.ratchet} / ${combo.bit}`);
+                        break;
+                    }
+
+                    if (!metaSuccess) {
+                        console.log(`[${bladerName}] ⚠️ MetaCombo Failed: Valid parts for existing combos are exhausted. Falling back to RANDOM.`);
+                        currentCategory = "random";
+                    }
+                }
+            }
+        }
+
+        // --- MOST USED LOGIC ---
+        if (currentCategory === "mostUsed") {
+            let needAssist = (system.name === "CX" && (blade.astBlade === "Yes" || blade.blade === "Over"));
+            let assistMatch = null, assistOrigIdx = -1, assistMUIdx = -1;
+            
+            if (needAssist) {
+                let muAssists = [...poolMostUsed.assist].sort(() => 0.5 - Math.random());
+                for (let muA of muAssists) {
+                    let matchNames = Array.isArray(muA) ? muA : [muA];
+                    for (let name of matchNames) {
+                        let fIdx = poolAssist.findIndex(a => {
+                            let check = Array.isArray(a) ? a[0] : a;
+                            return check.name === name || check.displayName === name;
+                        });
+                        if (fIdx > -1) {
+                            assistMatch = poolAssist[fIdx];
+                            assistOrigIdx = fIdx;
+                            assistMUIdx = poolMostUsed.assist.indexOf(muA);
+                            break;
+                        }
+                    }
+                    if (assistMatch) break;
+                }
+            }
+
+            let ratchetMatch = null, ratchetOrigIdx = -1, ratchetMUIdx = -1;
+            let filterKey = blade.core !== "Any" ? (blade.core === "Round" ? "R" : "W") : null;
+            let muRatchets = [...poolMostUsed.ratchet].sort(() => 0.5 - Math.random());
+            for (let muR of muRatchets) {
+                let fIdx = poolRatchets.findIndex(r => {
+                    let check = Array.isArray(r) ? r[0] : r;
+                    return check.name === muR && (filterKey ? check.core === filterKey : true) && check.bit !== "No"; 
+                });
+                if (fIdx > -1) {
+                    ratchetMatch = poolRatchets[fIdx]; ratchetOrigIdx = fIdx; ratchetMUIdx = poolMostUsed.ratchet.indexOf(muR);
+                    break;
+                }
+            }
+
+            let bitMatch = null, bitOrigIdx = -1, bitMUIdx = -1;
+            let muBits = [...poolMostUsed.bit].sort(() => 0.5 - Math.random());
+            for (let muB of muBits) {
+                let fIdx = poolBits.findIndex(b => {
+                    let check = Array.isArray(b) ? b[0] : b;
+                    return check.abbr === muB || check.name === muB;
+                });
+                if (fIdx > -1) {
+                    bitMatch = poolBits[fIdx]; bitOrigIdx = fIdx; bitMUIdx = poolMostUsed.bit.indexOf(muB);
+                    break;
+                }
+            }
+
+            if ((needAssist && !assistMatch) || !ratchetMatch || !bitMatch) {
+                console.log(`[${bladerName}] ⚠️ MostUsed Failed: The required top-tier parts are out of stock. Falling back to RANDOM.`);
+                currentCategory = "random";
+            } else {
+                if (needAssist) {
+                    assist = Array.isArray(assistMatch) ? assistMatch[Math.floor(Math.random() * assistMatch.length)] : assistMatch;
+                    poolAssist.splice(assistOrigIdx, 1);
+                    poolMostUsed.assist.splice(assistMUIdx, 1); // Assist ALWAYS removes from mostUsed tracker
+                }
+                
+                ratchet = Array.isArray(ratchetMatch) ? ratchetMatch[Math.floor(Math.random() * ratchetMatch.length)] : ratchetMatch;
+                if (duplicate === "off") {
+                    poolRatchets.splice(ratchetOrigIdx, 1);
+                    poolMostUsed.ratchet.splice(ratchetMUIdx, 1);
                 }
 
-                // Finalize the ratchet choice
-                let rawRatchet = validRatchets[rIndex];
-                ratchet = Array.isArray(rawRatchet) ? rawRatchet[Math.floor(Math.random() * rawRatchet.length)] : rawRatchet;
-                
-                const realRIndex = poolRatchets.indexOf(rawRatchet);
-                if(realRIndex > -1) poolRatchets.splice(realRIndex, 1);
+                bit = Array.isArray(bitMatch) ? bitMatch[Math.floor(Math.random() * bitMatch.length)] : bitMatch;
+                if (duplicate === "off") {
+                    poolBits.splice(bitOrigIdx, 1);
+                    poolMostUsed.bit.splice(bitMUIdx, 1);
+                }
+                console.log(`[${bladerName}] ✅ SUCCESS: Built via MostUsed part logic.`);
             }
         }
 
-        // --- BIT SELECTION ---
-        if (!errorFound && ratchet && ratchet.bit !== "No") {
-            let validBits = filterPoolByType(poolBits, "bit", bladerType);
-            if(validBits.length === 0) errorFound = true;
-            else {
-                const bIndex = Math.floor(Math.random() * validBits.length);
-                let rawBit = validBits[bIndex];
-                bit = Array.isArray(rawBit) ? rawBit[Math.floor(Math.random() * rawBit.length)] : rawBit;
-                
-                const realBIndex = poolBits.indexOf(rawBit);
-                if(realBIndex > -1) poolBits.splice(realBIndex, 1);
+        // --- STANDARD RANDOM LOGIC (Or Fallback) ---
+        if (currentCategory === "random") {
+            console.log(`[${bladerName}] ✅ Executing Standard RANDOM logic.`);
+            
+            // Random Assist
+            if (system.name === "CX" && (blade.astBlade === "Yes" || blade.blade === "Over")) {
+                let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
+                if(validAssists.length === 0) errorFound = true;
+                else {
+                    const rIndex = Math.floor(Math.random() * validAssists.length);
+                    let rawAssist = validAssists[rIndex];
+                    assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
+                    const realAIndex = poolAssist.indexOf(rawAssist);
+                    if(realAIndex > -1) poolAssist.splice(realAIndex, 1); // Assist ALWAYS removes
+                }
+            }
+
+            // Random Ratchet (Includes Lightweight Buff)
+            if (!errorFound) {
+                let validRatchets = poolRatchets;
+                if(blade.core !== "Any") {
+                    let filterKey = blade.core === "Round" ? "R" : "W";
+                    validRatchets = poolRatchets.filter(r => {
+                        const check = Array.isArray(r) ? r[0] : r;
+                        return check.core === filterKey;
+                    });
+                }
+
+                validRatchets = filterPoolByType(validRatchets, "ratchet", bladerType);
+                if(validRatchets.length === 0) errorFound = true;
+                else {
+                    let rIndex = 0;
+                    if ((system.name === "BX" || system.name === "UX") && blade.blade !== "Over" && blade.weight <= 32.9) {
+                        let maxWeight = -1;
+                        validRatchets.forEach(r => {
+                            const checkR = Array.isArray(r) ? r[0] : r;
+                            if ((checkR.weight || 0) > maxWeight) maxWeight = checkR.weight || 0;
+                        });
+                        const heaviestRatchets = validRatchets.filter(r => {
+                            const checkR = Array.isArray(r) ? r[0] : r;
+                            return (checkR.weight || 0) === maxWeight;
+                        });
+                        const heavyPick = heaviestRatchets[Math.floor(Math.random() * heaviestRatchets.length)];
+                        rIndex = validRatchets.indexOf(heavyPick);
+                    } else {
+                        rIndex = Math.floor(Math.random() * validRatchets.length);
+                    }
+
+                    let rawRatchet = validRatchets[rIndex];
+                    ratchet = Array.isArray(rawRatchet) ? rawRatchet[Math.floor(Math.random() * rawRatchet.length)] : rawRatchet;
+                    const realRIndex = poolRatchets.indexOf(rawRatchet);
+                    if(duplicate === "off" && realRIndex > -1) poolRatchets.splice(realRIndex, 1);
+                }
+            }
+
+            // Random Bit
+            if (!errorFound && ratchet && ratchet.bit !== "No") {
+                let validBits = filterPoolByType(poolBits, "bit", bladerType);
+                if(validBits.length === 0) errorFound = true;
+                else {
+                    const bIndex = Math.floor(Math.random() * validBits.length);
+                    let rawBit = validBits[bIndex];
+                    bit = Array.isArray(rawBit) ? rawBit[Math.floor(Math.random() * rawBit.length)] : rawBit;
+                    const realBIndex = poolBits.indexOf(rawBit);
+                    if(duplicate === "off" && realBIndex > -1) poolBits.splice(realBIndex, 1);
+                }
             }
         }
 
         // --- EVALUATE ATTEMPT ---
         if (!errorFound) {
-            // SUCCESS! The Beyblade was successfully built.
-            // Calculate stats and return. (The global pools keep the updated splices).
             const stats = { atk:0, def:0, sta:0, dash:0, burstR:0 };
             [blade, metalBlade, assist, ratchet, bit].forEach(p => {
                 if(p) {
@@ -760,21 +925,17 @@ function generateFullBeyblade(bladerType) {
                 }
             });
 
-            return { system, chip, blade, metalBlade, assist, ratchet, bit, stats };
+            // NEW: Added category to the return object
+            return { system, chip, blade, metalBlade, assist, ratchet, bit, stats, category: currentCategory };
+
         } else {
-            // FAILED! This specific system ran out of parts.
-            // Rollback the global pools to the snapshot so no parts are lost, 
-            // and the loop will automatically try the next system!
-            poolChips = backupChips;
-            poolBlades = backupBlades;
-            poolMetalBlades = backupMetal;
-            poolAssist = backupAssist;
-            poolRatchets = backupRatchets;
-            poolBits = backupBits;
+            console.log(`[${bladerName}] 🛑 FATAL: System ${system.name} failed entirely. Restoring pools and trying next System.`);
+            poolChips = backupChips; poolBlades = backupBlades; poolMetalBlades = backupMetal;
+            poolAssist = backupAssist; poolRatchets = backupRatchets; poolBits = backupBits;
+            poolMostUsed = backupMostUsed;
         }
     }
 
-    // If the code reaches this point, it means it tried UX, BX, and CX, and ALL of them failed.
     return { error: `All Systems exhausted. Completely out of compatible parts for Type: ${bladerType}.` };
 }
 
@@ -827,7 +988,6 @@ function createCardHTML(type, item, blader = null) {
             categoryLabel = "Lock Chip";
             specificName = item.name;
             faceStyle = "justify-content: center;";
-            // Keep the chip clean and simple!
             content = `
                 <div class="card-category-top">${categoryLabel}</div>
                 <div class="img-container">
@@ -853,7 +1013,6 @@ function createCardHTML(type, item, blader = null) {
             specificName = item.name; 
         }
 
-        // Apply standard layout for everything with stats
         if (type !== "chip") {
             content = `
                 <div class="card-category-top">${categoryLabel}</div>
@@ -980,6 +1139,13 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     
     container.innerHTML = ""; 
     outputContainer.style.display = "none"; 
+    
+    console.log("==========================================");
+    console.log("🛠️ STARTING NEW TOURNAMENT GENERATION");
+    console.log(`⚖️ Category Weights: Random(${category.random}%) MetaCombo(${category.metaCombo}%) MostUsed(${category.mostUsed}%)`);
+    console.log(`🔄 Duplicate Status: ${duplicate.toUpperCase()}`);
+    console.log("==========================================");
+    
     resetPools(); 
     
     const btn = document.getElementById("generateBtn");
@@ -1016,14 +1182,13 @@ function startGeneration(container) {
     let rowsData = [];
 
     bladers.forEach((blader, index) => {
-        const bey = generateFullBeyblade(blader.type || "all");
+        // Passed blader.name to cleanly log errors specific to the character!
+        const bey = generateFullBeyblade(blader.type || "all", blader.name); 
         
-        // --- NEW: ADVANCED ERROR DISPLAY ---
         if(!bey || bey.error) {
             const errDiv = document.createElement("div");
             errDiv.textContent = `🛑 ERROR FOR ${blader.name.toUpperCase()}: ${bey ? bey.error : 'Unknown error'}`;
             
-            // Stylize the error box so it is clearly visible
             errDiv.style.color = "#ff4d4d";
             errDiv.style.backgroundColor = "rgba(255, 0, 0, 0.1)";
             errDiv.style.border = "2px solid #ff4d4d";
@@ -1035,10 +1200,11 @@ function startGeneration(container) {
             errDiv.style.fontSize = "18px";
             
             container.appendChild(errDiv);
-            return; // Skip this blader and move to the next one
+            return; 
         }
 
         generatedBeyblades.push({
+            category: bey.category.toUpperCase(), // NEW: Save the category name
             name: blader.name,
             src: blader.src,
             system: bey.system.name,
@@ -1061,7 +1227,7 @@ function startGeneration(container) {
         if (bey.blade.blade === "Over") {
             if(bey.chip) fullName += bey.chip.name;
             if(bey.metalBlade) fullName += bey.metalBlade.displayName;
-            fullName += "<br>"; // NEW: Drops to a new line
+            fullName += "<br>"; 
             if(bey.blade) fullName += bey.blade.displayName.charAt(0).toUpperCase();
             if(bey.assist) fullName += bey.assist.displayName.charAt(0).toUpperCase();
             if(bey.ratchet) fullName += bey.ratchet.name;
@@ -1069,7 +1235,7 @@ function startGeneration(container) {
         } else {
             if(bey.chip) fullName += bey.chip.name;
             fullName += bey.blade.displayName;
-            fullName += "<br>"; // NEW: Drops to a new line
+            fullName += "<br>"; 
             if(bey.assist) fullName += bey.assist.displayName.charAt(0);
             if(bey.ratchet) fullName += bey.ratchet.name;
             if(bey.bit) fullName += bey.bit.abbr; 
@@ -1081,7 +1247,7 @@ function startGeneration(container) {
 
         let html = "";
         html += createCardHTML("blader", null, blader);
-        if(bey.chip) html += createCardHTML("chip", bey.chip); // Reverted chip call
+        if(bey.chip) html += createCardHTML("chip", bey.chip); 
         html += createCardHTML("blade", bey.blade);
         if(bey.metalBlade) html += createCardHTML("metalBlade", bey.metalBlade);
         if(bey.assist) html += createCardHTML("assist", bey.assist);
