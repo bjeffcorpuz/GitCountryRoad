@@ -457,15 +457,16 @@ let categoryValues = ["random", "metaCombo", "mostUsed"];
 // You can adjust these values as needed.
 //["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Darius","src":"avatars/Darius.png","type":"Atk"},
-    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkSta"},
-    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"Atk"},
-    {"name":"Mei","src":"avatars/Mei.png","type":"AtkSta"},
-    {"name":"Kael","src":"avatars/Kael.png","type":"Atk"},
+    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkDef"},
     {"name":"Ronan","src":"avatars/Ronan.png","type":"AtkSta"},
-    {"name":"Haruka","src":"avatars/Haruka.png","type":"DefSta"},
-    {"name":"Victor","src":"avatars/Victor.png","type":"all"}
+    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"Atk"},
+    {"name":"Kaito","src":"avatars/Kaito.png","type":"AtkDef"},
+    {"name":"Haruka","src":"avatars/Haruka.png","type":"AtkSta"},
+    {"name":"Darius","src":"avatars/Darius.png","type":"Atk"},
+    {"name":"Victor","src":"avatars/Victor.png","type":"all"},
+    {"name":"Zera","src":"avatars/Zera.png","type":"DefSta"}
 ]
+
 
 // THRESHOLDS
 const blades_minAtk = 30;
@@ -493,7 +494,7 @@ const metal_minDef = 1;
 const metal_minSta = 1;
 
 // BAN LIST
-let removeBlade = ["TyrannoBeat","Flow","WizardArrow","Break","Dark","Reaper","UnicornSting","ShelterDrake"];
+let removeBlade = ["ImpactDrake","Guard","SharkScale","Might","DranSword","WeissTiger","Flare","PteraSwing"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
 let poolMostUsed = { assist: [], ratchet: [], bit: [] }; // NEW: Working copy for mostUsed logic

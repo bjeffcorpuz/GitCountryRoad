@@ -26,6 +26,8 @@ const masterBlades = [
 {name:'KnightMail',src:'images/blades/KnightMail.png',displayName:'KnightMail',blade:'Main',weight:36.7,atk:10,def:65,sta:35,core:'Any',astBlade:'No',system:'UX'},
 {name:'ScorpioSpear',src:'images/blades/ScorpioSpear.png',displayName:'ScorpioSpear',blade:'Main',weight:39.6,atk:25,def:55,sta:30,core:'Any',astBlade:'No',system:'UX'},
 {name:'ImpactDrake',src:'images/blades/ImpactDrake.png',displayName:'ImpactDrake',blade:'Main',weight:39,atk:75,def:25,sta:10,core:'Any',astBlade:'No',system:'UX'},
+[{name:'CobaltDragoon',src:'images/blades/CobaltDragoon.png',displayName:'CobaltDragoon',blade:'Main',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'CobaltDragoon01',src:'images/blades/CobaltDragoon01.png',displayName:'CobaltDragoon',blade:'Main',weight:37.8,atk:60,def:15,sta:25,core:'Any',astBlade:'No',system:'BX'}],
 {name:'ClockMirage',src:'images/blades/ClockMirage.png',displayName:'ClockMirage',blade:'Main',weight:37.7,atk:10,def:10,sta:80,core:'Round',astBlade:'No',system:'UX'},
 {name:'SharkScale',src:'images/blades/SharkScale.png',displayName:'SharkScale',blade:'Main',weight:37.6,atk:70,def:15,sta:15,core:'Any',astBlade:'No',system:'UX'},
 {name:'TyrannoBeat',src:'images/blades/TyrannoBeat.png',displayName:'TyrannoBeat',blade:'Main',weight:37,atk:70,def:35,sta:10,core:'Any',astBlade:'No',system:'BX'},
@@ -47,9 +49,7 @@ const masterBlades = [
 {name:'SphinxCowl',src:'images/blades/SphinxCowl.png',displayName:'SphinxCowl',blade:'Main',weight:32.7,atk:35,def:55,sta:10,core:'Any',astBlade:'No',system:'BX'},
 [{name:'EclipseUpper',src:'images/blades/EclipseUpper.png',displayName:'Eclipse',blade:'Main',weight:32.3,atk:30,def:20,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'EclipseSmash',src:'images/blades/EclipseSmash.png',displayName:'Eclipse',blade:'Main',weight:32.3,atk:20,def:30,sta:10,core:'Any',astBlade:'Yes',system:'CX'}],
-[{name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',blade:'Main',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{name:'WyvernGale02',src:'images/blades/WyvernGale02.png',displayName:'WyvernGale',blade:'Main',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
-{name:'WyvernGale03',src:'images/blades/WyvernGale03.png',displayName:'WyvernGale',blade:'Main',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'}],
+{name:'WyvernGale',src:'images/blades/WyvernGale.png',displayName:'WyvernGale',blade:'Main',weight:31.9,atk:10,def:40,sta:50,core:'Any',astBlade:'No',system:'BX'},
 {name:'Hunt',src:'images/blades/Hunt.png',displayName:'Hunt',blade:'Main',weight:31.6,atk:20,def:10,sta:30,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Brave',src:'images/blades/Brave.png',displayName:'Brave',blade:'Main',weight:31.2,atk:40,def:10,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Dark',src:'images/blades/Dark.png',displayName:'Dark',blade:'Main',weight:30.3,atk:10,def:40,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
@@ -66,6 +66,7 @@ const masterBlades = [
 {name:'SharkEdge',src:'images/blades/SharkEdge.png',displayName:'SharkEdge',blade:'Main',weight:34.5,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
 {name:'WizardRod',src:'images/blades/WizardRod.png',displayName:'WizardRod',blade:'Main',weight:35.3,atk:15,def:25,sta:60,core:'Any',astBlade:'No',system:'UX'},
 {name:'PhoenixWing',src:'images/blades/PhoenixWing.png',displayName:'PhoenixWing',blade:'Main',weight:38,atk:65,def:30,sta:20,core:'Any',astBlade:'No',system:'BX'},
+{name:'MeteorDragoon',src:'images/blades/MeteorDragoon.png',displayName:'MeteorDragoon',blade:'Main',weight:39,atk:75,def:15,sta:35,core:'Any',astBlade:'No',system:'UX'},
 {name:'BlackShell',src:'images/blades/BlackShell.png',displayName:'BlackShell',blade:'Main',weight:32.4,atk:10,def:65,sta:25,core:'Any',astBlade:'No',system:'BX'},
 {name:'SamuraiSaber',src:'images/blades/SamuraiSaber.png',displayName:'SamuraiSaber',blade:'Main',weight:36.5,atk:65,def:20,sta:25,core:'Any',astBlade:'No',system:'UX'},
 {name:'MummyCurse',src:'images/blades/MummyCurse.png',displayName:'MummyCurse',blade:'Main',weight:37.5,atk:30,def:60,sta:20,core:'Any',astBlade:'No',system:'UX'},
@@ -75,7 +76,6 @@ const masterBlades = [
 {name:'Break',src:'images/blades/Break.png',displayName:'Break',blade:'Over',weight:3.8,atk:10,def:5,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Guard',src:'images/blades/Guard.png',displayName:'Guard',blade:'Over',weight:3.4,atk:5,def:10,sta:5,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'Flow',src:'images/blades/Flow.png',displayName:'Flow',blade:'Over',weight:3.7,atk:5,def:5,sta:10,core:'Any',astBlade:'Yes',system:'CX'},
-{name:'StormSpriggan',src:'images/blades/StormSpriggan.png',displayName:'StormSpriggan',blade:'Main',weight:31,atk:30,def:40,sta:30,core:'Any',astBlade:'No',system:'BX'},
 {name:'Volt',src:'images/blades/Volt.png',displayName:'Volt',blade:'Main',weight:31,atk:45,def:15,sta:15,core:'Any',astBlade:'Yes',system:'CX'},
 {name:'LeonCrest',src:'images/blades/LeonCrest.png',displayName:'LeonCrest',blade:'Main',weight:35,atk:15,def:70,sta:15,core:'Any',astBlade:'No',system:'UX'},
 {name:'Reaper',src:'images/blades/Reaper.png',displayName:'Reaper',blade:'Main',weight:29,atk:25,def:10,sta:25,core:'Any',astBlade:'Yes',system:'CX'},
@@ -83,7 +83,8 @@ const masterBlades = [
 {name:'SilverWolf',src:'images/blades/SilverWolf.png',displayName:'SilverWolf',blade:'Main',weight:36.8,atk:15,def:30,sta:65,core:'Any',astBlade:'No',system:'UX'},
 {name:'CrimsonGaruda',src:'images/blades/CrimsonGaruda.png',displayName:'CrimsonGaruda',blade:'Main',weight:35,atk:45,def:25,sta:30,core:'Any',astBlade:'No',system:'BX'},
 {name:'UnicornSting',src:'images/blades/UnicornSting.png',displayName:'UnicornSting',blade:'Main',weight:33.4,atk:35,def:35,sta:30,core:'Any',astBlade:'No',system:'BX'},
-{name:'DranSword',src:'images/blades/DranSword.png',displayName:'DranSword',blade:'Main',weight:34.6,atk:55,def:25,sta:20,core:'Any',astBlade:'No',system:'BX'}
+{name:'DranSword',src:'images/blades/DranSword.png',displayName:'DranSword',blade:'Main',weight:34.6,atk:55,def:25,sta:20,core:'Any',astBlade:'No',system:'BX'},
+{name:'AeroPegasus',src:'images/blades/AeroPegasus.png',displayName:'AeroPegasus',blade:'Main',weight:38.2,atk:60,def:25,sta:30,core:'Any',astBlade:'No',system:'BX'},
 ];
 
 const masterAssist = [
@@ -116,9 +117,9 @@ const masterRatchets = [
 {src:'images/ratchets/1-60.png',name:'1-60',weight:6,atk:17,def:9,sta:4,core:'W',bit:'Yes'},
 {src:'images/ratchets/1-70.png',name:'1-70',weight:6.1,atk:17,def:6,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/1-80.png',name:'1-80',weight:6.7,atk:17,def:4,sta:9,core:'W',bit:'Yes'},
-{src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,core:'W',bit:'Yes'},
-{src:'images/ratchets/2-70.png',name:'2-70',weight:6.4,atk:10,def:12,sta:8,core:'W',bit:'Yes'},
-{src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
+// {src:'images/ratchets/2-60.png',name:'2-60',weight:6.2,atk:16,def:8,sta:6,core:'W',bit:'Yes'},
+// {src:'images/ratchets/2-70.png',name:'2-70',weight:6.4,atk:10,def:12,sta:8,core:'W',bit:'Yes'},
+// {src:'images/ratchets/2-80.png',name:'2-80',weight:6.9,atk:10,def:11,sta:9,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-60.png',name:'3-60',weight:6.4,atk:15,def:9,sta:6,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-70.png',name:'3-70',weight:6.4,atk:15,def:8,sta:7,core:'W',bit:'Yes'},
 {src:'images/ratchets/3-80.png',name:'3-80',weight:7.1,atk:15,def:7,sta:8,core:'W',bit:'Yes'},
@@ -327,7 +328,7 @@ const metaCombo = [
 {blade:'ImpactDrake',assist:'',ratchet:'7-60',bit:'H'},
 {blade:'ImpactDrake',assist:'',ratchet:'9-60',bit:'FB'},
 {blade:'SharkScale',assist:'',ratchet:'3-60',bit:'R'},
-{blade:'SharkScale',assist:'',ratchet:'1-60',bit:'LF'},
+{blade:'SharkScale',assist:'',ratchet:'1-60',bit:'LR'},
 {blade:'SharkScale',assist:'',ratchet:'5-60',bit:'L'},
 {blade:'SharkScale',assist:'',ratchet:'7-60',bit:'H'},
 {blade:'SharkScale',assist:'',ratchet:'9-60',bit:'FB'},
@@ -485,7 +486,12 @@ const metaCombo = [
 {blade:'DranSword',assist:'',ratchet:'3-60',bit:'R'},
 {blade:'DranSword',assist:'',ratchet:'1-60',bit:'LF'},
 {blade:'DranSword',assist:'',ratchet:'5-60',bit:'L'},
-{blade:'DranSword',assist:'',ratchet:'7-60',bit:'H'}
+{blade:'DranSword',assist:'',ratchet:'7-60',bit:'H'},
+{blade:'AeroPegasus',assist:'',ratchet:'3-60',bit:'R'},
+{blade:'AeroPegasus',assist:'',ratchet:'1-60',bit:'LF'},
+{blade:'AeroPegasus',assist:'',ratchet:'5-60',bit:'L'},
+{blade:'AeroPegasus',assist:'',ratchet:'9-60',bit:'FB'},
+{blade:'AeroPegasus',assist:'',ratchet:'7-60',bit:'H'}
 ]
 
 const mostUsed ={
