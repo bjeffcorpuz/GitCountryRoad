@@ -85,6 +85,9 @@ const masterBlades = [
 {name:'UnicornSting',src:'images/blades/UnicornSting.png',displayName:'UnicornSting',blade:'Main',weight:33.4,atk:35,def:35,sta:30,core:'Any',astBlade:'No',system:'BX'},
 {name:'DranSword',src:'images/blades/DranSword.png',displayName:'DranSword',blade:'Main',weight:34.6,atk:55,def:25,sta:20,core:'Any',astBlade:'No',system:'BX'},
 {name:'AeroPegasus',src:'images/blades/AeroPegasus.png',displayName:'AeroPegasus',blade:'Main',weight:38.2,atk:60,def:25,sta:30,core:'Any',astBlade:'No',system:'BX'},
+{name:'DranStrike',src:'images/blades/DranStrike.png',displayName:'DranStrike',blade:'Main',weight:41.4,atk:58,def:25,sta:17,core:'Any',astBlade:'No',system:'BX'},
+{name:'CobaltDrake',src:'images/blades/CobaltDrake.png',displayName:'CobaltDrake',blade:'Main',weight:37.3,atk:70,def:35,sta:25,core:'Any',astBlade:'No',system:'BX'},
+{name:'BiteCroc',src:'images/blades/BiteCroc.png',displayName:'BiteCroc',blade:'Main',weight:34,atk:60,def:22,sta:18,core:'Any',astBlade:'No',system:'BX'},
 ];
 
 const masterAssist = [
@@ -164,6 +167,7 @@ const masterBits = [
 {src:'images/bits/GearFlat.png',name:'GearFlat',abbr:'GF',weight:2.3,atk:50,def:5,sta:5,dash:40,burstR:80},
 {src:'images/bits/GearNeedle.png',name:'GearNeedle',abbr:'GN',weight:2,atk:20,def:40,sta:10,dash:30,burstR:30},
 {src:'images/bits/GearPoint.png',name:'GearPoint',abbr:'GP',weight:2.3,atk:30,def:25,sta:15,dash:30,burstR:80},
+{src:'images/bits/GearRush.png',name:'GearRush',abbr:'GR',weight:2.1,atk:45,def:10,sta:10,dash:35,burstR:80},
 {src:'images/bits/Glide.png',name:'Glide',abbr:'G',weight:2.5,atk:20,def:10,sta:55,dash:15,burstR:30},
 {src:'images/bits/Hexa.png',name:'Hexa',abbr:'H',weight:2.6,atk:30,def:35,sta:20,dash:15,burstR:80},
 {src:'images/bits/HighNeedle.png',name:'HighNeedle',abbr:'HN',weight:2.2,atk:15,def:55,sta:20,dash:10,burstR:30},
@@ -191,8 +195,9 @@ const masterBits = [
 {src:'images/bits/Wedge.png',name:'Wedge',abbr:'W',weight:2.1,atk:5,def:55,sta:30,dash:10,burstR:30},
 {src:'images/bits/WallWedge.png',name:'WallWedge',abbr:'WW',weight:2.6,atk:5,def:60,sta:25,dash:10,burstR:30},
 {src:'images/bits/Zap.png',name:'Zap',abbr:'Z',weight:2.5,atk:30,def:20,sta:15,dash:35,burstR:80},
-{src:'images/bits/Ignition.png',name:'Ignition',abbr:'I',weight:2.4,atk:50,def:15,sta:5,dash:30,burstR:80},
-{src:'images/bits/Yielding.png',name:'Yielding',abbr:'Y',weight:4.2,atk:10,def:15,sta:65,dash:10,burstR:30}
+// {src:'images/bits/Ignition.png',name:'Ignition',abbr:'I',weight:2.4,atk:50,def:15,sta:5,dash:30,burstR:80},
+{src:'images/bits/Yielding.png',name:'Yielding',abbr:'Y',weight:4.2,atk:10,def:15,sta:65,dash:10,burstR:30},
+{src:'images/bits/FreeFlat.png',name:'FreeFlat',abbr:'FF',weight:2.3,atk:40,def:15,sta:15,dash:30,burstR:80}
 ];
 
 
@@ -491,7 +496,23 @@ const metaCombo = [
 {blade:'AeroPegasus',assist:'',ratchet:'1-60',bit:'LF'},
 {blade:'AeroPegasus',assist:'',ratchet:'5-60',bit:'L'},
 {blade:'AeroPegasus',assist:'',ratchet:'9-60',bit:'FB'},
-{blade:'AeroPegasus',assist:'',ratchet:'7-60',bit:'H'}
+{blade:'AeroPegasus',assist:'',ratchet:'7-60',bit:'H'},
+{blade:'DranStrike',assist:'',ratchet:'3-60',bit:'R'},
+{blade:'DranStrike',assist:'',ratchet:'5-60',bit:'L'},
+{blade:'DranStrike',assist:'',ratchet:'1-60',bit:'LF'},
+{blade:'DranStrike',assist:'',ratchet:'7-60',bit:'H'},
+{blade:'DranStrike',assist:'',ratchet:'9-60',bit:'FB'},
+{blade:'DranStrike',assist:'',ratchet:'9-60',bit:'FB'},
+{blade:'CobaltDrake',assist:'',ratchet:'3-60',bit:'R'},
+{blade:'CobaltDrake',assist:'',ratchet:'5-60',bit:'L'},
+{blade:'CobaltDrake',assist:'',ratchet:'1-60',bit:'LF'},
+{blade:'CobaltDrake',assist:'',ratchet:'7-60',bit:'H'},
+{blade:'CobaltDrake',assist:'',ratchet:'9-60',bit:'FB'},
+{blade:'BiteCroc',assist:'',ratchet:'3-60',bit:'R'},
+{blade:'BiteCroc',assist:'',ratchet:'1-60',bit:'LF'},
+{blade:'BiteCroc',assist:'',ratchet:'5-60',bit:'L'},
+{blade:'BiteCroc',assist:'',ratchet:'7-60',bit:'H'},
+{blade:'BiteCroc',assist:'',ratchet:'9-60',bit:'FB'},
 ]
 
 const mostUsed ={

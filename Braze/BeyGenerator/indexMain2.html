@@ -447,26 +447,26 @@ button:hover {
 /* ================= DATA AND SETTINGS ================= */
 
 // NEW: Duplicate Toggle ("on" or "off")
-// If "on", Ratchets and Bits are NOT removed from the pool after use.
 const duplicate = "off"; 
 
-// NEW: Weighted Category System
-let category = {random: 40, metaCombo: 30, mostUsed: 30};
+// NEW: Blade Weight Limit
+// Options: "all", "light" (<=32.9), "middle" (33-35.9), "heavy" (>=36), or "x+" (e.g. "35+")
+const bladeWeightLimit = "33.5+"; 
+
+// Weighted Category System
+let category = {random: 35, metaCombo: 30, mostUsed: 35};
 let categoryValues = ["random", "metaCombo", "mostUsed"];
 
-// You can adjust these values as needed.
-//["Def", "Atk", "Sta", "AtkDef", "AtkSta", "DefSta", "all"]
 const bladers = [
-    {"name":"Ruddy","src":"avatars/Ruddy.png","type":"AtkDef"},
-    {"name":"Ronan","src":"avatars/Ronan.png","type":"AtkSta"},
-    {"name":"Stephanie","src":"avatars/Stephanie.png","type":"Atk"},
+    {"name":"Sasha","src":"avatars/Sasha.png","type":"Def"},
+    {"name":"Aiko","src":"avatars/Aiko.png","type":"DefSta"},
+    {"name":"Zera","src":"avatars/Zera.png","type":"Def"},
     {"name":"Kaito","src":"avatars/Kaito.png","type":"AtkDef"},
-    {"name":"Haruka","src":"avatars/Haruka.png","type":"AtkSta"},
-    {"name":"Darius","src":"avatars/Darius.png","type":"Atk"},
-    {"name":"Victor","src":"avatars/Victor.png","type":"all"},
-    {"name":"Zera","src":"avatars/Zera.png","type":"DefSta"}
+    {"name":"Jaren","src":"avatars/Jaren.png","type":"AtkDef"},
+    {"name":"Lucian","src":"avatars/Lucian.png","type":"AtkDef"},
+    {"name":"Darian","src":"avatars/Darian.png","type":"AtkSta"},
+    {"name":"Mei","src":"avatars/Mei.png","type":"Atk"}
 ]
-
 
 // THRESHOLDS
 const blades_minAtk = 30;
@@ -494,10 +494,10 @@ const metal_minDef = 1;
 const metal_minSta = 1;
 
 // BAN LIST
-let removeBlade = ["ImpactDrake","Guard","SharkScale","Might","DranSword","WeissTiger","Flare","PteraSwing"];
+let removeBlade = ["CobaltDragoon","DranStrike","SamuraiCalibur","DranSword","MummyCurse","DranDagger","HellsScythe","PhoenixWing","MeteorDragoon","DranBuster"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
-let poolMostUsed = { assist: [], ratchet: [], bit: [] }; // NEW: Working copy for mostUsed logic
+let poolMostUsed = { assist: [], ratchet: [], bit: [] }; 
 let generatedBeyblades = []; 
 
 function resetPools() {
@@ -515,7 +515,6 @@ function resetPools() {
     poolBits = [...masterBits];
     poolMetalBlades = [...masterMetalBlade]; 
     
-    // Deep copy mostUsed so we can safely splice arrays inside it if duplicate is off
     poolMostUsed = {
         assist: [...mostUsed.assist],
         ratchet: [...mostUsed.ratchet],
@@ -536,7 +535,6 @@ function getRandomItem(pool, remove = true) {
     return { item: actualItem, raw: item };
 }
 
-// NEW HELPER: Picks a category based on the defined weights
 function getWeightedCategory() {
     let total = category.random + category.metaCombo + category.mostUsed;
     let r = Math.random() * total;
@@ -646,27 +644,61 @@ function generateFullBeyblade(bladerType, bladerName) {
 
         // --- CHIP SELECTION ---
         if(system.name === "CX") {
-            const chipRes = getRandomItem(poolChips, true); // Chips ALWAYS duplicate="off" 
+            const chipRes = getRandomItem(poolChips, true); 
             if(!chipRes) errorFound = true;
             else chip = chipRes.item;
         }
 
-        // --- BLADE SELECTION ---
+// --- BLADE SELECTION & WEIGHT LIMITS ---
         if (!errorFound) {
             let validBlades = poolBlades.filter(b => {
                 const check = Array.isArray(b) ? b[0] : b;
-                return check.system === system.name;
+                if (check.system !== system.name) return false;
+
+                // 1. "All" allows everything
+                if (bladeWeightLimit === "all") return true;
+
+                // --- 2. STRICT CX SYSTEM RULES ---
+                if (check.system === "CX") {
+                    // Always allow in middle and heavy
+                    if (bladeWeightLimit === "middle" || bladeWeightLimit === "heavy") return true;
+                    
+                    // Custom rule: Only allow if custom weight is 34 or higher
+                    if (bladeWeightLimit.includes("+")) {
+                        let minW = parseFloat(bladeWeightLimit);
+                        if (!isNaN(minW) && minW >= 34) return true; 
+                    }
+                    
+                    // If it's "light" or a custom weight under 34, completely REJECT the CX blade
+                    return false; 
+                }
+
+                // --- 3. STANDARD BX/UX WEIGHT RULES ---
+                let w = check.weight || 0;
+                
+                if (bladeWeightLimit === "light") return w <= 32.9;
+                if (bladeWeightLimit === "middle") return w >= 33 && w <= 35.9;
+                if (bladeWeightLimit === "heavy") return w >= 36;
+                
+                if (bladeWeightLimit.includes("+")) {
+                    let minW = parseFloat(bladeWeightLimit);
+                    if (!isNaN(minW)) return w >= minW;
+                }
+
+                return true;
             });
             
             validBlades = filterPoolByType(validBlades, "blade", bladerType);
-            if(validBlades.length === 0) errorFound = true;
-            else {
+            if(validBlades.length === 0) {
+                console.log(`[${bladerName}] ⚠️ Blade pool exhausted for System ${system.name}. (Check Weight Limits or Thresholds)`);
+                errorFound = true;
+            } else {
                 const bladeIndex = Math.floor(Math.random() * validBlades.length);
                 let rawBlade = validBlades[bladeIndex];
                 blade = Array.isArray(rawBlade) ? rawBlade[Math.floor(Math.random() * rawBlade.length)] : rawBlade;
                 
                 const realIndex = poolBlades.indexOf(rawBlade);
-                if(realIndex > -1) poolBlades.splice(realIndex, 1); // Blades ALWAYS duplicate="off"
+                if(realIndex > -1) poolBlades.splice(realIndex, 1);
             }
         }
 
@@ -680,13 +712,13 @@ function generateFullBeyblade(bladerType, bladerName) {
                 metalBlade = Array.isArray(rawMetal) ? rawMetal[Math.floor(Math.random() * rawMetal.length)] : rawMetal;
                 
                 const realMIndex = poolMetalBlades.indexOf(rawMetal);
-                if(realMIndex > -1) poolMetalBlades.splice(realMIndex, 1); // Metal Blades ALWAYS duplicate="off"
+                if(realMIndex > -1) poolMetalBlades.splice(realMIndex, 1);
             }
         }
 
         if (errorFound) {
             poolChips = backupChips; poolBlades = backupBlades; poolMetalBlades = backupMetal;
-            continue; // Skip to next system if we failed before category selection
+            continue; 
         }
 
         // ==========================================
@@ -707,22 +739,20 @@ function generateFullBeyblade(bladerType, bladerName) {
                     console.log(`[${bladerName}] ⚠️ MetaCombo Failed: No predefined combos exist for blade '${blade.displayName}'. Falling back to RANDOM.`);
                     currentCategory = "random";
                 } else {
-                    availableCombos.sort(() => 0.5 - Math.random()); // Shuffle combos
+                    availableCombos.sort(() => 0.5 - Math.random()); 
                     
                     for (let combo of availableCombos) {
                         let reqAssist = combo.assist;
                         let assistFound = null;
 
-                        // Check Assist
                         if (reqAssist && reqAssist !== "") {
                             assistFound = poolAssist.find(a => {
                                 let check = Array.isArray(a) ? a[0] : a;
                                 return check.name === reqAssist || check.displayName === reqAssist; 
                             });
-                            if (!assistFound) continue; // Combo part missing
+                            if (!assistFound) continue; 
                         }
 
-                        // Check Ratchet & Bit
                         let ratchetFound = poolRatchets.find(r => {
                             let check = Array.isArray(r) ? r[0] : r;
                             return check.name === combo.ratchet;
@@ -735,18 +765,16 @@ function generateFullBeyblade(bladerType, bladerName) {
                         });
                         if (!bitFound) continue;
 
-                        // Check Core Match for ratchet
                         if (blade.core !== "Any") {
                             let filterKey = blade.core === "Round" ? "R" : "W";
                             let rCheck = Array.isArray(ratchetFound) ? ratchetFound[0] : ratchetFound;
                             if (rCheck.core !== filterKey) continue;
                         }
 
-                        // If we made it here, all parts exist! Assign them.
                         metaSuccess = true;
                         if (assistFound) {
                             assist = Array.isArray(assistFound) ? assistFound[Math.floor(Math.random() * assistFound.length)] : assistFound;
-                            poolAssist.splice(poolAssist.indexOf(assistFound), 1); // Assist always removes
+                            poolAssist.splice(poolAssist.indexOf(assistFound), 1); 
                         }
                         
                         ratchet = Array.isArray(ratchetFound) ? ratchetFound[Math.floor(Math.random() * ratchetFound.length)] : ratchetFound;
@@ -755,7 +783,8 @@ function generateFullBeyblade(bladerType, bladerName) {
                         bit = Array.isArray(bitFound) ? bitFound[Math.floor(Math.random() * bitFound.length)] : bitFound;
                         if (duplicate === "off") poolBits.splice(poolBits.indexOf(bitFound), 1);
 
-                        console.log(`[${bladerName}] ✅ SUCCESS: Built MetaCombo -> ${blade.displayName} / ${reqAssist||"N/A"} / ${combo.ratchet} / ${combo.bit}`);
+                        // NEW: Added Weight to Log
+                        console.log(`[${bladerName}] ✅ SUCCESS: Built MetaCombo -> ${blade.displayName} (${blade.weight || 0}g) / ${reqAssist||"N/A"} / ${combo.ratchet} / ${combo.bit}`);
                         break;
                     }
 
@@ -826,7 +855,7 @@ function generateFullBeyblade(bladerType, bladerName) {
                 if (needAssist) {
                     assist = Array.isArray(assistMatch) ? assistMatch[Math.floor(Math.random() * assistMatch.length)] : assistMatch;
                     poolAssist.splice(assistOrigIdx, 1);
-                    poolMostUsed.assist.splice(assistMUIdx, 1); // Assist ALWAYS removes from mostUsed tracker
+                    poolMostUsed.assist.splice(assistMUIdx, 1); 
                 }
                 
                 ratchet = Array.isArray(ratchetMatch) ? ratchetMatch[Math.floor(Math.random() * ratchetMatch.length)] : ratchetMatch;
@@ -840,15 +869,13 @@ function generateFullBeyblade(bladerType, bladerName) {
                     poolBits.splice(bitOrigIdx, 1);
                     poolMostUsed.bit.splice(bitMUIdx, 1);
                 }
-                console.log(`[${bladerName}] ✅ SUCCESS: Built via MostUsed part logic.`);
+                // NEW: Added Weight to Log
+                console.log(`[${bladerName}] ✅ SUCCESS: Built via MostUsed logic -> ${blade.displayName} (${blade.weight || 0}g)`);
             }
         }
 
         // --- STANDARD RANDOM LOGIC (Or Fallback) ---
         if (currentCategory === "random") {
-            console.log(`[${bladerName}] ✅ Executing Standard RANDOM logic.`);
-            
-            // Random Assist
             if (system.name === "CX" && (blade.astBlade === "Yes" || blade.blade === "Over")) {
                 let validAssists = filterPoolByType(poolAssist, "assist", bladerType);
                 if(validAssists.length === 0) errorFound = true;
@@ -857,11 +884,10 @@ function generateFullBeyblade(bladerType, bladerName) {
                     let rawAssist = validAssists[rIndex];
                     assist = Array.isArray(rawAssist) ? rawAssist[Math.floor(Math.random() * rawAssist.length)] : rawAssist;
                     const realAIndex = poolAssist.indexOf(rawAssist);
-                    if(realAIndex > -1) poolAssist.splice(realAIndex, 1); // Assist ALWAYS removes
+                    if(realAIndex > -1) poolAssist.splice(realAIndex, 1); 
                 }
             }
 
-            // Random Ratchet (Includes Lightweight Buff)
             if (!errorFound) {
                 let validRatchets = poolRatchets;
                 if(blade.core !== "Any") {
@@ -899,7 +925,6 @@ function generateFullBeyblade(bladerType, bladerName) {
                 }
             }
 
-            // Random Bit
             if (!errorFound && ratchet && ratchet.bit !== "No") {
                 let validBits = filterPoolByType(poolBits, "bit", bladerType);
                 if(validBits.length === 0) errorFound = true;
@@ -915,6 +940,11 @@ function generateFullBeyblade(bladerType, bladerName) {
 
         // --- EVALUATE ATTEMPT ---
         if (!errorFound) {
+            if (currentCategory === "random") {
+                // NEW: Added Weight to Random Log
+                console.log(`[${bladerName}] ✅ SUCCESS: Built via Standard RANDOM logic -> ${blade.displayName} (${blade.weight || 0}g)`);
+            }
+            
             const stats = { atk:0, def:0, sta:0, dash:0, burstR:0 };
             [blade, metalBlade, assist, ratchet, bit].forEach(p => {
                 if(p) {
@@ -926,9 +956,7 @@ function generateFullBeyblade(bladerType, bladerName) {
                 }
             });
 
-            // NEW: Added category to the return object
             return { system, chip, blade, metalBlade, assist, ratchet, bit, stats, category: currentCategory };
-
         } else {
             console.log(`[${bladerName}] 🛑 FATAL: System ${system.name} failed entirely. Restoring pools and trying next System.`);
             poolChips = backupChips; poolBlades = backupBlades; poolMetalBlades = backupMetal;
@@ -1145,6 +1173,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     console.log("🛠️ STARTING NEW TOURNAMENT GENERATION");
     console.log(`⚖️ Category Weights: Random(${category.random}%) MetaCombo(${category.metaCombo}%) MostUsed(${category.mostUsed}%)`);
     console.log(`🔄 Duplicate Status: ${duplicate.toUpperCase()}`);
+    console.log(`🏋️ Blade Weight Limit: ${bladeWeightLimit.toUpperCase()}`); // NEW: Log the setting on run
     console.log("==========================================");
     
     resetPools(); 
@@ -1183,7 +1212,6 @@ function startGeneration(container) {
     let rowsData = [];
 
     bladers.forEach((blader, index) => {
-        // Passed blader.name to cleanly log errors specific to the character!
         const bey = generateFullBeyblade(blader.type || "all", blader.name); 
         
         if(!bey || bey.error) {
@@ -1205,7 +1233,7 @@ function startGeneration(container) {
         }
 
         generatedBeyblades.push({
-            category: bey.category.toUpperCase(), // NEW: Save the category name
+            category: bey.category.toUpperCase(),
             name: blader.name,
             src: blader.src,
             system: bey.system.name,
