@@ -451,10 +451,10 @@ const duplicate = "off";
 
 // NEW: Blade Weight Limit
 // Options: "all", "light" (<=32.9), "middle" (33-35.9), "heavy" (>=36), or "x+" (e.g. "35+")
-const bladeWeightLimit = "33.5+"; 
+const bladeWeightLimit = "33.4+"; 
 
 // Weighted Category System
-let category = {random: 35, metaCombo: 30, mostUsed: 35};
+let category = {random: 0, metaCombo: 100, mostUsed: 0};
 let categoryValues = ["random", "metaCombo", "mostUsed"];
 
 const bladers = [
@@ -493,8 +493,8 @@ const metal_minAtk = 1;
 const metal_minDef = 1;
 const metal_minSta = 1;
 
-// BAN LIST
-let removeBlade = ["CobaltDragoon","DranStrike","SamuraiCalibur","DranSword","MummyCurse","DranDagger","HellsScythe","PhoenixWing","MeteorDragoon","DranBuster"];
+// BAN LIST ["","","","","","","",""];
+let removeBlade = ["HellsHammer","DranSword","MummyCurse","TyrannoRoar","Hunt","Guard","Brave","Blast"];
 
 let poolSystem, poolBlades, poolRatchets, poolChips, poolAssist, poolBits, poolMetalBlades;
 let poolMostUsed = { assist: [], ratchet: [], bit: [] }; 
@@ -666,10 +666,10 @@ function generateFullBeyblade(bladerType, bladerName) {
                     // Custom rule: Only allow if custom weight is 34 or higher
                     if (bladeWeightLimit.includes("+")) {
                         let minW = parseFloat(bladeWeightLimit);
-                        if (!isNaN(minW) && minW >= 34) return true; 
+                        if (!isNaN(minW) && minW >= 33) return true; 
                     }
                     
-                    // If it's "light" or a custom weight under 34, completely REJECT the CX blade
+                    // If it's "light" or a custom weight under 33, completely REJECT the CX blade
                     return false; 
                 }
 
